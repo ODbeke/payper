@@ -1,16 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const { ethers } = require('ethers');
+import express from 'express';
+import cors from 'cors';
+import { ethers } from 'ethers';
+import crypto from 'crypto';
 
-// Initialize Seller App
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// In-memory stats & simulated wallets
-const SELLER_WALLET = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'; // Standard Hardhat test wallet #2
+const SELLER_WALLET = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
 
-// Seller Capability Price Catalog (in 6 decimal USDC units: 10,000 = 0.01 USDC)
 const SERVICE_CATALOG = {
   'web-scraper': {
     id: 1,
@@ -65,7 +63,6 @@ const SERVICE_CATALOG = {
   }
 };
 
-// Safety Check: Verify Seller Server Health
 app.get('/health', (req, res) => {
   res.json({
     status: 'ONLINE',
@@ -75,7 +72,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Generic x402 Middleware Payment Endpoint
 app.post('/api/service/:serviceKey', async (req, res) => {
   const startTime = Date.now();
   const serviceKey = req.params.serviceKey;
@@ -87,10 +83,9 @@ app.post('/api/service/:serviceKey', async (req, res) => {
 
   const paymentHeader = req.headers['x-payment-auth'];
 
-  // STEP 1 & 2: Check for valid EIP-3009 payment authorization
   if (!paymentHeader) {
     const nonce = ethers.hexlify(ethers.randomBytes(32));
-    const validBefore = Math.floor(Date.now() / 1000) + 120; // 2 min expiry for safety
+    const validBefore = Math.floor(Date.now() / 1000) + 120;
 
     return res.status(402).json({
       error: 'Payment Required',
@@ -110,7 +105,6 @@ app.post('/api/service/:serviceKey', async (req, res) => {
     });
   }
 
-  // Parse payment authorization
   let paymentAuth;
   try {
     paymentAuth = typeof paymentHeader === 'string' ? JSON.parse(paymentHeader) : paymentHeader;
@@ -118,7 +112,6 @@ app.post('/api/service/:serviceKey', async (req, res) => {
     return res.status(400).json({ error: 'Invalid X-PAYMENT-AUTH header format' });
   }
 
-  // Validate authorization fields
   if (paymentAuth.amount < serviceConfig.pricePerCall) {
     return res.status(402).json({ error: 'Insufficient payment amount attached in signature authorization' });
   }
@@ -127,9 +120,7 @@ app.post('/api/service/:serviceKey', async (req, res) => {
     return res.status(402).json({ error: 'Payment authorization expired' });
   }
 
-  // STEP 5: Attempt actual upstream task FIRST
   try {
-    // If client passes simulateFailure: true in body, trigger error to test zero-charge safety rule
     if (req.body && req.body.simulateFailure === true) {
       throw new Error('Simulated upstream API failure');
     }
@@ -137,8 +128,6 @@ app.post('/api/service/:serviceKey', async (req, res) => {
     const taskResult = await serviceConfig.handler(req.body || {});
     const executionDuration = Date.now() - startTime;
 
-    // STEP 6: CRITICAL ORDERING RULE — Task Succeeded! Settle payment authorization.
-    // In production, submit transferWithAuthorization to Circle Gateway / Arc RPC.
     const settlementTxHash = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(32)))
       .map(b => b.toString(16).padStart(2, '0')).join('');
 
@@ -156,7 +145,6 @@ app.post('/api/service/:serviceKey', async (req, res) => {
       }
     });
   } catch (taskError) {
-    // STEP 6 FAIL CASE: Task failed -> NEVER submit authorization. Buyer is NEVER charged!
     console.error(`[x402 Safety Net] Task execution failed: ${taskError.message}. Authorization discarded.`);
     return res.status(500).json({
       success: false,
@@ -170,10 +158,8 @@ app.post('/api/service/:serviceKey', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 4020;
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`[PayPer Seller Server] Running on http://localhost:${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`[PayPer Seller Server] Running on http://localhost:${PORT}`);
+});
 
-module.exports = app;
+export default app;
