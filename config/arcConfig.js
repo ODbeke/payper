@@ -4,10 +4,17 @@
  * Docs: https://docs.arc.io/ & https://docs.arc.io/app-kit
  */
 
+const getRpcUrl = () => {
+  if (typeof process !== 'undefined' && process.env && process.env.ARC_TESTNET_RPC) {
+    return process.env.ARC_TESTNET_RPC;
+  }
+  return 'https://rpc-testnet.arc.network';
+};
+
 export const ARC_TESTNET_CONFIG = {
   chainId: 5040,
   chainName: 'Arc Testnet',
-  rpcUrl: process.env.ARC_TESTNET_RPC || 'https://rpc-testnet.arc.network',
+  rpcUrl: getRpcUrl(),
   blockExplorerUrl: 'https://explorer.testnet.arc.network',
   nativeCurrency: {
     name: 'USD Coin',
@@ -16,7 +23,6 @@ export const ARC_TESTNET_CONFIG = {
   },
   contracts: {
     payPerRegistry: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
-    // Official Circle USDC on Arc Testnet (Native Gas Token)
     officialCircleUsdc: '0x0000000000000000000000000000000000004020',
     circleGateway: '0x0000000000000000000000000000000000004020'
   }

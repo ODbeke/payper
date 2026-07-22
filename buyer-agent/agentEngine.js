@@ -2,7 +2,13 @@ import { ethers } from 'ethers';
 import { CircleAgentStack } from './circleAgentStack.js';
 import { ARC_TESTNET_CONFIG } from '../config/arcConfig.js';
 
-const BUYER_PRIVATE_KEY = process.env.BUYER_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+const getPrivateKey = () => {
+  if (typeof process !== 'undefined' && process.env && process.env.BUYER_PRIVATE_KEY) {
+    return process.env.BUYER_PRIVATE_KEY;
+  }
+  return '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+};
+const BUYER_PRIVATE_KEY = getPrivateKey();
 
 export class AutonomousBuyerAgent {
   constructor(options = {}) {

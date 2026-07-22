@@ -8,8 +8,14 @@ import { ARC_TESTNET_CONFIG } from '../config/arcConfig.js';
  */
 export class CircleAgentStack {
   constructor(options = {}) {
-    this.apiKey = options.apiKey || process.env.CIRCLE_API_KEY || 'simulated-circle-api-key';
-    this.entitySecret = options.entitySecret || process.env.CIRCLE_ENTITY_SECRET || 'simulated-circle-entity-secret';
+    const getEnvVal = (key, fallback) => {
+      if (typeof process !== 'undefined' && process.env && process.env[key]) {
+        return process.env[key];
+      }
+      return fallback;
+    };
+    this.apiKey = options.apiKey || getEnvVal('CIRCLE_API_KEY', 'simulated-circle-api-key');
+    this.entitySecret = options.entitySecret || getEnvVal('CIRCLE_ENTITY_SECRET', 'simulated-circle-entity-secret');
     
     // Developer-controlled agent wallet address on Arc
     this.agentWalletAddress = options.agentWalletAddress || '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
