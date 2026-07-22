@@ -5,6 +5,10 @@ dist/
 build/
 .next/
 
+# Hardhat build artifacts
+artifacts/
+cache/
+
 # Environment / Logs
 .env
 .env.local
