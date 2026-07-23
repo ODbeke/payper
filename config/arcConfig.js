@@ -25,8 +25,9 @@ export const ARC_TESTNET_CONFIG = {
   },
   contracts: {
     payPerRegistry: deploymentInfo?.payPerRegistry || '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
-    officialCircleUsdc: '0x0000000000000000000000000000000000004020',
-    circleGateway: '0x0000000000000000000000000000000000004020'
+    // Official Circle USDC Native System Contract on Arc Testnet (Chain 5042002)
+    officialCircleUsdc: '0x3600000000000000000000000000000000000000',
+    circleGateway: '0x3600000000000000000000000000000000000000'
   }
 };
 

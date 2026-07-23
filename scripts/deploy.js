@@ -9,8 +9,8 @@ async function main() {
   const [deployer] = await hre.ethers.getSigners();
   console.log("Deployer Wallet:", deployer.address);
 
-  // Official Circle USDC on Arc Testnet (USDC is native gas token)
-  const usdcAddress = "0x0000000000000000000000000000000000004020";
+  // Official Circle USDC Native System Contract on Arc Testnet (Chain ID 5042002)
+  const usdcAddress = "0x3600000000000000000000000000000000000000";
   console.log("-> Using Official Circle USDC on Arc Testnet:", usdcAddress);
 
   // Deploy PayPerRegistry directory contract
