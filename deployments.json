@@ -1,7 +1,7 @@
 {
   "network": "arcTestnet",
-  "chainId": 5040,
+  "chainId": 5042002,
   "usdcTokenAddress": "0x0000000000000000000000000000000000004020",
   "payPerRegistry": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-  "deployedAt": "2026-07-22T18:00:00.000Z"
+  "deployedAt": "2026-07-23T07:12:00.000Z"
 }

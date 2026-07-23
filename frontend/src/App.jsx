@@ -103,7 +103,7 @@ export default function App() {
       await new Promise(r => setTimeout(r, 700));
 
       // Subtask 1
-      addLog('DISCOVERY', 'Querying PayPerRegistry contract on Arc Testnet (Chain 5040) for category: "scraping"');
+      addLog('DISCOVERY', 'Querying PayPerRegistry contract on Arc Testnet (Chain 5042002) for category: "scraping"');
       await new Promise(r => setTimeout(r, 500));
 
       addLog('POLICY_APPROVED', `Circle Agent Guardrails: 0.01 USDC is within single-call cap (${maxCallBudget} USDC) & session cap (${maxSessionBudget} USDC)`);
@@ -213,7 +213,7 @@ export default function App() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="brand-title">PayPer<span>.</span></span>
               <span className="status-badge">
-                <span className="pulse-dot"></span> ARC_TESTNET_5040
+                <span className="pulse-dot"></span> ARC_TESTNET_5042002
               </span>
             </div>
             <div className="terminal-path">~/payper/registry/main</div>

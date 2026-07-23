@@ -111,7 +111,7 @@ export class CircleAgentStack {
     return {
       walletId: 'cw_agent_arc_8827',
       address: this.agentWalletAddress,
-      network: 'Arc Testnet (Chain ID 5040)',
+      network: 'Arc Testnet (Chain ID 5042002)',
       usdcBalance: 1000.0,
       spendingGuardrails: this.guardrails,
       currentSessionSpent: Number(this.currentSessionSpentUSDC.toFixed(2))

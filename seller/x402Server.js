@@ -98,7 +98,7 @@ app.post('/api/service/:serviceKey', async (req, res) => {
         validBefore: validBefore,
         nonce: nonce,
         network: 'arc-testnet',
-        chainId: 5040,
+        chainId: 5042002,
         serviceId: serviceConfig.id,
         serviceName: serviceConfig.name
       }

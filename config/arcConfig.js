@@ -10,14 +10,14 @@ const getRpcUrl = () => {
   if (typeof process !== 'undefined' && process.env && process.env.ARC_TESTNET_RPC) {
     return process.env.ARC_TESTNET_RPC;
   }
-  return 'https://rpc-testnet.arc.network';
+  return 'https://rpc.testnet.arc.network';
 };
 
 export const ARC_TESTNET_CONFIG = {
-  chainId: 5040,
+  chainId: 5042002,
   chainName: 'Arc Testnet',
   rpcUrl: getRpcUrl(),
-  blockExplorerUrl: 'https://explorer.testnet.arc.network',
+  blockExplorerUrl: 'https://testnet.arcscan.app',
   nativeCurrency: {
     name: 'USD Coin',
     symbol: 'USDC',
