@@ -1,7 +1,7 @@
 {
-  "network": "hardhat",
-  "chainId": 31337,
+  "network": "arcTestnet",
+  "chainId": 5042002,
   "usdcTokenAddress": "0x3600000000000000000000000000000000000000",
-  "payPerRegistry": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-  "deployedAt": "2026-07-23T07:15:44.794Z"
+  "payPerRegistry": "0xdAea9d883f8d7F87F0D62378555e6660EC51AB77",
+  "deployedAt": "2026-07-23T07:23:14.848Z"
 }
