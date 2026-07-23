@@ -56,8 +56,8 @@ export default function App() {
 
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [listings, setListings] = useState(INITIAL_LISTINGS);
-  const [totalTxCount, setTotalTxCount] = useState(548);
-  const [totalUsdcVolume, setTotalUsdcVolume] = useState(10.24);
+  const [totalTxCount, setTotalTxCount] = useState(584);
+  const [totalUsdcVolume, setTotalUsdcVolume] = useState(12.48);
 
   // Circle Agent Stack Guardrail Settings
   const [maxCallBudget, setMaxCallBudget] = useState('0.10');
@@ -204,202 +204,204 @@ export default function App() {
   };
 
   return (
-    <div className="app-container">
-      {/* Top Header Bar */}
-      <header className="header-bar glass">
-        <button className="brand-link" onClick={() => setCurrentPage('landing')}>
-          <div className="brand-symbol">P</div>
+    <div className="app-shell">
+      {/* Top Terminal Navigation Bar */}
+      <header className="nav-terminal">
+        <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
+          <div className="brand-mark">P</div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="brand-name">PayPer</span>
-              <span className="network-chip">
-                <span className="dot-live"></span> ARC TESTNET
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span className="brand-title">PayPer<span>.</span></span>
+              <span className="status-badge">
+                <span className="pulse-dot"></span> ARC_TESTNET_5040
               </span>
             </div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Agentic Nanopayments Marketplace</div>
+            <div className="terminal-path">~/payper/registry/main</div>
           </div>
         </button>
 
         {/* Live Persistent Ticker */}
-        <div className="live-ticker">
-          <div className="ticker-metric">
-            <span className="ticker-key">Total Txs:</span>
-            <span className="ticker-value">{totalTxCount.toLocaleString()}</span>
+        <div className="ticker-strip">
+          <div className="ticker-cell">
+            <span className="ticker-lbl">TOTAL_TXS:</span>
+            <span className="ticker-val">{totalTxCount.toLocaleString()}</span>
           </div>
-          <div style={{ color: 'var(--border-color)' }}>|</div>
-          <div className="ticker-metric">
-            <span className="ticker-key">USDC Volume:</span>
-            <span className="ticker-value">${totalUsdcVolume.toFixed(2)}</span>
+          <div style={{ color: 'var(--void-05)' }}>|</div>
+          <div className="ticker-cell">
+            <span className="ticker-lbl">USDC_VOLUME:</span>
+            <span className="ticker-val">${totalUsdcVolume.toFixed(2)}</span>
           </div>
         </div>
 
-        {/* Toggle Mode inside App View */}
-        {currentPage === 'app' ? (
-          <div className="mode-switch">
-            <button
-              className={`switch-btn ${viewMode === 'buyer' ? 'active' : ''}`}
-              onClick={() => setViewMode('buyer')}
-            >
-              Browse (Buyer)
+        {/* Toggle Mode / Launch App */}
+        <div className="nav-actions">
+          {currentPage === 'app' ? (
+            <>
+              <button
+                className={`btn-terminal ${viewMode === 'buyer' ? 'active' : ''}`}
+                onClick={() => setViewMode('buyer')}
+              >
+                [01] BROWSE // BUYER
+              </button>
+              <button
+                className={`btn-terminal ${viewMode === 'seller' ? 'active' : ''}`}
+                onClick={() => setViewMode('seller')}
+              >
+                [02] LIST SERVICE // SELLER
+              </button>
+            </>
+          ) : (
+            <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
+              LAUNCH APP →
             </button>
-            <button
-              className={`switch-btn ${viewMode === 'seller' ? 'active' : ''}`}
-              onClick={() => setViewMode('seller')}
-            >
-              List Service (Seller)
-            </button>
-          </div>
-        ) : (
-          <button className="switch-btn active" onClick={() => setCurrentPage('app')}>
-            Launch App →
-          </button>
-        )}
+          )}
+        </div>
       </header>
 
-      {/* 1. LANDING PAGE VIEW (Single Scroll, 1 CTA: Launch App) */}
+      {/* 1. LANDING PAGE VIEW (Admon.peerfix.dev Aesthetic) */}
       {currentPage === 'landing' && (
         <main>
-          <section className="landing-hero">
-            <div className="badge-tag">⚡ Encode Club Programmable Money Hackathon • Arc Track</div>
-            <h1 className="hero-heading">
-              The Autonomous Agentic <br />
-              <span>Financial Network on Arc</span>
+          <section className="hero-admon">
+            <div className="tag-monad">⚡ ENCODE CLUB PROGRAMMABLE MONEY HACKATHON • ARC TRACK</div>
+            <h1 className="hero-display-title">
+              Agent-to-Agent Nanopayment <br />
+              <span>Marketplace on Arc</span>
             </h1>
-            <p className="hero-subtext">
-              AI agents pay other agents per API call in USDC on Arc — zero subscriptions, zero API keys as auth credentials. Payment itself is the credential, powered by <strong>x402</strong> and <strong>EIP-3009</strong>.
+            <p className="hero-lede">
+              AI agents pay other specialized service agents per API call in USDC on Arc — zero subscriptions, zero API keys as auth credentials. Payment itself is the credential.
             </p>
 
-            {/* ONLY ONE CTA BUTTON ON LANDING PAGE */}
-            <button className="launch-cta" onClick={() => setCurrentPage('app')}>
-              Launch Marketplace App →
+            {/* Prompt spec: Exactly ONE CTA on landing page */}
+            <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
+              LAUNCH MARKETPLACE APP →
             </button>
           </section>
 
-          {/* Feature Highlights Grid */}
-          <section className="landing-features">
-            <div className="feat-card glass">
-              <div className="feat-icon">💳</div>
-              <h3 className="feat-title">x402 Nanopayments</h3>
-              <p className="feat-desc">
-                HTTP 402 Payment Required flow. Sellers return exact price challenges; agents respond with signed gasless EIP-3009 authorizations.
-              </p>
-            </div>
+          {/* Proof Grid Section */}
+          <section className="proof-section">
+            <div className="proof-grid">
+              <article className="proof-card">
+                <span className="proof-mark">01 / X402_PROTOCOL</span>
+                <h3>HTTP 402 Nanopayments</h3>
+                <p>
+                  Sellers return exact price challenges; agents respond with gasless EIP-3009 transfer authorizations settled directly in USDC on Arc.
+                </p>
+              </article>
 
-            <div className="feat-card glass">
-              <div className="feat-icon">🎯</div>
-              <h3 className="feat-title">Signal-Based Selection</h3>
-              <p className="feat-desc">
-                Buyer agents discover listings from on-chain PayPerRegistry and pick sellers based on real metrics: price, rating, success rate, and response speed.
-              </p>
-            </div>
+              <article className="proof-card">
+                <span className="proof-mark">02 / ONCHAIN_DIRECTORY</span>
+                <h3>Signal-Based Discovery</h3>
+                <p>
+                  Buyer agents evaluate listings on-chain using real performance metrics: rating score, response speed, success ratio, and USDC pricing.
+                </p>
+              </article>
 
-            <div className="feat-card glass">
-              <div className="feat-icon">🔒</div>
-              <h3 className="feat-title">Task-Success Settlement</h3>
-              <p className="feat-desc">
-                Strict safety ordering rule: funds are settled only when the upstream API call succeeds. If the seller fails, zero funds are deducted.
-              </p>
+              <article className="proof-card">
+                <span className="proof-mark">03 / NO_CHARGE_SAFETY</span>
+                <h3>Task-Success Settlement</h3>
+                <p>
+                  Funds are settled only when the seller's upstream execution succeeds. If the seller service fails, zero USDC is ever deducted.
+                </p>
+              </article>
             </div>
           </section>
         </main>
       )}
 
-      {/* 2. INSIDE APP VIEW (Buyer & Seller Toggle) */}
+      {/* 2. INSIDE APP VIEW */}
       {currentPage === 'app' && (
         <main>
           {/* BUYER VIEW */}
           {viewMode === 'buyer' && (
             <div>
-              {/* Circle Developer Wallet Status Banner */}
-              <div className="wallet-card glass">
-                <div className="wallet-details">
-                  <span className="dot-live" style={{ backgroundColor: 'var(--accent-purple)', boxShadow: '0 0 10px var(--accent-purple)' }}></span>
+              {/* Wallet Strip */}
+              <div className="wallet-strip">
+                <div className="wallet-cluster">
+                  <span className="pulse-dot" style={{ backgroundColor: 'var(--accent-purple)', boxShadow: '0 0 8px var(--accent-purple)' }}></span>
                   <div>
-                    <strong style={{ fontSize: '14px' }}>Circle Developer-Controlled Wallet</strong>
-                    <div className="wallet-addr">0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</div>
+                    <div style={{ fontFamily: 'var(--font-accent)', fontSize: '10px', color: 'var(--ink-tertiary)', letterSpacing: '0.1em' }}>CIRCLE_DEVELOPER_WALLET</div>
+                    <div className="wallet-address-chip">0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</div>
                   </div>
                 </div>
 
-                <div className="guardrails-box">
-                  <div className="guard-field">
-                    <span style={{ color: 'var(--text-muted)', fontWeight: '600' }}>Max/Call:</span>
+                <div className="guardrails-flex">
+                  <div className="guard-box">
+                    <span className="guard-lbl">MAX/CALL:</span>
                     <input
                       type="text"
-                      className="guard-input-val"
+                      className="guard-input-field"
                       value={maxCallBudget}
                       onChange={(e) => setMaxCallBudget(e.target.value)}
                     />
-                    <span style={{ color: 'var(--text-dim)', fontSize: '12px' }}>USDC</span>
+                    <span style={{ color: 'var(--ink-tertiary)', fontSize: '11px' }}>USDC</span>
                   </div>
-                  <div className="guard-field">
-                    <span style={{ color: 'var(--text-muted)', fontWeight: '600' }}>Session Cap:</span>
+                  <div className="guard-box">
+                    <span className="guard-lbl">SESSION_CAP:</span>
                     <input
                       type="text"
-                      className="guard-input-val"
+                      className="guard-input-field"
                       value={maxSessionBudget}
                       onChange={(e) => setMaxSessionBudget(e.target.value)}
                     />
-                    <span style={{ color: 'var(--text-dim)', fontSize: '12px' }}>USDC</span>
+                    <span style={{ color: 'var(--ink-tertiary)', fontSize: '11px' }}>USDC</span>
                   </div>
                 </div>
               </div>
 
-              {/* Category Filter Controls */}
-              <div className="grid-controls">
-                <h2 style={{ fontSize: '24px', fontWeight: '900' }}>Registered Seller Capabilities</h2>
-                <div className="filter-group">
+              {/* Toolbar & Category Filters */}
+              <div className="section-toolbar">
+                <h2 className="section-h2">Registered Capabilities</h2>
+                <div className="cat-filters">
                   {['all', 'scraping', 'summarization', 'image-gen'].map((cat) => (
                     <button
                       key={cat}
-                      className={`cat-pill ${categoryFilter === cat ? 'active' : ''}`}
+                      className={`cat-btn ${categoryFilter === cat ? 'active' : ''}`}
                       onClick={() => setCategoryFilter(cat)}
                     >
-                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                      {cat}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Game Card Grid */}
-              <div className="cards-container">
+              {/* Game Cards Grid */}
+              <div className="service-grid">
                 {filteredListings.map((listing) => (
-                  <div key={listing.id} className="service-card glass">
+                  <div key={listing.id} className="card-service">
                     <div>
-                      <div className="service-header">
-                        <span className="tag-category">{listing.category}</span>
-                        <div className="online-tag">
-                          <span className="dot-live"></span> Online
+                      <div className="card-head">
+                        <span className="badge-category">{listing.category}</span>
+                        <div className="status-online">
+                          <span className="pulse-dot"></span> ONLINE
                         </div>
                       </div>
 
-                      <h3 className="service-name">{listing.name}</h3>
-                      <p className="service-desc">{listing.description}</p>
+                      <h3 className="card-title">{listing.name}</h3>
+                      <p className="card-description">{listing.description}</p>
                     </div>
 
                     <div>
-                      <div className="signals-grid">
+                      <div className="metrics-row">
                         <div>
-                          <div className="signal-lbl">Rating</div>
-                          <div className="signal-val" style={{ color: 'var(--accent-amber)' }}>★ {listing.ratingScore}/100</div>
+                          <div className="metric-lbl">RATING</div>
+                          <div className="metric-val" style={{ color: 'var(--accent-amber)' }}>★ {listing.ratingScore}/100</div>
                         </div>
                         <div>
-                          <div className="signal-lbl">Success</div>
-                          <div className="signal-val" style={{ color: 'var(--accent-emerald)' }}>{listing.successRatio}%</div>
+                          <div className="metric-lbl">SUCCESS</div>
+                          <div className="metric-val" style={{ color: 'var(--accent-emerald)' }}>{listing.successRatio}%</div>
                         </div>
                         <div>
-                          <div className="signal-lbl">Speed</div>
-                          <div className="signal-val" style={{ color: 'var(--primary-arc)' }}>{listing.avgResponseMs}ms</div>
+                          <div className="metric-lbl">SPEED</div>
+                          <div className="metric-val" style={{ color: 'var(--accent-cyan)' }}>{listing.avgResponseMs}ms</div>
                         </div>
                       </div>
 
-                      <div className="service-footer">
+                      <div className="card-foot">
                         <div>
-                          <div style={{ fontSize: '11px', color: 'var(--text-dim)', uppercase: 'true' }}>Price per Call</div>
-                          <div className="price-display">{(listing.pricePerCall / 1e6).toFixed(2)} USDC</div>
+                          <div className="metric-lbl">PRICE / CALL</div>
+                          <div className="price-usdc">{(listing.pricePerCall / 1e6).toFixed(2)} USDC</div>
                         </div>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-muted)' }}>
-                          /api/{listing.category}
-                        </div>
+                        <div className="endpoint-lbl">/api/{listing.category}</div>
                       </div>
                     </div>
                   </div>
@@ -407,60 +409,58 @@ export default function App() {
               </div>
 
               {/* Agent Execution Console Workbench */}
-              <section className="agent-console-box glass">
-                <div className="console-header">
-                  <h2 className="console-title">⚡ Circle Agent Stack Autonomous Execution Workbench</h2>
-                  <p className="console-sub">
-                    Input a goal prompt. Watch the autonomous agent evaluate seller signals, sign gasless EIP-3009 authorizations, and settle nanopayments on Arc Testnet.
-                  </p>
-                </div>
+              <section className="workbench-panel">
+                <h2 className="wb-h2">⚡ Circle Agent Stack Workbench</h2>
+                <p className="wb-sub">
+                  Input a goal prompt. Watch the autonomous agent evaluate seller signals, sign gasless EIP-3009 authorizations, and settle nanopayments on Arc Testnet.
+                </p>
 
-                <div className="input-row">
+                <div className="prompt-bar">
                   <input
                     type="text"
-                    className="goal-input"
+                    className="prompt-input-field"
                     value={userPrompt}
                     onChange={(e) => setUserPrompt(e.target.value)}
                     placeholder="Enter prompt goal for autonomous buyer agent..."
                   />
                   <button
-                    className="exec-btn"
+                    className="btn-exec"
                     onClick={handleRunAgent}
                     disabled={isRunningAgent}
                   >
-                    {isRunningAgent ? 'Executing Agent...' : '🚀 Execute Agent'}
+                    {isRunningAgent ? 'EXECUTING...' : 'EXECUTE AGENT'}
                   </button>
                 </div>
 
-                {/* Execution Log Terminal */}
-                <div className="terminal">
+                {/* Console Terminal */}
+                <div className="console-terminal">
                   {agentLogs.length === 0 ? (
-                    <div style={{ color: 'var(--text-dim)', textAlign: 'center', padding: '30px' }}>
-                      Click "Execute Agent" to run the autonomous agentic nanopayment pipeline live.
+                    <div style={{ color: 'var(--ink-tertiary)', textAlign: 'center', padding: '30px' }}>
+                      Click "EXECUTE AGENT" to run the autonomous agentic nanopayment pipeline.
                     </div>
                   ) : (
                     agentLogs.map((log, idx) => (
-                      <div key={idx} className="terminal-line">
-                        <span className="t-time">[{log.timestamp}]</span>
-                        <span className={`t-badge ${log.step}`}>{log.step}</span>
-                        <span className="t-msg">{log.message}</span>
+                      <div key={idx} className="log-row">
+                        <span className="log-t">[{log.timestamp}]</span>
+                        <span className={`log-tag ${log.step}`}>{log.step}</span>
+                        <span className="log-text">{log.message}</span>
                       </div>
                     ))
                   )}
                 </div>
 
-                {/* Output Result */}
+                {/* Output Display */}
                 {agentResult && (
-                  <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
-                    <h3 style={{ color: 'var(--accent-emerald)', fontSize: '20px', marginBottom: '10px', fontWeight: '800' }}>
+                  <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(16, 185, 129, 0.06)', borderRadius: '10px', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
+                    <h3 style={{ color: 'var(--accent-emerald)', fontFamily: 'var(--font-display)', fontSize: '20px', marginBottom: '10px', fontWeight: '800' }}>
                       ✓ Pipeline Completed ({agentResult.txCount} calls settled • Total: {agentResult.totalSpent})
                     </h3>
-                    <p style={{ color: 'var(--text-main)', marginBottom: '16px', fontSize: '15px', lineHeight: '1.6' }}>
+                    <p style={{ color: 'var(--ink-primary)', marginBottom: '16px', fontSize: '15px', lineHeight: '1.6' }}>
                       <strong>Summary Output:</strong> {agentResult.summary}
                     </p>
-                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px', fontFamily: 'var(--font-mono)' }}>
-                      Arc Testnet Receipts: {agentResult.txHashes.map(h => (
-                        <a key={h} href={`${ARC_TESTNET_CONFIG.blockExplorerUrl}`} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-arc)', marginRight: '14px', textDecoration: 'underline' }}>
+                    <div style={{ fontSize: '12px', color: 'var(--ink-tertiary)', marginBottom: '16px', fontFamily: 'var(--font-accent)' }}>
+                      Arc Receipts: {agentResult.txHashes.map(h => (
+                        <a key={h} href={`${ARC_TESTNET_CONFIG.blockExplorerUrl}`} target="_blank" rel="noreferrer" style={{ color: 'var(--accent-cyan)', marginRight: '14px', textDecoration: 'underline' }}>
                           {h} ↗
                         </a>
                       ))}
@@ -469,7 +469,7 @@ export default function App() {
                       <img
                         src={agentResult.imageUrl}
                         alt="Generated Artwork"
-                        style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', borderRadius: 'var(--radius-sm)' }}
+                        style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', borderRadius: '6px' }}
                       />
                     )}
                   </div>
@@ -481,18 +481,18 @@ export default function App() {
           {/* SELLER VIEW */}
           {viewMode === 'seller' && (
             <div>
-              <div className="form-wrapper glass">
-                <h2 style={{ fontSize: '28px', fontWeight: '900', marginBottom: '8px' }}>Register Seller Capability Listing</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '28px' }}>
-                  Publish your wrapped HTTP API endpoint to the PayPerRegistry smart contract on Arc Testnet.
+              <div className="seller-panel">
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '28px', fontWeight: '800', marginBottom: '8px' }}>Register Seller Capability</h2>
+                <p style={{ color: 'var(--ink-secondary)', fontSize: '14px', marginBottom: '28px' }}>
+                  Publish your wrapped HTTP API capability endpoint to the PayPerRegistry smart contract on Arc Testnet.
                 </p>
 
                 <form onSubmit={handleRegisterService}>
-                  <div className="field-group">
-                    <label className="field-lbl">Service Name</label>
+                  <div className="form-group-cell">
+                    <label className="label-cell">Service Name</label>
                     <input
                       type="text"
-                      className="field-inp"
+                      className="input-cell"
                       placeholder="e.g. Code Security Linter API"
                       value={sellerForm.name}
                       onChange={(e) => setSellerForm({ ...sellerForm, name: e.target.value })}
@@ -500,11 +500,11 @@ export default function App() {
                     />
                   </div>
 
-                  <div className="field-group">
-                    <label className="field-lbl">Public HTTP Endpoint URL</label>
+                  <div className="form-group-cell">
+                    <label className="label-cell">Public Endpoint URL</label>
                     <input
                       type="url"
-                      className="field-inp"
+                      className="input-cell"
                       placeholder="https://api.yourdomain.com/payper"
                       value={sellerForm.endpoint}
                       onChange={(e) => setSellerForm({ ...sellerForm, endpoint: e.target.value })}
@@ -512,23 +512,23 @@ export default function App() {
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    <div className="field-group">
-                      <label className="field-lbl">Price per Call (USDC)</label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div className="form-group-cell">
+                      <label className="label-cell">Price per Call (USDC)</label>
                       <input
                         type="number"
                         step="0.001"
-                        className="field-inp"
+                        className="input-cell"
                         value={sellerForm.pricePerCall}
                         onChange={(e) => setSellerForm({ ...sellerForm, pricePerCall: e.target.value })}
                         required
                       />
                     </div>
 
-                    <div className="field-group">
-                      <label className="field-lbl">Category</label>
+                    <div className="form-group-cell">
+                      <label className="label-cell">Category</label>
                       <select
-                        className="field-sel"
+                        className="select-cell"
                         value={sellerForm.category}
                         onChange={(e) => setSellerForm({ ...sellerForm, category: e.target.value })}
                       >
@@ -540,10 +540,10 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="field-group">
-                    <label className="field-lbl">Description</label>
+                  <div className="form-group-cell">
+                    <label className="label-cell">Description</label>
                     <textarea
-                      className="field-txt"
+                      className="textarea-cell"
                       rows="3"
                       placeholder="Describe what capability your agent endpoint provides..."
                       value={sellerForm.description}
@@ -551,7 +551,7 @@ export default function App() {
                     ></textarea>
                   </div>
 
-                  <button type="submit" className="pub-btn">
+                  <button type="submit" className="btn-publish">
                     Publish to PayPerRegistry Contract
                   </button>
                 </form>
@@ -561,8 +561,9 @@ export default function App() {
         </main>
       )}
 
-      <footer className="footer-nav">
-        PayPer Marketplace • Built for Encode Club Programmable Money Hackathon on Arc L1 • USDC Nanopayments
+      <footer className="footer-admon">
+        <span className="footer-brand">PayPer.</span>
+        <span>Built for Encode Club Programmable Money Hackathon on Arc L1 • USDC Nanopayments</span>
       </footer>
     </div>
   );
