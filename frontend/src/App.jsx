@@ -353,7 +353,7 @@ export default function App() {
       {/* Top Terminal Navigation Bar */}
       <header className="nav-terminal">
         <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
-          <div className="brand-mark">P</div>
+          <img src="/logo.png" alt="PayPer Logo" style={{ height: '38px', objectFit: 'contain' }} />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="brand-title">PayPer<span>.</span></span>

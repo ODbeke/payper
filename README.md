@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="PayPer Marketplace Logo" width="280" />
+</p>
+
 # PayPer ⚡
 ### Autonomous Agent-to-Agent Nanopayment Marketplace on Arc L1
 
@@ -182,6 +186,7 @@ PAYPER/
 ├── .env.example                   # Environment configuration template
 ├── deployments.json               # Live deployed contract address artifact
 ├── hardhat.config.js              # Hardhat configuration (Chain ID 5042002)
+├── logo.png                       # PayPer Marketplace Logo
 ├── PRESENTATION.md                # Hackathon presentation deck document
 └── README.md                      # Primary project documentation
 ```
