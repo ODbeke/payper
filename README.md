@@ -14,7 +14,7 @@
 
 ---
 
-## 📌 Executive Summary & Live Contract Directory
+##  Executive Summary & Live Contract Directory
 
 | Deployment Parameter | Live Contract Specification |
 |---|---|
@@ -29,7 +29,7 @@
 
 ---
 
-## 💡 The Paradigm Shift: Why Traditional Billing Fails Machine Economy
+##  The Paradigm Shift: Why Traditional Billing Fails Machine Economy
 
 As AI agents transition from conversational interfaces to autonomous execution engines, existing Web2 financial rails and traditional Web3 patterns create critical adoption bottlenecks:
 
@@ -56,7 +56,7 @@ As AI agents transition from conversational interfaces to autonomous execution e
 
 ---
 
-## ⚙️ Core Architectural Innovations
+##  Core Architectural Innovations
 
 ### 1. The `x402` HTTP Payment Protocol Handshake
 When an autonomous buyer agent invokes a seller endpoint without credentials, the server responds with a standard `HTTP 402 Payment Required` header payload containing the precise payment challenge:
@@ -95,7 +95,7 @@ $$\text{Upstream API Execution} \xrightarrow{\text{FAILURE (HTTP 500)}} \text{Di
 
 ---
 
-## 🎯 Signal-Based Discovery Logic in `PayPerRegistry.sol`
+##  Signal-Based Discovery Logic in `PayPerRegistry.sol`
 
 Autonomous agents cannot rely on subjective marketing copy. The [`PayPerRegistry.sol`](file:///Users/okoyes/PAYPER/contracts/PayPerRegistry.sol) smart contract acts as an immutable on-chain registry that tracks verifiable seller execution signals:
 
@@ -125,7 +125,7 @@ This mathematical selection process eliminates hallucinated choices and guarante
 
 ---
 
-## 🛡️ Circle Agent Stack & Spending Policy Engine
+##  Circle Agent Stack & Spending Policy Engine
 
 Integrated with the official **Circle Developer Stack** (`circlefin/agent-stack-starter-kits`), the buyer agent includes strict policy guardrails ([buyer-agent/circleAgentStack.js](file:///Users/okoyes/PAYPER/buyer-agent/circleAgentStack.js)):
 
@@ -142,7 +142,7 @@ If an endpoint attempts to overcharge or request unauthorized spending, the Circ
 
 ---
 
-## 🎨 Cyber-Financial Design System (`admon.peerfix.dev` Style)
+##  Cyber-Financial Design System (`admon.peerfix.dev` Style)
 
 The frontend application ([frontend/src/App.jsx](file:///Users/okoyes/PAYPER/frontend/src/App.jsx)) is crafted with custom typography and visual aesthetics inspired by high-end web3 build registries:
 
@@ -157,7 +157,7 @@ The frontend application ([frontend/src/App.jsx](file:///Users/okoyes/PAYPER/fro
 
 ---
 
-## 📂 Codebase Directory Architecture
+##  Codebase Directory Architecture
 
 ```
 PAYPER/
@@ -192,7 +192,7 @@ PAYPER/
 
 ---
 
-## 🧪 Verification & Testing
+##  Verification & Testing
 
 PayPer includes a complete unit testing suite for smart contracts and spending policy engines:
 
@@ -220,7 +220,7 @@ npm run test
 
 ---
 
-## ⚡ Quickstart Setup Guide
+##  Quickstart Setup Guide
 
 ### 1. Clone & Install Dependencies
 ```bash
