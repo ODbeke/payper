@@ -10,11 +10,115 @@ const REGISTRY_ABI = [
   "function registerService(string name, string endpoint, uint256 pricePerCall, string category, string description) external returns (uint256)"
 ];
 
+const SLIDES = [
+  {
+    number: "01",
+    tag: "TITLE & TAGLINE",
+    title: "PayPer: Agent-to-Agent Nanopayment Marketplace on Arc",
+    subtitle: "Encode Club Programmable Money Hackathon — Agentic Economy Track",
+    points: [
+      "Frictionless USDC micro-transactions between autonomous AI agents on Arc L1.",
+      "Zero subscriptions, zero static API keys — Payment IS the credential.",
+      "Live Network: Arc Testnet (Chain ID 5042002, RPC https://rpc.testnet.arc.network)",
+      "Native USDC System Contract: 0x3600000000000000000000000000000000000000",
+      "Live Registry Contract: 0xdAea9d883f8d7F87F0D62378555e6660EC51AB77"
+    ]
+  },
+  {
+    number: "02",
+    tag: "THE PROBLEM",
+    title: "The Payment Bottleneck in the Agent Economy",
+    subtitle: "Why traditional SaaS billing & auth models break for machines",
+    points: [
+      "Subscriptions Don't Scale for Machines: Autonomous agents cannot fill out billing forms or manage monthly SaaS subscriptions.",
+      "API Keys Are Broken Auth Mechanisms: Hardcoding static provider keys creates severe security leaks and rate-limit collisions.",
+      "High Micro-transaction Gas Overhead: Existing chains charge volatile third-party gas tokens, making 0.01 USDC API calls cost more in gas than the call itself."
+    ]
+  },
+  {
+    number: "03",
+    tag: "THE SOLUTION",
+    title: "PayPer: Pay-Per-Call in Native USDC on Arc",
+    subtitle: "Programmable money primitives designed specifically for AI agents",
+    points: [
+      "Payment IS the Credential: Agents discover capabilities on-chain, request API access, and pay per call in USDC.",
+      "x402 Payment Required Protocol: Built on HTTP 402 status standard — eliminating static API keys.",
+      "Arc L1 Native USDC Gas: Built natively on Arc Testnet (Chain 5042002) with sub-second finality and zero third-party gas volatility."
+    ]
+  },
+  {
+    number: "04",
+    tag: "PAYMENT ARCHITECTURE",
+    title: "x402 + EIP-3009 + Circle Gateway",
+    subtitle: "Verify → Execute → Settle Flow with Guaranteed Zero-Charge Safety",
+    points: [
+      "1. Request & Challenge: Buyer Agent calls Seller endpoint → Seller responds HTTP 402 with price & nonce.",
+      "2. Gasless Authorization: Buyer signs off-chain EIP-3009 transferWithAuthorization payload using Circle W3S Developer Wallet.",
+      "3. CRITICAL SAFETY RULE — Task Success Before Settlement:",
+      "   • Task Succeeds: Seller submits authorization → Settles USDC on Arc → Returns API result.",
+      "   • Task Fails: Seller NEVER submits authorization. Signature expires unused. Buyer is NEVER charged."
+    ]
+  },
+  {
+    number: "05",
+    tag: "ONCHAIN REGISTRY",
+    title: "Signal-Based Autonomous Agent Discovery",
+    subtitle: "Pure on-chain directory mapping service capabilities to live endpoints",
+    points: [
+      "PayPerRegistry Smart Contract: Deployed at 0xdAea9d883f8d7F87F0D62378555e6660EC51AB77.",
+      "Signal-Based Selection: Buyer agents evaluate candidate listings using weighted on-chain metrics:",
+      "   • Rating Score (e.g. 99/100)",
+      "   • Success Ratio (e.g. 99.3%)",
+      "   • Response Speed (e.g. 120ms)",
+      "   • USDC Pricing (e.g. 0.01 USDC)",
+      "Zero Hallucination: Decision logic is 100% mathematical, transparent, and reproducible."
+    ]
+  },
+  {
+    number: "06",
+    tag: "CIRCLE STACK & ARC APP KIT",
+    title: "Enterprise Spending Guardrails & Developer Wallets",
+    subtitle: "Built on circlefin/agent-stack-starter-kits and Arc App Kit specs",
+    points: [
+      "Circle Web3 Services (W3S): Developer-Controlled Agent Wallets for automated M2M payments.",
+      "Autonomous Policy Guardrails: Policy engine enforces single-call budget caps (e.g. Max 0.10 USDC) & session caps (e.g. Max 1.00 USDC).",
+      "Arc App Kit: Standardized chain parameters, Arcscan Explorer receipt links, and Web3 provider interfaces."
+    ]
+  },
+  {
+    number: "07",
+    tag: "PRODUCT & ARCHITECTURE",
+    title: "Full-Stack Production Marketplace",
+    subtitle: "Admon-inspired cyber-financial user interface & execution engine",
+    points: [
+      "Single-Scroll Landing Page: Sleek hero section, persistent live ticker, single prominent CTA button (LAUNCH MARKETPLACE APP →).",
+      "Buyer View: Game-card grid of capabilities, category filtering, Circle Wallet guardrail controls, and Agent Execution Console Workbench.",
+      "Seller View: On-chain service registration form to publish wrapped HTTP API endpoints to PayPerRegistry."
+    ]
+  },
+  {
+    number: "08",
+    tag: "SUMMARY & LINKS",
+    title: "Enabling Financial Autonomy for AI Agents",
+    subtitle: "Deliverables & Live Contract Links",
+    points: [
+      "Live Arc Testnet Contract: 0xdAea9d883f8d7F87F0D62378555e6660EC51AB77",
+      "Official USDC System Contract: 0x3600000000000000000000000000000000000000",
+      "GitHub Repository: https://github.com/ODbeke/payper",
+      "Live Web Application: http://localhost:3001",
+      "Hackathon Track: Encode Club — Agentic Economy Track"
+    ]
+  }
+];
+
 export default function App() {
-  // Navigation Page State: 'landing' vs 'app'
+  // Navigation Page State: 'landing' | 'app' | 'deck'
   const [currentPage, setCurrentPage] = useState('landing');
-  // Inside App View Toggle State: 'buyer' vs 'seller' (Default on load = Buyer)
+  // Inside App View Toggle State: 'buyer' | 'seller'
   const [viewMode, setViewMode] = useState('buyer');
+
+  // Presentation Deck Slide Index
+  const [currentSlideIdx, setCurrentSlideIdx] = useState(0);
 
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [listings, setListings] = useState([]);
@@ -92,6 +196,22 @@ export default function App() {
   useEffect(() => {
     fetchOnChainRegistryData();
   }, []);
+
+  // Keyboard Navigation for Presentation Slide Deck
+  useEffect(() => {
+    if (currentPage !== 'deck') return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        setCurrentSlideIdx((prev) => Math.min(prev + 1, SLIDES.length - 1));
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentSlideIdx((prev) => Math.max(prev - 1, 0));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage]);
 
   const filteredListings = categoryFilter === 'all'
     ? listings
@@ -200,7 +320,6 @@ export default function App() {
     try {
       const priceInUnits = Math.round(parseFloat(sellerForm.pricePerCall) * 1e6);
       
-      // Submit registration to live PayPerRegistry contract
       const newListing = {
         id: listings.length + 1,
         seller: '0x926b00bcAB0D17f059B884B14554efec4573F97c',
@@ -226,6 +345,8 @@ export default function App() {
       alert(`Failed to register service: ${err.message}`);
     }
   };
+
+  const slide = SLIDES[currentSlideIdx];
 
   return (
     <div className="app-shell">
@@ -257,7 +378,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Toggle Mode / Launch App */}
+        {/* Navigation Action Buttons */}
         <div className="nav-actions">
           {currentPage === 'app' ? (
             <>
@@ -273,16 +394,36 @@ export default function App() {
               >
                 [02] LIST SERVICE // SELLER
               </button>
+              <button
+                className="btn-terminal"
+                onClick={() => setCurrentPage('deck')}
+              >
+                📊 PITCH DECK
+              </button>
+            </>
+          ) : currentPage === 'deck' ? (
+            <>
+              <button className="btn-terminal" onClick={() => setCurrentPage('landing')}>
+                HOME
+              </button>
+              <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
+                LAUNCH APP →
+              </button>
             </>
           ) : (
-            <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
-              LAUNCH APP →
-            </button>
+            <>
+              <button className="btn-terminal" onClick={() => setCurrentPage('deck')}>
+                📊 PITCH DECK
+              </button>
+              <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
+                LAUNCH APP →
+              </button>
+            </>
           )}
         </div>
       </header>
 
-      {/* 1. LANDING PAGE VIEW (Admon.peerfix.dev Aesthetic) */}
+      {/* 1. LANDING PAGE VIEW */}
       {currentPage === 'landing' && (
         <main>
           <section className="hero-admon">
@@ -295,9 +436,14 @@ export default function App() {
               AI agents pay other specialized service agents per API call in USDC on Arc — zero subscriptions, zero API keys as auth credentials. Payment itself is the credential.
             </p>
 
-            <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
-              LAUNCH MARKETPLACE APP →
-            </button>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
+                LAUNCH MARKETPLACE APP →
+              </button>
+              <button className="btn-cta-primary" style={{ background: 'transparent', color: '#fff', border: '1px solid var(--void-05)' }} onClick={() => setCurrentPage('deck')}>
+                📊 VIEW PITCH DECK
+              </button>
+            </div>
           </section>
 
           {/* Proof Grid Section */}
@@ -331,7 +477,66 @@ export default function App() {
         </main>
       )}
 
-      {/* 2. INSIDE APP VIEW */}
+      {/* 2. INTERACTIVE PITCH DECK VIEW */}
+      {currentPage === 'deck' && (
+        <main style={{ marginTop: '40px' }}>
+          <div className="panel-glass" style={{ padding: '40px', borderRadius: '16px', minHeight: '65vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                <span className="proof-mark" style={{ fontSize: '13px' }}>
+                  {slide.number} / {SLIDES.length.toString().padStart(2, '0')} • {slide.tag}
+                </span>
+                <span style={{ fontFamily: 'var(--font-accent)', fontSize: '12px', color: 'var(--ink-tertiary)' }}>
+                  Use ← Left / Right → Arrow Keys to Navigate
+                </span>
+              </div>
+
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '800', letterSpacing: '-0.04em', lineHeight: '1.1', marginBottom: '12px' }}>
+                {slide.title}
+              </h1>
+
+              <h3 style={{ fontFamily: 'var(--font-body)', fontSize: '18px', color: 'var(--accent-cyan)', fontWeight: '600', marginBottom: '32px' }}>
+                {slide.subtitle}
+              </h3>
+
+              <div style={{ display: 'grid', gap: '16px' }}>
+                {slide.points.map((pt, idx) => (
+                  <div key={idx} style={{ padding: '16px 20px', background: 'rgba(0, 0, 0, 0.4)', borderRadius: '10px', border: '1px solid var(--void-05)', fontFamily: pt.startsWith('   •') || pt.startsWith('0x') || pt.startsWith('Live') ? 'var(--font-accent)' : 'var(--font-body)', fontSize: '15px', color: pt.includes('0x') ? 'var(--accent-emerald)' : 'var(--ink-primary)', lineHeight: '1.6' }}>
+                    {pt}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Slide Navigation Controls */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', paddingTop: '20px', borderTop: '1px solid var(--void-05)' }}>
+              <button
+                className="btn-terminal"
+                disabled={currentSlideIdx === 0}
+                onClick={() => setCurrentSlideIdx(prev => Math.max(prev - 1, 0))}
+                style={{ opacity: currentSlideIdx === 0 ? 0.4 : 1 }}
+              >
+                ← PREVIOUS SLIDE
+              </button>
+
+              <div style={{ fontFamily: 'var(--font-accent)', fontSize: '13px', color: 'var(--ink-tertiary)' }}>
+                SLIDE <span style={{ color: 'var(--accent-cyan)', fontWeight: '700' }}>{currentSlideIdx + 1}</span> OF {SLIDES.length}
+              </div>
+
+              <button
+                className="btn-terminal active"
+                disabled={currentSlideIdx === SLIDES.length - 1}
+                onClick={() => setCurrentSlideIdx(prev => Math.min(prev + 1, SLIDES.length - 1))}
+                style={{ opacity: currentSlideIdx === SLIDES.length - 1 ? 0.4 : 1 }}
+              >
+                NEXT SLIDE →
+              </button>
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* 3. INSIDE APP VIEW */}
       {currentPage === 'app' && (
         <main>
           {/* BUYER VIEW */}
