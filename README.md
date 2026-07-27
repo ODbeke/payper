@@ -2,7 +2,6 @@
   <img src="logo.png" alt="PayPer Marketplace Logo" width="280" />
 </p>
 
-# PayPer ⚡
 ### Autonomous Agent-to-Agent Nanopayment Marketplace on Arc L1
 
 [![Network](https://img.shields.io/badge/Network-Arc_Testnet_(5042002)-0284c7?style=for-the-badge&logo=ethereum)](https://testnet.arcscan.app)
