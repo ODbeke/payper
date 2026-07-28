@@ -92,7 +92,7 @@ const SLIDES = [
     subtitle: "Admon-inspired cyber-financial user interface & execution engine",
     points: [
       "Single-Scroll Landing Page: Sleek hero section, persistent live ticker, single prominent CTA button (LAUNCH MARKETPLACE APP →).",
-      "Buyer View: Game-card grid of capabilities, category filtering, Circle Wallet guardrail controls, and Agent Execution Console Workbench.",
+      "Buyer View: Game-card grid of capabilities, category filters, wallet guardrails, and Agent Execution Console Workbench.",
       "Seller View: On-chain service registration form to publish wrapped HTTP API endpoints to PayPerRegistry."
     ]
   },
@@ -350,7 +350,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {/* Top Terminal Navigation Bar */}
+      {/* Top Floating Navigation Bar (Synthora Style) */}
       <header className="nav-terminal">
         <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
           <img src="/logo.png" alt="PayPer Logo" style={{ height: '38px', objectFit: 'contain' }} />
@@ -423,26 +423,75 @@ export default function App() {
         </div>
       </header>
 
-      {/* 1. LANDING PAGE VIEW */}
+      {/* 1. LANDING PAGE VIEW (Synthora AI Agent Platform Aesthetic) */}
       {currentPage === 'landing' && (
         <main>
-          <section className="hero-admon">
-            <div className="tag-monad">⚡ ENCODE CLUB PROGRAMMABLE MONEY HACKATHON • ARC TRACK</div>
+          <section className="hero-synthora">
+            <div className="synthora-badge">
+              ✦ NEXT-GEN AGENTIC FINANCIAL NETWORK ON ARC
+            </div>
+
             <h1 className="hero-display-title">
-              Agent-to-Agent Nanopayment <br />
-              <span>Marketplace on Arc</span>
+              The Autonomous Agentic <br />
+              <span>Financial Network on Arc</span>
             </h1>
+
             <p className="hero-lede">
-              AI agents pay other specialized service agents per API call in USDC on Arc — zero subscriptions, zero API keys as auth credentials. Payment itself is the credential.
+              AI agents pay other specialized provider agents per API call in USDC on Arc — zero monthly subscriptions, zero static API keys. Payment itself is the authorization credential.
             </p>
 
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="btn-cta-group">
+              {/* Single Prominent CTA */}
               <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
                 LAUNCH MARKETPLACE APP →
               </button>
-              <button className="btn-cta-primary" style={{ background: 'transparent', color: '#fff', border: '1px solid var(--void-05)' }} onClick={() => setCurrentPage('deck')}>
+              <button className="btn-cta-secondary" onClick={() => setCurrentPage('deck')}>
                 📊 VIEW PITCH DECK
               </button>
+            </div>
+
+            {/* Synthora Interactive Dashboard Showcase Card */}
+            <div className="synthora-showcase-card">
+              <div className="showcase-header">
+                <div className="showcase-title">
+                  <span className="pulse-dot"></span>
+                  LIVE AGENT NETWORK MONITOR • ARC L1
+                </div>
+                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', color: 'var(--accent-cyan)' }}>
+                  CHAIN_ID: 5042002 • USDC: 0x3600...0000
+                </div>
+              </div>
+
+              <div className="showcase-grid">
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">ACTIVE AGENT NODES</div>
+                  <div className="showcase-val" style={{ color: 'var(--ink-primary)' }}>142</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">TOTAL TRANSACTIONS</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-cyan)' }}>{totalTxCount.toLocaleString()}</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">USDC SETTLED</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-emerald)' }}>${totalUsdcVolume.toFixed(2)}</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">AVG FINALITY SPEED</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-purple)' }}>&lt; 1.2s</div>
+                </div>
+              </div>
+
+              <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.6)', borderRadius: '10px', border: '1px solid var(--void-05)', fontFamily: 'var(--font-accent)', fontSize: '12px', color: 'var(--ink-secondary)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--accent-emerald)' }}>
+                  <span>✓ RECENT EXECUTION LOG</span>
+                  <span>EIP-3009 GASLESS SETTLEMENT</span>
+                </div>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <span style={{ color: 'var(--ink-tertiary)' }}>[10:14:02]</span>
+                  <span style={{ padding: '2px 6px', background: 'rgba(52, 211, 153, 0.2)', color: 'var(--accent-emerald)', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>CALL_SETTLED</span>
+                  <span>Agent `0x926b...F97c` paid 0.01 USDC to `Web Scraper Pro` (Tx: 0x8f2d9c...)</span>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -689,7 +738,7 @@ export default function App() {
 
                 {/* Output Display */}
                 {agentResult && (
-                  <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(16, 185, 129, 0.06)', borderRadius: '10px', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
+                  <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(52, 211, 153, 0.06)', borderRadius: '10px', border: '1px solid rgba(52, 211, 153, 0.25)' }}>
                     <h3 style={{ color: 'var(--accent-emerald)', fontFamily: 'var(--font-display)', fontSize: '20px', marginBottom: '10px', fontWeight: '800' }}>
                       ✓ Pipeline Completed ({agentResult.txCount} calls settled • Total: {agentResult.totalSpent})
                     </h3>
