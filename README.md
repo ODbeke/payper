@@ -2,6 +2,7 @@
   <img src="logo.png" alt="PayPer Marketplace Logo" width="280" />
 </p>
 
+# PayPer ⚡
 ### Autonomous Agent-to-Agent Nanopayment Marketplace on Arc L1
 
 [![Network](https://img.shields.io/badge/Network-Arc_Testnet_(5042002)-0284c7?style=for-the-badge&logo=ethereum)](https://testnet.arcscan.app)
@@ -14,7 +15,7 @@
 
 ---
 
-##  Executive Summary & Live Contract Directory
+## 📌 Executive Summary & Live Contract Directory
 
 | Deployment Parameter | Live Contract Specification |
 |---|---|
@@ -29,7 +30,64 @@
 
 ---
 
-##  The Paradigm Shift: Why Traditional Billing Fails Machine Economy
+## 🐉 Architecture & Core Sequence Flow Charts
+
+### System Topology Architecture
+```mermaid
+graph TD
+    subgraph Agentic Buyer Stack
+        A[Goal Prompt] --> B[Goal Decomposition Engine]
+        B --> C[Signal-Based Seller Selection]
+        C --> D[Circle Agent Policy Guardrails]
+    end
+
+    subgraph On-Chain Signal Layer
+        R[(PayPerRegistry Contract<br/>0xdAea...AB77)] -->|Rating ★ / Speed ms / USDC Price| C
+    end
+
+    subgraph Seller x402 Execution Layer
+        D -->|1. HTTP Request| S[Seller x402 Server]
+        S -->|2. HTTP 402 Challenge| D
+        D -->|3. Signed EIP-3009 Payload| S
+        S -->|4. Upstream Execution FIRST| U[Upstream API Capability]
+        U -->|5. HTTP 200 OK| S
+    end
+
+    subgraph Arc L1 Settlement Layer
+        S -->|6. Settle EIP-3009 & Record Call| Arc[Arc L1 Blockchain<br/>USDC System Contract 0x3600...0000]
+        Arc -->|7. Verified On-Chain Receipt| A
+    end
+```
+
+### End-to-End Execution Sequence Diagram
+```mermaid
+sequenceDiagram
+    autonumber
+    actor BuyerAgent as 🤖 Autonomous Buyer Agent (Circle W3S)
+    participant SellerServer as 🌐 Seller Server (x402 Express)
+    participant UpstreamAPI as ⚡ Upstream API Capability
+    participant ArcL1 as ⛓️ Arc L1 Blockchain (PayPerRegistry & USDC)
+
+    BuyerAgent->>SellerServer: 1. HTTP Request (No Credentials / API Key)
+    SellerServer-->>BuyerAgent: 2. HTTP 402 Payment Required (Price, Nonce, ServiceID)
+    Note over BuyerAgent: Evaluates Circle Guardrail Policy (Max/Call & Session Cap)
+    BuyerAgent->>BuyerAgent: 3. Signs EIP-3009 transferWithAuthorization Off-Chain
+    SellerServer->>UpstreamAPI: 4. Executes Upstream Service Call FIRST
+    alt Upstream Execution Succeeds (HTTP 200 OK)
+        UpstreamAPI-->>SellerServer: Upstream Response Data
+        SellerServer->>ArcL1: 5. Submits EIP-3009 Authorization to Arc
+        ArcL1-->>SellerServer: Settles USDC & Records Call Metrics in PayPerRegistry
+        SellerServer-->>BuyerAgent: 6. Returns API Data & Arc Receipt Tx Hash
+    else Upstream Execution Fails (HTTP 500 Error)
+        UpstreamAPI-->>SellerServer: Service Error
+        Note over SellerServer: Signature DISCARDED. Zero USDC deducted!
+        SellerServer-->>BuyerAgent: 500 Error (0 USDC charged)
+    end
+```
+
+---
+
+## 💡 The Paradigm Shift: Why Traditional Billing Fails Machine Economy
 
 As AI agents transition from conversational interfaces to autonomous execution engines, existing Web2 financial rails and traditional Web3 patterns create critical adoption bottlenecks:
 
@@ -56,7 +114,7 @@ As AI agents transition from conversational interfaces to autonomous execution e
 
 ---
 
-##  Core Architectural Innovations
+## ⚙️ Core Architectural Innovations
 
 ### 1. The `x402` HTTP Payment Protocol Handshake
 When an autonomous buyer agent invokes a seller endpoint without credentials, the server responds with a standard `HTTP 402 Payment Required` header payload containing the precise payment challenge:
@@ -95,7 +153,7 @@ $$\text{Upstream API Execution} \xrightarrow{\text{FAILURE (HTTP 500)}} \text{Di
 
 ---
 
-##  Signal-Based Discovery Logic in `PayPerRegistry.sol`
+## 🎯 Signal-Based Discovery Logic in `PayPerRegistry.sol`
 
 Autonomous agents cannot rely on subjective marketing copy. The [`PayPerRegistry.sol`](file:///Users/okoyes/PAYPER/contracts/PayPerRegistry.sol) smart contract acts as an immutable on-chain registry that tracks verifiable seller execution signals:
 
@@ -125,7 +183,7 @@ This mathematical selection process eliminates hallucinated choices and guarante
 
 ---
 
-##  Circle Agent Stack & Spending Policy Engine
+## 🛡️ Circle Agent Stack & Spending Policy Engine
 
 Integrated with the official **Circle Developer Stack** (`circlefin/agent-stack-starter-kits`), the buyer agent includes strict policy guardrails ([buyer-agent/circleAgentStack.js](file:///Users/okoyes/PAYPER/buyer-agent/circleAgentStack.js)):
 
@@ -142,7 +200,7 @@ If an endpoint attempts to overcharge or request unauthorized spending, the Circ
 
 ---
 
-##  Cyber-Financial Design System (`admon.peerfix.dev` Style)
+## 🎨 Cyber-Financial Design System (`admon.peerfix.dev` Style)
 
 The frontend application ([frontend/src/App.jsx](file:///Users/okoyes/PAYPER/frontend/src/App.jsx)) is crafted with custom typography and visual aesthetics inspired by high-end web3 build registries:
 
@@ -157,7 +215,7 @@ The frontend application ([frontend/src/App.jsx](file:///Users/okoyes/PAYPER/fro
 
 ---
 
-##  Codebase Directory Architecture
+## 📂 Codebase Directory Architecture
 
 ```
 PAYPER/
@@ -192,7 +250,7 @@ PAYPER/
 
 ---
 
-##  Verification & Testing
+## 🧪 Verification & Testing
 
 PayPer includes a complete unit testing suite for smart contracts and spending policy engines:
 
@@ -220,7 +278,7 @@ npm run test
 
 ---
 
-##  Quickstart Setup Guide
+## ⚡ Quickstart Setup Guide
 
 ### 1. Clone & Install Dependencies
 ```bash
