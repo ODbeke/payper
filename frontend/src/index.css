@@ -881,32 +881,48 @@ body {
   margin-bottom: 40px;
 }
 
-.landing-video-bg {
-  position: absolute;
+.global-bg-image {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  transition: all 0.8s var(--ease-out);
 }
 
-.landing-video-bg video, .landing-video-bg img {
+.global-bg-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 1.0; /* Crisp and vibrant */
+  transition: all 0.8s var(--ease-out);
 }
 
-.video-overlay {
+.global-bg-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
-  pointer-events: none;
+  transition: background 0.8s var(--ease-out);
+}
+
+/* Landing view: sharp, bright cover */
+.global-bg-image.landing-view img {
+  filter: blur(0px) brightness(1.0);
+}
+.global-bg-image.landing-view .global-bg-overlay {
+  background: linear-gradient(to bottom, rgba(3, 4, 7, 0) 40%, rgba(3, 4, 7, 1.0) 100%);
+}
+
+/* App view: heavily blurred, deep dark ambient color bleed background */
+.global-bg-image.app-view img {
+  filter: blur(80px) brightness(0.22) saturate(1.3);
+}
+.global-bg-image.app-view .global-bg-overlay {
+  background: rgba(3, 4, 7, 0.75);
 }
 
 /* Left Aligned Cover Text Overlay */

@@ -350,6 +350,12 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      {/* Global Ambient Background */}
+      <div className={`global-bg-image ${currentPage === 'landing' ? 'landing-view' : 'app-view'}`}>
+        <img src="/usdc_activation_gate_spaced.jpg" alt="USDC Gate Background" />
+        <div className="global-bg-overlay"></div>
+      </div>
+
       {/* Top Floating Navigation Bar (Synthora Style) */}
       <header className={`nav-terminal ${currentPage === 'landing' ? 'landing-nav' : ''}`}>
         <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
@@ -405,10 +411,6 @@ export default function App() {
         <main style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
           {/* Full Screen Static Image Cover */}
           <div className="hero-video-container">
-            <div className="landing-video-bg">
-              <img src="/usdc_activation_gate_spaced.jpg" alt="USDC Activation Gate" />
-              <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0) 40%, rgba(3, 4, 7, 1.0) 100%)' }}></div>
-            </div>
 
             {/* Left-Aligned Text Content Container Overlay */}
             <div className="hero-left-content" style={{ top: '48%', maxWidth: '680px' }}>
