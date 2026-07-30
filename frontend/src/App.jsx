@@ -423,114 +423,15 @@ export default function App() {
         </div>
       </header>
 
-      {/* 1. LANDING PAGE VIEW (Synthora AI Agent Platform Aesthetic) */}
+      {/* 1. LANDING PAGE VIEW (Full-Screen Live Video Cover) */}
       {currentPage === 'landing' && (
         <main>
-          {/* Full Screen Ambient Video Background */}
+          {/* Full Screen Live Video Cover */}
           <div className="landing-video-bg">
             <video autoPlay loop muted playsInline>
               <source src="/hero_showcase.mp4" type="video/mp4" />
             </video>
-            <div className="video-overlay"></div>
           </div>
-
-          <section className="hero-synthora">
-            <div className="synthora-badge">
-              ✦ NEXT-GEN AGENTIC FINANCIAL NETWORK ON ARC
-            </div>
-
-            <h1 className="hero-display-title">
-              The Autonomous Agentic <br />
-              <span>Financial Network on Arc</span>
-            </h1>
-
-            <p className="hero-lede">
-              AI agents pay other specialized provider agents per API call in USDC on Arc — zero monthly subscriptions, zero static API keys. Payment itself is the authorization credential.
-            </p>
-
-            <div className="btn-cta-group">
-              {/* Single Prominent CTA */}
-              <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
-                LAUNCH MARKETPLACE APP →
-              </button>
-              <button className="btn-cta-secondary" onClick={() => setCurrentPage('deck')}>
-                📊 VIEW PITCH DECK
-              </button>
-            </div>
-
-            {/* Restored Full-Width Synthora Interactive Dashboard Showcase Card */}
-            <div className="synthora-showcase-card">
-              <div className="showcase-header">
-                <div className="showcase-title">
-                  <span className="pulse-dot"></span>
-                  LIVE AGENT NETWORK MONITOR • ARC L1
-                </div>
-                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', color: 'var(--accent-cyan)' }}>
-                  CHAIN_ID: 5042002 • USDC: 0x3600...0000
-                </div>
-              </div>
-
-              <div className="showcase-grid">
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">ACTIVE AGENT NODES</div>
-                  <div className="showcase-val" style={{ color: 'var(--ink-primary)' }}>142</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">TOTAL TRANSACTIONS</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-cyan)' }}>{totalTxCount.toLocaleString()}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">USDC SETTLED</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-emerald)' }}>${totalUsdcVolume.toFixed(2)}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">AVG FINALITY SPEED</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-purple)' }}>&lt; 1.2s</div>
-                </div>
-              </div>
-
-              <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.6)', borderRadius: '10px', border: '1px solid var(--void-05)', fontFamily: 'var(--font-accent)', fontSize: '12px', color: 'var(--ink-secondary)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--accent-emerald)' }}>
-                  <span>✓ RECENT EXECUTION LOG</span>
-                  <span>EIP-3009 GASLESS SETTLEMENT</span>
-                </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <span style={{ color: 'var(--ink-tertiary)' }}>[08:56:02]</span>
-                  <span style={{ padding: '2px 6px', background: 'rgba(52, 211, 153, 0.2)', color: 'var(--accent-emerald)', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>CALL_SETTLED</span>
-                  <span>Agent `0x926b...F97c` paid 0.01 USDC to `Web Scraper Pro` (Tx: 0x8f2d9c...)</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Proof Grid Section */}
-          <section className="proof-section">
-            <div className="proof-grid">
-              <article className="proof-card">
-                <span className="proof-mark">01 / X402_PROTOCOL</span>
-                <h3>HTTP 402 Nanopayments</h3>
-                <p>
-                  Sellers return exact price challenges; agents respond with gasless EIP-3009 transfer authorizations settled directly in USDC on Arc.
-                </p>
-              </article>
-
-              <article className="proof-card">
-                <span className="proof-mark">02 / ONCHAIN_DIRECTORY</span>
-                <h3>Signal-Based Discovery</h3>
-                <p>
-                  Buyer agents evaluate listings on-chain using real performance metrics: rating score, response speed, success ratio, and USDC pricing.
-                </p>
-              </article>
-
-              <article className="proof-card">
-                <span className="proof-mark">03 / NO_CHARGE_SAFETY</span>
-                <h3>Task-Success Settlement</h3>
-                <p>
-                  Funds are settled only when the seller's upstream execution succeeds. If the seller service fails, zero USDC is ever deducted.
-                </p>
-              </article>
-            </div>
-          </section>
         </main>
       )}
 
