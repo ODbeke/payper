@@ -351,7 +351,7 @@ export default function App() {
   return (
     <div className="app-shell">
       {/* Top Floating Navigation Bar (Synthora Style) */}
-      <header className="nav-terminal">
+      <header className={`nav-terminal ${currentPage === 'landing' ? 'landing-nav' : ''}`}>
         <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

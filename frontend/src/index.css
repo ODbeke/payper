@@ -84,6 +84,16 @@ body {
   -webkit-backdrop-filter: none;
 }
 
+.nav-terminal.landing-nav {
+  position: absolute;
+  top: 10px;
+  left: 24px;
+  right: 24px;
+  width: calc(100% - 48px);
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -828,7 +838,7 @@ body {
 .hero-video-container {
   position: relative;
   width: 100vw;
-  height: calc(100vh - 120px);
+  height: 100vh;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
   overflow: hidden;
