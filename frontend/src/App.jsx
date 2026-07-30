@@ -423,15 +423,169 @@ export default function App() {
         </div>
       </header>
 
-      {/* 1. LANDING PAGE VIEW (Full-Screen Live Video Cover) */}
+      {/* 1. LANDING PAGE VIEW (Scrollable Cover & Specifications Section) */}
       {currentPage === 'landing' && (
-        <main>
-          {/* Full Screen Live Video Cover */}
-          <div className="landing-video-bg">
-            <video autoPlay loop muted playsInline>
-              <source src="/hero_showcase.mp4" type="video/mp4" />
-            </video>
+        <main style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
+          {/* Full Screen Video Hero Section */}
+          <div className="hero-video-container">
+            <div className="landing-video-bg">
+              <video autoPlay loop muted playsInline>
+                <source src="/hero_showcase.mp4" type="video/mp4" />
+              </video>
+              <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0.1) 0%, rgba(3, 4, 7, 0.85) 100%)' }}></div>
+            </div>
+
+            {/* Overlaid CTA Buttons at the bottom of the video */}
+            <div style={{ zIndex: 10, display: 'flex', gap: '16px', marginBottom: '80px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
+                LAUNCH APP →
+              </button>
+              <button 
+                className="btn-cta-secondary" 
+                onClick={() => document.getElementById('specifications').scrollIntoView({ behavior: 'smooth' })}
+              >
+                VIEW SPECS ↓
+              </button>
+            </div>
           </div>
+
+          {/* Scrollable Specifications Section */}
+          <section id="specifications" className="app-shell" style={{ padding: '80px 24px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+              <span className="proof-mark">BUILD SPECIFICATIONS</span>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 54px)', fontWeight: '800', letterSpacing: '-0.04em', lineHeight: '1.05', marginBottom: '16px' }}>
+                On-Chain Directory & <br />
+                <span style={{ background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Protocol Parameters</span>
+              </h2>
+              <p style={{ color: 'var(--ink-secondary)', fontSize: '17px', maxWidth: '640px', margin: '0 auto' }}>
+                Verifiable deployment endpoints and technical specs running live on the Arc L1 Network.
+              </p>
+            </div>
+
+            {/* Parameter Cards Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '60px' }}>
+              {/* Card 1: Network specifications */}
+              <div className="panel-glass" style={{ padding: '28px', borderRadius: '16px' }}>
+                <span className="proof-mark">01 / NETWORK INFRASTRUCTURE</span>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '700', marginBottom: '16px' }}>Arc Testnet Layer-1</h3>
+                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '12px', display: 'grid', gap: '10px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'var(--ink-tertiary)' }}>CHAIN ID:</span>
+                    <span style={{ color: 'var(--accent-cyan)' }}>5042002</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'var(--ink-tertiary)' }}>GAS SYMBOL:</span>
+                    <span style={{ color: 'var(--accent-emerald)' }}>USDC (6 Decimals)</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'var(--ink-tertiary)' }}>RPC URL:</span>
+                    <span style={{ color: 'var(--ink-primary)', wordBreak: 'break-all' }}>https://rpc.testnet.arc.network</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Registry Deployment */}
+              <div className="panel-glass" style={{ padding: '28px', borderRadius: '16px' }}>
+                <span className="proof-mark">02 / SMART CONTRACTS</span>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '700', marginBottom: '16px' }}>PayPerRegistry Contract</h3>
+                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', display: 'grid', gap: '10px' }}>
+                  <div>
+                    <div style={{ color: 'var(--ink-tertiary)', marginBottom: '4px' }}>CONTRACT ADDRESS:</div>
+                    <a 
+                      href={`${ARC_TESTNET_CONFIG.blockExplorerUrl}/address/${ARC_TESTNET_CONFIG.contracts.payPerRegistry}`} 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      style={{ color: 'var(--accent-cyan)', textDecoration: 'underline', wordBreak: 'break-all' }}
+                    >
+                      {ARC_TESTNET_CONFIG.contracts.payPerRegistry} ↗
+                    </a>
+                  </div>
+                  <div>
+                    <div style={{ color: 'var(--ink-tertiary)', marginBottom: '4px' }}>USDC CONTRACT:</div>
+                    <span style={{ color: 'var(--accent-emerald)', wordBreak: 'break-all' }}>
+                      0x3600000000000000000000000000000000000000
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Live Authority Wallet */}
+              <div className="panel-glass" style={{ padding: '28px', borderRadius: '16px' }}>
+                <span className="proof-mark">03 / AUTHORITY AGENTS</span>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '700', marginBottom: '16px' }}>Circle Developer Wallet</h3>
+                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', display: 'grid', gap: '10px' }}>
+                  <div>
+                    <div style={{ color: 'var(--ink-tertiary)', marginBottom: '4px' }}>BUYER WALLET ADDRESS:</div>
+                    <span style={{ color: 'var(--accent-purple)', wordBreak: 'break-all' }}>
+                      0x926b00bcAB0D17f059B884B14554efec4573F97c
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: 'var(--ink-tertiary)' }}>W3S DEPLOYED:</span>
+                    <span style={{ color: 'var(--accent-emerald)' }}>YES (DEV-CONTROLLED)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Onchain Statistics Panel */}
+            <div className="synthora-showcase-card" style={{ marginBottom: '60px' }}>
+              <div className="showcase-header">
+                <div className="showcase-title">
+                  <span className="pulse-dot"></span>
+                  LIVE ON-CHAIN METRICS
+                </div>
+                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', color: 'var(--accent-cyan)' }}>
+                  REGISTRY: 0xdAea...AB77
+                </div>
+              </div>
+              <div className="showcase-grid">
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">ACTIVE AGENTS</div>
+                  <div className="showcase-val">{listings.length}</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">ONCHAIN TRANSACTIONS</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-cyan)' }}>{totalTxCount.toLocaleString()}</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">USDC SETTLED</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-emerald)' }}>${totalUsdcVolume.toFixed(2)}</div>
+                </div>
+                <div className="showcase-metric-box">
+                  <div className="showcase-lbl">BLOCK FINALITY</div>
+                  <div className="showcase-val" style={{ color: 'var(--accent-purple)' }}>&lt; 1.2s</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Features Detail Grid */}
+            <div className="proof-grid">
+              <article className="proof-card">
+                <span className="proof-mark">01 / X402 PROTOCOL</span>
+                <h3>HTTP 402 Handshake</h3>
+                <p>
+                  AI agents trigger endpoints with no prior credentials. Sellers respond with an HTTP 402 Payment Required challenge payload outlining price, nonce, and target address.
+                </p>
+              </article>
+
+              <article className="proof-card">
+                <span className="proof-mark">02 / EIP-3009 SIGNATURES</span>
+                <h3>Gasless USDC Settlement</h3>
+                <p>
+                  Instead of standard ERC-20 approve and transfer paths, buyer agents sign gasless EIP-3009 transferWithAuthorization off-chain signatures, executing in one step.
+                </p>
+              </article>
+
+              <article className="proof-card">
+                <span className="proof-mark">03 / GUARANTEED SAFETY</span>
+                <h3>Success-Before-Payment</h3>
+                <p>
+                  Sellers execute the requested API task first. Only if the call returns HTTP 200 is the USDC settlement transaction submitted to Arc. Zero charges for failed calls.
+                </p>
+              </article>
+            </div>
+          </section>
         </main>
       )}
 

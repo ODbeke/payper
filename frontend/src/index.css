@@ -825,14 +825,28 @@ body {
   color: var(--ink-primary);
 }
 
-/* Full Screen Background Video Loop */
+/* Full Screen Background Video Loop & Container */
+.hero-video-container {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 120px);
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
 .landing-video-bg {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1; /* In front of body background but behind navbar */
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   overflow: hidden;
   pointer-events: none;
 }
@@ -841,7 +855,18 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 1.0; /* Full opacity cover */
+  opacity: 1.0; /* Crisp and vibrant */
 }
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
 
 
