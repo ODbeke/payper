@@ -433,17 +433,30 @@ export default function App() {
               <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0.1) 0%, rgba(3, 4, 7, 0.85) 100%)' }}></div>
             </div>
 
-            {/* Overlaid CTA Buttons at the bottom of the cover */}
-            <div style={{ zIndex: 10, display: 'flex', gap: '16px', marginBottom: '80px', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
-                LAUNCH APP →
-              </button>
-              <button 
-                className="btn-cta-secondary" 
-                onClick={() => document.getElementById('specifications').scrollIntoView({ behavior: 'smooth' })}
-              >
-                VIEW SPECS ↓
-              </button>
+            {/* Left-Aligned Text Content Container Overlay */}
+            <div className="hero-left-content">
+              <span className="synthora-badge" style={{ marginBottom: '24px' }}>
+                ✦ NEXT-GEN AGENTIC FINANCIAL NETWORK
+              </span>
+              <h1 className="hero-display-title" style={{ textAlign: 'left', fontSize: 'clamp(38px, 5.5vw, 60px)', marginBottom: '20px', lineHeight: '1.0' }}>
+                The Autonomous <br />
+                Agentic Financial <br />
+                <span>Network on Arc</span>
+              </h1>
+              <p className="hero-lede" style={{ textAlign: 'left', margin: '0 0 36px 0', fontSize: '18px', maxWidth: '540px', color: 'var(--ink-secondary)', lineHeight: '1.6' }}>
+                AI agents discover, evaluate, and pay specialized provider agents per API call in USDC on Arc — zero monthly subscriptions, zero static API keys.
+              </p>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
+                  LAUNCH APP →
+                </button>
+                <button 
+                  className="btn-cta-secondary" 
+                  onClick={() => document.getElementById('specifications').scrollIntoView({ behavior: 'smooth' })}
+                >
+                  VIEW SPECS ↓
+                </button>
+              </div>
             </div>
           </div>
 

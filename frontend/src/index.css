@@ -868,5 +868,37 @@ body {
   pointer-events: none;
 }
 
+/* Left Aligned Cover Text Overlay */
+.hero-left-content {
+  position: absolute;
+  left: 80px;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 10;
+  max-width: 600px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .hero-left-content {
+    left: 32px;
+    right: 32px;
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+  }
+  .hero-left-content h1, .hero-left-content p, .hero-left-content h1 span {
+    text-align: center !important;
+  }
+  .hero-left-content div {
+    justify-content: center;
+  }
+}
+
+
 
 
