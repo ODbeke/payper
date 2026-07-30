@@ -407,7 +407,7 @@ export default function App() {
           <div className="hero-video-container">
             <div className="landing-video-bg">
               <img src="/usdc_activation_gate_spaced.jpg" alt="USDC Activation Gate" />
-              <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0.1) 0%, rgba(3, 4, 7, 0.85) 100%)' }}></div>
+              <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0) 40%, rgba(3, 4, 7, 1.0) 100%)' }}></div>
             </div>
 
             {/* Left-Aligned Text Content Container Overlay */}
