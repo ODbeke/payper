@@ -158,22 +158,40 @@ body {
 .ticker-strip {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--void-05);
   padding: 8px 18px;
   border-radius: 9999px;
   font-family: var(--font-accent);
   font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ticker-cell {
   display: flex;
   gap: 8px;
+  white-space: nowrap;
+  align-items: center;
 }
 
-.ticker-lbl { color: var(--ink-tertiary); letter-spacing: 0.06em; }
-.ticker-val { color: var(--accent-emerald); font-weight: 600; }
+.ticker-lbl { 
+  color: var(--ink-tertiary); 
+  letter-spacing: 0.06em; 
+  white-space: nowrap; 
+}
+.ticker-val { 
+  color: var(--accent-emerald); 
+  font-weight: 600; 
+  white-space: nowrap; 
+}
+
+@media (max-width: 768px) {
+  .ticker-strip {
+    display: none;
+  }
+}
 
 .nav-actions {
   display: flex;
