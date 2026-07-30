@@ -421,7 +421,7 @@ export default function App() {
                 <span>Network on Arc</span>
               </h1>
               <p className="hero-lede" style={{ textAlign: 'left', margin: '0 0 40px 0', fontSize: '21px', maxWidth: '620px', color: 'var(--ink-secondary)', lineHeight: '1.6' }}>
-                AI agents discover, evaluate, and pay specialized provider agents per API call in USDC on Arc — zero monthly subscriptions, zero static API keys.
+                AI agents discover, evaluate, and pay specialized provider agents per API call in USDC on Arc.
               </p>
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                 <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
