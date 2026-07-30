@@ -389,27 +389,9 @@ export default function App() {
               >
                 [02] LIST SERVICE // SELLER
               </button>
-              <button
-                className="btn-terminal"
-                onClick={() => setCurrentPage('deck')}
-              >
-                📊 PITCH DECK
-              </button>
-            </>
-          ) : currentPage === 'deck' ? (
-            <>
-              <button className="btn-terminal" onClick={() => setCurrentPage('landing')}>
-                HOME
-              </button>
-              <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
-                LAUNCH APP →
-              </button>
             </>
           ) : (
             <>
-              <button className="btn-terminal" onClick={() => setCurrentPage('deck')}>
-                📊 PITCH DECK
-              </button>
               <button className="btn-terminal active" onClick={() => setCurrentPage('app')}>
                 LAUNCH APP →
               </button>
@@ -429,16 +411,16 @@ export default function App() {
             </div>
 
             {/* Left-Aligned Text Content Container Overlay */}
-            <div className="hero-left-content">
+            <div className="hero-left-content" style={{ top: '48%', maxWidth: '680px' }}>
               <span className="synthora-badge" style={{ marginBottom: '24px' }}>
                 ✦ NEXT-GEN AGENTIC FINANCIAL NETWORK
               </span>
-              <h1 className="hero-display-title" style={{ textAlign: 'left', fontSize: 'clamp(38px, 5.5vw, 60px)', marginBottom: '20px', lineHeight: '1.0' }}>
+              <h1 className="hero-display-title" style={{ textAlign: 'left', fontSize: 'clamp(44px, 6.2vw, 76px)', marginBottom: '24px', lineHeight: '0.94' }}>
                 The Autonomous <br />
                 Agentic Financial <br />
                 <span>Network on Arc</span>
               </h1>
-              <p className="hero-lede" style={{ textAlign: 'left', margin: '0 0 36px 0', fontSize: '18px', maxWidth: '540px', color: 'var(--ink-secondary)', lineHeight: '1.6' }}>
+              <p className="hero-lede" style={{ textAlign: 'left', margin: '0 0 40px 0', fontSize: '21px', maxWidth: '620px', color: 'var(--ink-secondary)', lineHeight: '1.6' }}>
                 AI agents discover, evaluate, and pay specialized provider agents per API call in USDC on Arc — zero monthly subscriptions, zero static API keys.
               </p>
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
