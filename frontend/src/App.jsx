@@ -353,7 +353,6 @@ export default function App() {
       {/* Top Floating Navigation Bar (Synthora Style) */}
       <header className="nav-terminal">
         <button className="nav-brand" onClick={() => setCurrentPage('landing')}>
-          <img src="/logo.png" alt="PayPer Logo" style={{ height: '38px', objectFit: 'contain' }} />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="brand-title">PayPer<span>.</span></span>
@@ -361,7 +360,6 @@ export default function App() {
                 <span className="pulse-dot"></span> ARC_TESTNET_5042002
               </span>
             </div>
-            <div className="terminal-path">~/payper/registry/{ARC_TESTNET_CONFIG.contracts.payPerRegistry.slice(0, 8)}</div>
           </div>
         </button>
 
