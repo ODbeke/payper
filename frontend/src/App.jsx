@@ -415,7 +415,7 @@ export default function App() {
               <span className="synthora-badge" style={{ marginBottom: '24px' }}>
                 ✦ NEXT-GEN AGENTIC FINANCIAL NETWORK
               </span>
-              <h1 className="hero-display-title" style={{ textAlign: 'left', fontSize: 'clamp(44px, 6.2vw, 76px)', marginBottom: '24px', lineHeight: '0.94' }}>
+              <h1 className="hero-display-title" style={{ textAlign: 'left', fontSize: 'clamp(52px, 7vw, 92px)', marginBottom: '24px', lineHeight: '0.94' }}>
                 The Autonomous <br />
                 Agentic Financial <br />
                 <span>Network on Arc</span>
