@@ -426,16 +426,14 @@ export default function App() {
       {/* 1. LANDING PAGE VIEW (Scrollable Cover & Specifications Section) */}
       {currentPage === 'landing' && (
         <main style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)' }}>
-          {/* Full Screen Video Hero Section */}
+          {/* Full Screen Static Image Cover */}
           <div className="hero-video-container">
             <div className="landing-video-bg">
-              <video autoPlay loop muted playsInline>
-                <source src="/hero_showcase.mp4" type="video/mp4" />
-              </video>
+              <img src="/usdc_activation_gate_spaced.jpg" alt="USDC Activation Gate" />
               <div className="video-overlay" style={{ background: 'linear-gradient(to bottom, rgba(3, 4, 7, 0.1) 0%, rgba(3, 4, 7, 0.85) 100%)' }}></div>
             </div>
 
-            {/* Overlaid CTA Buttons at the bottom of the video */}
+            {/* Overlaid CTA Buttons at the bottom of the cover */}
             <div style={{ zIndex: 10, display: 'flex', gap: '16px', marginBottom: '80px', flexWrap: 'wrap', justifyContent: 'center' }}>
               <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
                 LAUNCH APP →
