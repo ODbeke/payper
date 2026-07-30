@@ -427,77 +427,9 @@ export default function App() {
                 <button className="btn-cta-primary" onClick={() => setCurrentPage('app')}>
                   LAUNCH APP →
                 </button>
-                <button 
-                  className="btn-cta-secondary" 
-                  onClick={() => document.getElementById('specifications').scrollIntoView({ behavior: 'smooth' })}
-                >
-                  VIEW SPECS ↓
-                </button>
               </div>
             </div>
           </div>
-
-          {/* Scrollable Specifications Section */}
-          <section id="specifications" className="app-shell" style={{ padding: '80px 24px' }}>
-
-            {/* Live Onchain Statistics Panel */}
-            <div className="synthora-showcase-card" style={{ marginBottom: '60px' }}>
-              <div className="showcase-header">
-                <div className="showcase-title">
-                  <span className="pulse-dot"></span>
-                  LIVE ON-CHAIN METRICS
-                </div>
-                <div style={{ fontFamily: 'var(--font-accent)', fontSize: '11px', color: 'var(--accent-cyan)' }}>
-                  REGISTRY: 0xdAea...AB77
-                </div>
-              </div>
-              <div className="showcase-grid">
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">ACTIVE AGENTS</div>
-                  <div className="showcase-val">{listings.length}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">ONCHAIN TRANSACTIONS</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-cyan)' }}>{totalTxCount.toLocaleString()}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">USDC SETTLED</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-emerald)' }}>${totalUsdcVolume.toFixed(2)}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">BLOCK FINALITY</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-purple)' }}>&lt; 1.2s</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Features Detail Grid */}
-            <div className="proof-grid">
-              <article className="proof-card">
-                <span className="proof-mark">01 / X402 PROTOCOL</span>
-                <h3>HTTP 402 Handshake</h3>
-                <p>
-                  AI agents trigger endpoints with no prior credentials. Sellers respond with an HTTP 402 Payment Required challenge payload outlining price, nonce, and target address.
-                </p>
-              </article>
-
-              <article className="proof-card">
-                <span className="proof-mark">02 / EIP-3009 SIGNATURES</span>
-                <h3>Gasless USDC Settlement</h3>
-                <p>
-                  Instead of standard ERC-20 approve and transfer paths, buyer agents sign gasless EIP-3009 transferWithAuthorization off-chain signatures, executing in one step.
-                </p>
-              </article>
-
-              <article className="proof-card">
-                <span className="proof-mark">03 / GUARANTEED SAFETY</span>
-                <h3>Success-Before-Payment</h3>
-                <p>
-                  Sellers execute the requested API task first. Only if the call returns HTTP 200 is the USDC settlement transaction submitted to Arc. Zero charges for failed calls.
-                </p>
-              </article>
-            </div>
-          </section>
         </main>
       )}
 
@@ -823,10 +755,12 @@ export default function App() {
         </main>
       )}
 
-      <footer className="footer-admon">
-        <span className="footer-brand">PayPer.</span>
-        <span>Built for Encode Club Programmable Money Hackathon on Arc L1 • Live Contract {ARC_TESTNET_CONFIG.contracts.payPerRegistry.slice(0, 10)}...</span>
-      </footer>
+      {currentPage !== 'landing' && (
+        <footer className="footer-admon">
+          <span className="footer-brand">PayPer.</span>
+          <span>Built for Encode Club Programmable Money Hackathon on Arc L1 • Live Contract {ARC_TESTNET_CONFIG.contracts.payPerRegistry.slice(0, 10)}...</span>
+        </footer>
+      )}
     </div>
   );
 }
