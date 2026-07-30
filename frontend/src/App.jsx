@@ -441,11 +441,7 @@ export default function App() {
           <section id="specifications" className="app-shell" style={{ padding: '80px 24px' }}>
             <div style={{ textAlign: 'center', marginBottom: '60px' }}>
               <span className="proof-mark">BUILD SPECIFICATIONS</span>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 54px)', fontWeight: '800', letterSpacing: '-0.04em', lineHeight: '1.05', marginBottom: '16px' }}>
-                On-Chain Directory & <br />
-                <span style={{ background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Protocol Parameters</span>
-              </h2>
-              <p style={{ color: 'var(--ink-secondary)', fontSize: '17px', maxWidth: '640px', margin: '0 auto' }}>
+              <p style={{ color: 'var(--ink-secondary)', fontSize: '17px', maxWidth: '640px', margin: '0 auto', marginTop: '16px' }}>
                 Verifiable deployment endpoints and technical specs running live on the Arc L1 Network.
               </p>
             </div>
