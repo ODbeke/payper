@@ -366,7 +366,7 @@ export default function App() {
             <span className="ticker-lbl">ONCHAIN_TXS:</span>
             <span className="ticker-val">{totalTxCount.toLocaleString()}</span>
           </div>
-          <div style={{ color: 'var(--void-05)' }}>|</div>
+          <div style={{ color: 'rgba(255, 255, 255, 0.2)' }}>|</div>
           <div className="ticker-cell">
             <span className="ticker-lbl">USDC_VOLUME:</span>
             <span className="ticker-val">${totalUsdcVolume.toFixed(2)}</span>

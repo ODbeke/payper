@@ -159,14 +159,16 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid var(--void-05);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 8px 18px;
   border-radius: 9999px;
   font-family: var(--font-accent);
   font-size: 11px;
   white-space: nowrap;
   flex-shrink: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .ticker-cell {
@@ -177,13 +179,13 @@ body {
 }
 
 .ticker-lbl { 
-  color: var(--ink-tertiary); 
+  color: rgba(255, 255, 255, 0.6); 
   letter-spacing: 0.06em; 
   white-space: nowrap; 
 }
 .ticker-val { 
-  color: var(--accent-emerald); 
-  font-weight: 600; 
+  color: var(--accent-cyan); 
+  font-weight: 700; 
   white-space: nowrap; 
 }
 
