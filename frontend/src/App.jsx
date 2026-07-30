@@ -356,9 +356,6 @@ export default function App() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="brand-title">PayPer<span>.</span></span>
-              <span className="status-badge">
-                <span className="pulse-dot"></span> ARC_TESTNET_5042002
-              </span>
             </div>
           </div>
         </button>
