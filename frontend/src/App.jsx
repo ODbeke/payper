@@ -450,7 +450,7 @@ export default function App() {
               </button>
             </div>
 
-            {/* Synthora Interactive Dashboard Showcase Card */}
+            {/* Synthora Interactive Dashboard Showcase Card with Looping USDC Gate Video */}
             <div className="synthora-showcase-card">
               <div className="showcase-header">
                 <div className="showcase-title">
@@ -462,34 +462,45 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="showcase-grid">
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">ACTIVE AGENT NODES</div>
-                  <div className="showcase-val" style={{ color: 'var(--ink-primary)' }}>142</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">TOTAL TRANSACTIONS</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-cyan)' }}>{totalTxCount.toLocaleString()}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">USDC SETTLED</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-emerald)' }}>${totalUsdcVolume.toFixed(2)}</div>
-                </div>
-                <div className="showcase-metric-box">
-                  <div className="showcase-lbl">AVG FINALITY SPEED</div>
-                  <div className="showcase-val" style={{ color: 'var(--accent-purple)' }}>&lt; 1.2s</div>
-                </div>
-              </div>
+              <div className="showcase-split-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px', alignItems: 'start' }}>
+                <div>
+                  <div className="showcase-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+                    <div className="showcase-metric-box">
+                      <div className="showcase-lbl">ACTIVE AGENT NODES</div>
+                      <div className="showcase-val" style={{ color: 'var(--ink-primary)', fontSize: '18px' }}>142</div>
+                    </div>
+                    <div className="showcase-metric-box">
+                      <div className="showcase-lbl">TOTAL TRANSACTIONS</div>
+                      <div className="showcase-val" style={{ color: 'var(--accent-cyan)', fontSize: '18px' }}>{totalTxCount.toLocaleString()}</div>
+                    </div>
+                    <div className="showcase-metric-box">
+                      <div className="showcase-lbl">USDC SETTLED</div>
+                      <div className="showcase-val" style={{ color: 'var(--accent-emerald)', fontSize: '18px' }}>${totalUsdcVolume.toFixed(2)}</div>
+                    </div>
+                    <div className="showcase-metric-box">
+                      <div className="showcase-lbl">AVG FINALITY SPEED</div>
+                      <div className="showcase-val" style={{ color: 'var(--accent-purple)', fontSize: '18px' }}>&lt; 1.2s</div>
+                    </div>
+                  </div>
 
-              <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.6)', borderRadius: '10px', border: '1px solid var(--void-05)', fontFamily: 'var(--font-accent)', fontSize: '12px', color: 'var(--ink-secondary)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--accent-emerald)' }}>
-                  <span>✓ RECENT EXECUTION LOG</span>
-                  <span>EIP-3009 GASLESS SETTLEMENT</span>
+                  <div style={{ padding: '16px', background: 'rgba(0, 0, 0, 0.6)', borderRadius: '10px', border: '1px solid var(--void-05)', fontFamily: 'var(--font-accent)', fontSize: '11px', color: 'var(--ink-secondary)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', color: 'var(--accent-emerald)', fontWeight: '600' }}>
+                      <span>✓ RECENT EXECUTION LOG</span>
+                      <span>EIP-3009 GASLESS SETTLEMENT</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <span style={{ color: 'var(--ink-tertiary)' }}>[08:56:02]</span>
+                      <span style={{ padding: '2px 6px', background: 'rgba(52, 211, 153, 0.2)', color: 'var(--accent-emerald)', borderRadius: '4px', fontSize: '9px', fontWeight: '700' }}>CALL_SETTLED</span>
+                      <span>Agent `0x926b...F97c` paid 0.01 USDC to `Web Scraper Pro` (Tx: 0x8f2d9c...)</span>
+                    </div>
+                  </div>
                 </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <span style={{ color: 'var(--ink-tertiary)' }}>[10:14:02]</span>
-                  <span style={{ padding: '2px 6px', background: 'rgba(52, 211, 153, 0.2)', color: 'var(--accent-emerald)', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>CALL_SETTLED</span>
-                  <span>Agent `0x926b...F97c` paid 0.01 USDC to `Web Scraper Pro` (Tx: 0x8f2d9c...)</span>
+
+                {/* Looping USDC Gate Video Showcase Column */}
+                <div style={{ borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.12)', overflow: 'hidden', background: '#000', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)' }}>
+                  <video autoPlay loop muted playsInline style={{ width: '100%', display: 'block', aspectRatio: '1/1', objectFit: 'cover' }}>
+                    <source src="/hero_showcase.mp4" type="video/mp4" />
+                  </video>
                 </div>
               </div>
             </div>
