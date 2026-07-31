@@ -957,6 +957,201 @@ body {
   }
 }
 
+/* Memoriada DA Light Cyber Theme Overrides */
+body.memoriada-app-body {
+  background-color: #ffffff !important;
+  background-image: radial-gradient(circle, #c8b8e8 1.2px, transparent 1.2px) !important;
+  background-size: 24px 24px !important;
+  background-attachment: fixed !important;
+  color: #1a1a1a !important;
+}
+
+/* Hide global USDC portal cover background in App view */
+body.memoriada-app-body .global-bg-image {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+body.memoriada-app-body h2.section-h2,
+body.memoriada-app-body h3.card-title,
+body.memoriada-app-body h3.panel-title {
+  color: #000000 !important;
+}
+
+body.memoriada-app-body p.card-description {
+  color: #4b5563 !important;
+}
+
+body.memoriada-app-body .brand-title {
+  color: #000000 !important;
+}
+
+/* Panel glass container styled as Memoriada white pane */
+body.memoriada-app-body .panel-glass {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  box-shadow: 0 4px 20px rgba(200, 184, 232, 0.25) !important;
+  color: #1a1a1a !important;
+}
+
+/* Floating Navigation Bar */
+body.memoriada-app-body .nav-terminal {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid #ddd8f0 !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(200, 184, 232, 0.2) !important;
+}
+
+/* Navbar stats ticker */
+body.memoriada-app-body .ticker-strip {
+  background: #f7f5fc !important;
+  border: 1px solid #ddd8f0 !important;
+}
+body.memoriada-app-body .ticker-lbl {
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .ticker-val {
+  color: #000000 !important;
+}
+
+/* Navigation button toggles */
+body.memoriada-app-body .btn-terminal {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  color: #555555 !important;
+}
+body.memoriada-app-body .btn-terminal:hover:not(.active) {
+  background: #f0edf8 !important;
+  color: #7c3aed !important;
+  border-color: #b08ad4 !important;
+}
+body.memoriada-app-body .btn-terminal.active {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border-color: #7c3aed !important;
+  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* Wallet andguardrails strip */
+body.memoriada-app-body .wallet-strip {
+  background: #f7f5fc !important;
+  border: 1px solid #ddd8f0 !important;
+  color: #000000 !important;
+}
+body.memoriada-app-body .wallet-address-chip {
+  background: #f0edf8 !important;
+  color: #7c3aed !important;
+  border: 1px solid #ddd8f0 !important;
+}
+body.memoriada-app-body .guard-box {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  color: #000000 !important;
+}
+body.memoriada-app-body .guard-lbl {
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .guard-input-field {
+  color: #000000 !important;
+  background: transparent !important;
+}
+
+/* Category Filters */
+body.memoriada-app-body .cat-btn {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  color: #555555 !important;
+}
+body.memoriada-app-body .cat-btn.active {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border-color: #7c3aed !important;
+}
+body.memoriada-app-body .cat-btn:hover:not(.active) {
+  background: #f0edf8 !important;
+  color: #7c3aed !important;
+}
+
+/* Service Capability Listing Cards */
+body.memoriada-app-body .card-service {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  box-shadow: 0 4px 16px rgba(200, 184, 232, 0.15) !important;
+}
+body.memoriada-app-body .card-service:hover {
+  border-color: #b08ad4 !important;
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.12) !important;
+}
+body.memoriada-app-body .badge-category {
+  background: #f0edf8 !important;
+  color: #7c3aed !important;
+  border: 1px solid #ddd8f0 !important;
+}
+body.memoriada-app-body .metric-lbl {
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .metric-val {
+  color: #000000 !important;
+}
+body.memoriada-app-body .btn-pay {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+body.memoriada-app-body .btn-pay:hover {
+  background: #6d28d9 !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* Registration Form input styles */
+body.memoriada-app-body .input-cell,
+body.memoriada-app-body .select-cell,
+body.memoriada-app-body .textarea-cell {
+  background: #ffffff !important;
+  border: 1px solid #ddd8f0 !important;
+  color: #000000 !important;
+}
+body.memoriada-app-body .label-cell {
+  color: #555555 !important;
+}
+body.memoriada-app-body .btn-publish {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+body.memoriada-app-body .btn-publish:hover {
+  background: #6d28d9 !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* Terminal Console Styles */
+body.memoriada-app-body .panel-header {
+  background: #f7f5fc !important;
+  border-bottom: 1px solid #ddd8f0 !important;
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .panel-title {
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .log-entry {
+  color: #111111 !important;
+}
+body.memoriada-app-body .log-type {
+  background: #f0edf8 !important;
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .log-type-compute {
+  background: #f3e8ff !important;
+  color: #7c3aed !important;
+}
+body.memoriada-app-body .log-time {
+  color: #777777 !important;
+}
+body.memoriada-app-body .terminal-cursor-line {
+  color: #7c3aed !important;
+}
+
 
 
 

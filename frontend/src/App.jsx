@@ -114,6 +114,14 @@ const SLIDES = [
 export default function App() {
   // Navigation Page State: 'landing' | 'app' | 'deck'
   const [currentPage, setCurrentPage] = useState('landing');
+
+  useEffect(() => {
+    if (currentPage === 'app') {
+      document.body.classList.add('memoriada-app-body');
+    } else {
+      document.body.classList.remove('memoriada-app-body');
+    }
+  }, [currentPage]);
   // Inside App View Toggle State: 'buyer' | 'seller'
   const [viewMode, setViewMode] = useState('buyer');
 
