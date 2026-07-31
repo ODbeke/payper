@@ -964,6 +964,27 @@ body.memoriada-app-body {
   background-size: 24px 24px !important;
   background-attachment: fixed !important;
   color: #1a1a1a !important;
+
+  /* Global variables overrides to match Memoriada DA purple/lavender light digital theme */
+  --void-00: #f6f4fa;
+  --void-01: #f7f5fc;
+  --void-02: #ffffff;
+  --void-03: #f0edf8;
+  --void-05: #ddd8f0;
+  --void-10: #b08ad4;
+
+  --ink-primary: #000000;
+  --ink-secondary: #4b5563;
+  --ink-tertiary: #71717a;
+  --ink-dim: #9ca3af;
+
+  --accent-cyan: #7c3aed;       /* Electric Purple instead of cyan */
+  --accent-blue: #6d28d9;       /* Deep Purple instead of blue */
+  --accent-purple: #b08ad4;     /* Lavender instead of neon purple */
+  --accent-emerald: #2a8a4a;    /* Soft Forest Green instead of neon green */
+  --accent-amber: #b08a00;      /* Muted Gold instead of neon yellow */
+  --accent-rose: #c00000;       /* Crimson instead of neon pink */
+  --accent-border: #ddd8f0;
 }
 
 /* Hide global USDC portal cover background in App view */
