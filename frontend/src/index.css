@@ -1180,6 +1180,252 @@ body.memoriada-app-body .terminal-cursor-line {
   color: #7c3aed !important;
 }
 
+/* Dashboard Grid Layout overrides and styles */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 32px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 100px;
+}
+
+.dashboard-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .dashboard-sidebar {
+    position: static;
+  }
+}
+
+/* Premium Wallet Card Design */
+.wallet-card-premium {
+  padding: 24px !important;
+  border-radius: 16px !important;
+}
+
+.wallet-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--void-05);
+  padding-bottom: 12px;
+}
+
+.wallet-card-title {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-secondary);
+}
+
+.wallet-card-net {
+  margin-left: auto;
+  font-family: var(--font-accent);
+  font-size: 9px;
+  background: var(--void-03);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--accent-cyan) !important;
+  border: 1px solid var(--void-05);
+}
+
+.wallet-address-label {
+  font-family: var(--font-accent);
+  font-size: 9px;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.wallet-address-value {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  color: var(--ink-primary) !important;
+  word-break: break-all;
+  margin-bottom: 20px;
+}
+
+.wallet-balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wallet-balance-lbl {
+  font-family: var(--font-accent);
+  font-size: 9px;
+  color: var(--ink-tertiary);
+}
+
+.wallet-balance-val {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink-primary) !important;
+}
+
+.usdc-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.wallet-badge-funded {
+  font-family: var(--font-accent);
+  font-size: 9px;
+  background: rgba(42, 138, 74, 0.08);
+  border: 1px solid rgba(42, 138, 74, 0.22);
+  color: var(--accent-emerald) !important;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+
+/* Premium Sidebar Card Settings */
+.sidebar-h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--ink-primary) !important;
+}
+
+.sidebar-p {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-secondary);
+  margin-bottom: 20px;
+}
+
+.policy-card-premium {
+  padding: 24px !important;
+  border-radius: 16px !important;
+}
+
+.policy-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.policy-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.policy-lbl {
+  font-family: var(--font-accent);
+  font-size: 9px;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.05em;
+}
+
+.policy-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--void-05);
+  background: var(--void-02);
+  border-radius: 8px;
+  padding: 2px 12px;
+  transition: all 0.2s;
+}
+
+.policy-input-wrapper:focus-within {
+  border-color: var(--accent-cyan);
+}
+
+.policy-input-wrapper .guard-input-field {
+  border: none !important;
+  background: transparent !important;
+  padding: 8px 0 !important;
+  margin: 0 !important;
+  flex: 1;
+  font-size: 13px !important;
+}
+
+.input-suffix {
+  font-family: var(--font-accent);
+  font-size: 10px;
+  color: var(--ink-tertiary);
+}
+
+.policy-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--void-05);
+  padding-top: 16px;
+}
+
+.policy-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--ink-secondary);
+}
+
+.check-dot {
+  font-weight: 700;
+}
+.check-dot.positive {
+  color: var(--accent-emerald) !important;
+}
+
+.filter-card-premium {
+  padding: 24px !important;
+  border-radius: 16px !important;
+}
+
+.cat-filters-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cat-filters-sidebar .cat-btn {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 10px 16px;
+}
+
+/* Service Card Alignment Adjustments */
+.card-service {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+}
+
+/* Active online indicator */
+.active-glow {
+  background-color: var(--accent-emerald) !important;
+  box-shadow: 0 0 8px var(--accent-emerald) !important;
+}
+
+
 
 
 

@@ -507,178 +507,225 @@ export default function App() {
         <main>
           {/* BUYER VIEW */}
           {viewMode === 'buyer' && (
-            <div>
-              {/* Wallet Strip */}
-              <div className="wallet-strip">
-                <div className="wallet-cluster">
-                  <span className="pulse-dot" style={{ backgroundColor: 'var(--accent-purple)', boxShadow: '0 0 8px var(--accent-purple)' }}></span>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-accent)', fontSize: '10px', color: 'var(--ink-tertiary)', letterSpacing: '0.1em' }}>CIRCLE_DEVELOPER_WALLET</div>
-                    <div className="wallet-address-chip">0x926b00bcAB0D17f059B884B14554efec4573F97c</div>
+            <div className="dashboard-grid">
+              {/* Left Column: Settings and Wallet Config */}
+              <aside className="dashboard-sidebar">
+                {/* 1. Circle Wallet Card */}
+                <div className="panel-glass wallet-card-premium">
+                  <div className="wallet-card-header">
+                    <span className="pulse-dot active-glow"></span>
+                    <span className="wallet-card-title">CIRCLE WALLET</span>
+                    <span className="wallet-card-net">ARC_TESTNET</span>
                   </div>
-                </div>
-
-                <div className="guardrails-flex">
-                  <div className="guard-box">
-                    <span className="guard-lbl">MAX/CALL:</span>
-                    <input
-                      type="text"
-                      className="guard-input-field"
-                      value={maxCallBudget}
-                      onChange={(e) => setMaxCallBudget(e.target.value)}
-                    />
-                    <span style={{ color: 'var(--ink-tertiary)', fontSize: '11px' }}>USDC</span>
-                  </div>
-                  <div className="guard-box">
-                    <span className="guard-lbl">SESSION_CAP:</span>
-                    <input
-                      type="text"
-                      className="guard-input-field"
-                      value={maxSessionBudget}
-                      onChange={(e) => setMaxSessionBudget(e.target.value)}
-                    />
-                    <span style={{ color: 'var(--ink-tertiary)', fontSize: '11px' }}>USDC</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Toolbar & Category Filters */}
-              <div className="section-toolbar">
-                <h2 className="section-h2">On-Chain Registered Capabilities ({filteredListings.length})</h2>
-                <div className="cat-filters">
-                  {['all', 'scraping', 'summarization', 'image-gen'].map((cat) => (
-                    <button
-                      key={cat}
-                      className={`cat-btn ${categoryFilter === cat ? 'active' : ''}`}
-                      onClick={() => setCategoryFilter(cat)}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Game Cards Grid */}
-              {isLoadingOnChain ? (
-                <div style={{ padding: '60px 20px', textAlign: 'center', fontFamily: 'var(--font-accent)', color: 'var(--ink-tertiary)' }}>
-                  Connecting to PayPerRegistry ({ARC_TESTNET_CONFIG.contracts.payPerRegistry.slice(0, 10)}...) on Arc Testnet...
-                </div>
-              ) : filteredListings.length === 0 ? (
-                <div style={{ padding: '60px 20px', textAlign: 'center', border: '1px solid var(--void-05)', borderRadius: '12px', color: 'var(--ink-tertiary)', fontFamily: 'var(--font-accent)' }}>
-                  No active seller listings found in registry. Switch to "[02] LIST SERVICE // SELLER" to register a capability.
-                </div>
-              ) : (
-                <div className="service-grid">
-                  {filteredListings.map((listing) => (
-                    <div key={listing.id} className="card-service">
+                  <div className="wallet-card-body">
+                    <div className="wallet-address-label">DEVELOPER WALLET ADDRESS</div>
+                    <div className="wallet-address-value">0x926b00bcAB0D17f059B884B14554efec4573F97c</div>
+                    
+                    <div className="wallet-balance-row">
                       <div>
-                        <div className="card-head">
-                          <span className="badge-category">{listing.category}</span>
-                          <div className="status-online">
-                            <span className="pulse-dot"></span> ONLINE
-                          </div>
-                        </div>
-
-                        <h3 className="card-title">{listing.name}</h3>
-                        <p className="card-description">{listing.description}</p>
+                        <div className="wallet-balance-lbl">AVAILABLE BALANCE</div>
+                        <div className="wallet-balance-val">10.00 <span className="usdc-unit">USDC</span></div>
                       </div>
-
-                      <div>
-                        <div className="metrics-row">
-                          <div>
-                            <div className="metric-lbl">RATING</div>
-                            <div className="metric-val" style={{ color: 'var(--accent-amber)' }}>★ {listing.ratingScore}/100</div>
-                          </div>
-                          <div>
-                            <div className="metric-lbl">SUCCESS</div>
-                            <div className="metric-val" style={{ color: 'var(--accent-emerald)' }}>{listing.successRatio}%</div>
-                          </div>
-                          <div>
-                            <div className="metric-lbl">SPEED</div>
-                            <div className="metric-val" style={{ color: 'var(--accent-cyan)' }}>{listing.avgResponseMs}ms</div>
-                          </div>
-                        </div>
-
-                        <div className="card-foot">
-                          <div>
-                            <div className="metric-lbl">PRICE / CALL</div>
-                            <div className="price-usdc">{(listing.pricePerCall / 1e6).toFixed(2)} USDC</div>
-                          </div>
-                          <div className="endpoint-lbl">/api/{listing.category}</div>
-                        </div>
-                      </div>
+                      <div className="wallet-badge-funded">VERIFIED</div>
                     </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Agent Execution Console Workbench */}
-              <section className="workbench-panel">
-                <h2 className="wb-h2">⚡ Circle Agent Stack Workbench</h2>
-                <p className="wb-sub">
-                  Input a goal prompt. Watch the autonomous agent evaluate seller signals, sign gasless EIP-3009 authorizations, and settle nanopayments on Arc Testnet.
-                </p>
-
-                <div className="prompt-bar">
-                  <input
-                    type="text"
-                    className="prompt-input-field"
-                    value={userPrompt}
-                    onChange={(e) => setUserPrompt(e.target.value)}
-                    placeholder="Enter prompt goal for autonomous buyer agent..."
-                  />
-                  <button
-                    className="btn-exec"
-                    onClick={handleRunAgent}
-                    disabled={isRunningAgent}
-                  >
-                    {isRunningAgent ? 'EXECUTING...' : 'EXECUTE AGENT'}
-                  </button>
+                  </div>
                 </div>
 
-                {/* Console Terminal */}
-                <div className="console-terminal">
-                  {agentLogs.length === 0 ? (
-                    <div style={{ color: 'var(--ink-tertiary)', textAlign: 'center', padding: '30px' }}>
-                      Click "EXECUTE AGENT" to run the autonomous agentic nanopayment pipeline.
-                    </div>
-                  ) : (
-                    agentLogs.map((log, idx) => (
-                      <div key={idx} className="log-row">
-                        <span className="log-t">[{log.timestamp}]</span>
-                        <span className={`log-tag ${log.step}`}>{log.step}</span>
-                        <span className="log-text">{log.message}</span>
+                {/* 2. Guardrails Policy Settings */}
+                <div className="panel-glass policy-card-premium">
+                  <h3 className="sidebar-h3">✦ Spend Guardrail Policies</h3>
+                  <p className="sidebar-p">Enforced autonomously by Circle Agent-Stack policy engine</p>
+                  
+                  <div className="policy-field-group">
+                    <div className="policy-input-box">
+                      <div className="policy-lbl">MAX SINGLE CALL BUDGET</div>
+                      <div className="policy-input-wrapper">
+                        <input
+                          type="text"
+                          className="guard-input-field"
+                          value={maxCallBudget}
+                          onChange={(e) => setMaxCallBudget(e.target.value)}
+                        />
+                        <span className="input-suffix">USDC</span>
                       </div>
-                    ))
-                  )}
+                    </div>
+
+                    <div className="policy-input-box">
+                      <div className="policy-lbl">MAX SESSION SPENDING CAP</div>
+                      <div className="policy-input-wrapper">
+                        <input
+                          type="text"
+                          className="guard-input-field"
+                          value={maxSessionBudget}
+                          onChange={(e) => setMaxSessionBudget(e.target.value)}
+                        />
+                        <span className="input-suffix">USDC</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="policy-checklist">
+                    <div className="policy-check-item">
+                      <span className="check-dot positive">✓</span>
+                      <span>EIP-3009 Gasless Offchain Signing</span>
+                    </div>
+                    <div className="policy-check-item">
+                      <span className="check-dot positive">✓</span>
+                      <span>Enforce Success-Before-Payment</span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Output Display */}
-                {agentResult && (
-                  <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(52, 211, 153, 0.06)', borderRadius: '10px', border: '1px solid rgba(52, 211, 153, 0.25)' }}>
-                    <h3 style={{ color: 'var(--accent-emerald)', fontFamily: 'var(--font-display)', fontSize: '20px', marginBottom: '10px', fontWeight: '800' }}>
-                      ✓ Pipeline Completed ({agentResult.txCount} calls settled • Total: {agentResult.totalSpent})
-                    </h3>
-                    <p style={{ color: 'var(--ink-primary)', marginBottom: '16px', fontSize: '15px', lineHeight: '1.6' }}>
-                      <strong>Summary Output:</strong> {agentResult.summary}
-                    </p>
-                    <div style={{ fontSize: '12px', color: 'var(--ink-tertiary)', marginBottom: '16px', fontFamily: 'var(--font-accent)' }}>
-                      Arc Receipts: {agentResult.txHashes.map(h => (
-                        <a key={h} href={`${ARC_TESTNET_CONFIG.blockExplorerUrl}/address/${ARC_TESTNET_CONFIG.contracts.payPerRegistry}`} target="_blank" rel="noreferrer" style={{ color: 'var(--accent-cyan)', marginRight: '14px', textDecoration: 'underline' }}>
-                          {h} ↗
-                        </a>
-                      ))}
-                    </div>
-                    {agentResult.imageUrl && (
-                      <img
-                        src={agentResult.imageUrl}
-                        alt="Generated Artwork"
-                        style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', borderRadius: '6px' }}
-                      />
-                    )}
+                {/* 3. Category Filter Widget */}
+                <div className="panel-glass filter-card-premium">
+                  <h3 className="sidebar-h3">✦ Capability Directory</h3>
+                  <p className="sidebar-p">Filter registered agent capabilities on-chain</p>
+                  <div className="cat-filters-sidebar">
+                    {['all', 'scraping', 'summarization', 'image-gen'].map((cat) => (
+                      <button
+                        key={cat}
+                        className={`cat-btn ${categoryFilter === cat ? 'active' : ''}`}
+                        onClick={() => setCategoryFilter(cat)}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+
+              {/* Right Column: Main Capabilities List and Workbench */}
+              <div className="dashboard-main-content">
+                {/* Capabilities grid list header */}
+                <div className="workbench-section-header">
+                  <h2 className="section-h2">On-Chain Registered Capabilities ({filteredListings.length})</h2>
+                  <p className="section-p">Autonomous endpoints queryable via HTTP 402 challenges</p>
+                </div>
+
+                {/* Service Cards Grid */}
+                {isLoadingOnChain ? (
+                  <div style={{ padding: '60px 20px', textAlign: 'center', fontFamily: 'var(--font-accent)', color: 'var(--ink-tertiary)' }}>
+                    Connecting to PayPerRegistry ({ARC_TESTNET_CONFIG.contracts.payPerRegistry.slice(0, 10)}...) on Arc Testnet...
+                  </div>
+                ) : filteredListings.length === 0 ? (
+                  <div style={{ padding: '60px 20px', textAlign: 'center', border: '1px solid var(--void-05)', borderRadius: '12px', color: 'var(--ink-tertiary)', fontFamily: 'var(--font-accent)' }}>
+                    No active seller listings found in registry. Switch to "[02] LIST SERVICE // SELLER" to register a capability.
+                  </div>
+                ) : (
+                  <div className="service-grid">
+                    {filteredListings.map((listing) => (
+                      <div key={listing.id} className="card-service">
+                        <div>
+                          <div className="card-head">
+                            <span className="badge-category">{listing.category}</span>
+                            <div className="status-online">
+                              <span className="pulse-dot"></span> ONLINE
+                            </div>
+                          </div>
+
+                          <h3 className="card-title">{listing.name}</h3>
+                          <p className="card-description">{listing.description}</p>
+                        </div>
+
+                        <div>
+                          <div className="metrics-row">
+                            <div>
+                              <div className="metric-lbl">RATING</div>
+                              <div className="metric-val" style={{ color: 'var(--accent-amber)' }}>★ {listing.ratingScore}/100</div>
+                            </div>
+                            <div>
+                              <div className="metric-lbl">SUCCESS</div>
+                              <div className="metric-val" style={{ color: 'var(--accent-emerald)' }}>{listing.successRatio}%</div>
+                            </div>
+                            <div>
+                              <div className="metric-lbl">SPEED</div>
+                              <div className="metric-val" style={{ color: 'var(--accent-cyan)' }}>{listing.avgResponseMs}ms</div>
+                            </div>
+                          </div>
+
+                          <div className="card-foot">
+                            <div>
+                              <div className="metric-lbl">PRICE / CALL</div>
+                              <div className="price-usdc">{(listing.pricePerCall / 1e6).toFixed(2)} USDC</div>
+                            </div>
+                            <div className="endpoint-lbl">/api/{listing.category}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
-              </section>
+
+                {/* Agent Execution Console Workbench */}
+                <section className="workbench-panel panel-glass">
+                  <div className="workbench-header">
+                    <h2 className="wb-h2">⚡ Circle Agent Stack Workbench</h2>
+                    <p className="wb-sub">
+                      Input a goal prompt. Watch the autonomous agent evaluate seller signals, sign gasless EIP-3009 authorizations, and settle nanopayments on Arc Testnet.
+                    </p>
+                  </div>
+
+                  <div className="prompt-bar">
+                    <input
+                      type="text"
+                      className="prompt-input-field"
+                      value={userPrompt}
+                      onChange={(e) => setUserPrompt(e.target.value)}
+                      placeholder="Enter prompt goal for autonomous buyer agent..."
+                    />
+                    <button
+                      className="btn-exec"
+                      onClick={handleRunAgent}
+                      disabled={isRunningAgent}
+                    >
+                      {isRunningAgent ? 'EXECUTING...' : 'EXECUTE AGENT'}
+                    </button>
+                  </div>
+
+                  {/* Console Terminal */}
+                  <div className="console-terminal">
+                    {agentLogs.length === 0 ? (
+                      <div style={{ color: 'var(--ink-tertiary)', textAlign: 'center', padding: '30px' }}>
+                        Click "EXECUTE AGENT" to run the autonomous agentic nanopayment pipeline.
+                      </div>
+                    ) : (
+                      agentLogs.map((log, idx) => (
+                        <div key={idx} className="log-row">
+                          <span className="log-t">[{log.timestamp}]</span>
+                          <span className={`log-tag ${log.step}`}>{log.step}</span>
+                          <span className="log-text">{log.message}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  {/* Output Display */}
+                  {agentResult && (
+                    <div style={{ marginTop: '24px', padding: '24px', background: 'rgba(124, 58, 237, 0.05)', borderRadius: '10px', border: '1px solid rgba(124, 58, 237, 0.2)' }}>
+                      <h3 style={{ color: 'var(--accent-cyan)', fontFamily: 'var(--font-display)', fontSize: '20px', marginBottom: '10px', fontWeight: '800' }}>
+                        ✓ Pipeline Completed ({agentResult.txCount} calls settled • Total: {agentResult.totalSpent})
+                      </h3>
+                      <p style={{ color: 'var(--ink-primary)', marginBottom: '16px', fontSize: '15px', lineHeight: '1.6' }}>
+                        <strong>Summary Output:</strong> {agentResult.summary}
+                      </p>
+                      <div style={{ fontSize: '12px', color: 'var(--ink-tertiary)', marginBottom: '16px', fontFamily: 'var(--font-accent)' }}>
+                        Arc Receipts: {agentResult.txHashes.map(h => (
+                          <a key={h} href={`${ARC_TESTNET_CONFIG.blockExplorerUrl}/address/${ARC_TESTNET_CONFIG.contracts.payPerRegistry}`} target="_blank" rel="noreferrer" style={{ color: 'var(--accent-cyan)', marginRight: '14px', textDecoration: 'underline' }}>
+                            {h} ↗
+                          </a>
+                        ))}
+                      </div>
+                      {agentResult.imageUrl && (
+                        <img
+                          src={agentResult.imageUrl}
+                          alt="Generated Artwork"
+                          style={{ width: '100%', maxHeight: '340px', objectFit: 'cover', borderRadius: '6px' }}
+                        />
+                      )}
+                    </div>
+                  )}
+                </section>
+              </div>
             </div>
           )}
 
