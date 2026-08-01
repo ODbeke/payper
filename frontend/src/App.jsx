@@ -510,75 +510,9 @@ export default function App() {
             <div className="dashboard-grid">
               {/* Left Column: Settings and Wallet Config */}
               <aside className="dashboard-sidebar">
-                {/* 1. Circle Wallet Card */}
-                <div className="panel-glass wallet-card-premium">
-                  <div className="wallet-card-header">
-                    <span className="pulse-dot active-glow"></span>
-                    <span className="wallet-card-title">CIRCLE WALLET</span>
-                    <span className="wallet-card-net">ARC_TESTNET</span>
-                  </div>
-                  <div className="wallet-card-body">
-                    <div className="wallet-address-label">DEVELOPER WALLET ADDRESS</div>
-                    <div className="wallet-address-value">0x926b00bcAB0D17f059B884B14554efec4573F97c</div>
-                    
-                    <div className="wallet-balance-row">
-                      <div>
-                        <div className="wallet-balance-lbl">AVAILABLE BALANCE</div>
-                        <div className="wallet-balance-val">10.00 <span className="usdc-unit">USDC</span></div>
-                      </div>
-                      <div className="wallet-badge-funded">VERIFIED</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2. Guardrails Policy Settings */}
-                <div className="panel-glass policy-card-premium">
-                  <h3 className="sidebar-h3">✦ Spend Guardrail Policies</h3>
-                  <p className="sidebar-p">Enforced autonomously by Circle Agent-Stack policy engine</p>
-                  
-                  <div className="policy-field-group">
-                    <div className="policy-input-box">
-                      <div className="policy-lbl">MAX SINGLE CALL BUDGET</div>
-                      <div className="policy-input-wrapper">
-                        <input
-                          type="text"
-                          className="guard-input-field"
-                          value={maxCallBudget}
-                          onChange={(e) => setMaxCallBudget(e.target.value)}
-                        />
-                        <span className="input-suffix">USDC</span>
-                      </div>
-                    </div>
-
-                    <div className="policy-input-box">
-                      <div className="policy-lbl">MAX SESSION SPENDING CAP</div>
-                      <div className="policy-input-wrapper">
-                        <input
-                          type="text"
-                          className="guard-input-field"
-                          value={maxSessionBudget}
-                          onChange={(e) => setMaxSessionBudget(e.target.value)}
-                        />
-                        <span className="input-suffix">USDC</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="policy-checklist">
-                    <div className="policy-check-item">
-                      <span className="check-dot positive">✓</span>
-                      <span>EIP-3009 Gasless Offchain Signing</span>
-                    </div>
-                    <div className="policy-check-item">
-                      <span className="check-dot positive">✓</span>
-                      <span>Enforce Success-Before-Payment</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. Category Filter Widget */}
+                {/* 1. Category Filter Widget (Renamed & Promoted to the top) */}
                 <div className="panel-glass filter-card-premium">
-                  <h3 className="sidebar-h3">✦ Capability Directory</h3>
+                  <h3 className="sidebar-h3">⚡ Service Marketplace</h3>
                   <p className="sidebar-p">Filter registered agent capabilities on-chain</p>
                   <div className="cat-filters-sidebar">
                     {['all', 'scraping', 'summarization', 'image-gen'].map((cat) => (
@@ -590,6 +524,59 @@ export default function App() {
                         {cat}
                       </button>
                     ))}
+                  </div>
+                </div>
+
+                {/* 2. Circle Wallet Card (With integrated compact policy limits and no developer address) */}
+                <div className="panel-glass wallet-card-premium">
+                  <div className="wallet-card-header">
+                    <span className="pulse-dot active-glow"></span>
+                    <span className="wallet-card-title">CIRCLE WALLET</span>
+                    <span className="wallet-card-net">ARC_TESTNET</span>
+                  </div>
+                  <div className="wallet-card-body">
+                    <div className="wallet-balance-row" style={{ marginBottom: '20px' }}>
+                      <div>
+                        <div className="wallet-balance-lbl">AVAILABLE BALANCE</div>
+                        <div className="wallet-balance-val">10.00 <span className="usdc-unit">USDC</span></div>
+                      </div>
+                      <div className="wallet-badge-funded">VERIFIED</div>
+                    </div>
+
+                    {/* Integrated compact Spend limits */}
+                    <div className="compact-policy-section" style={{ borderTop: '1px solid var(--void-05)', paddingTop: '16px' }}>
+                      <div style={{ fontFamily: 'var(--font-accent)', fontSize: '10px', color: 'var(--ink-secondary)', letterSpacing: '0.05em', marginBottom: '12px', fontWeight: 'bold' }}>
+                        SPEND LIMIT GUARDRAILS
+                      </div>
+                      
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                        <div className="policy-input-box">
+                          <div className="policy-lbl">MAX / CALL</div>
+                          <div className="policy-input-wrapper">
+                            <input
+                              type="text"
+                              className="guard-input-field"
+                              value={maxCallBudget}
+                              onChange={(e) => setMaxCallBudget(e.target.value)}
+                            />
+                            <span className="input-suffix">USDC</span>
+                          </div>
+                        </div>
+
+                        <div className="policy-input-box">
+                          <div className="policy-lbl">SESSION CAP</div>
+                          <div className="policy-input-wrapper">
+                            <input
+                              type="text"
+                              className="guard-input-field"
+                              value={maxSessionBudget}
+                              onChange={(e) => setMaxSessionBudget(e.target.value)}
+                            />
+                            <span className="input-suffix">USDC</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </aside>
