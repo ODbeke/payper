@@ -144,6 +144,8 @@ export default function App() {
   const [fetchError, setFetchError] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
   const [walletChainId, setWalletChainId] = useState(null);
+  const [walletBalance, setWalletBalance] = useState('0.00');
+  const [isWalletDropdownOpen, setIsWalletDropdownOpen] = useState(false);
 
   // Circle Agent Stack Guardrail Settings
   const [maxCallBudget, setMaxCallBudget] = useState('0.05');
@@ -234,6 +236,24 @@ export default function App() {
     }
   };
 
+  const fetchWalletBalance = async (address) => {
+    if (!window.ethereum) return;
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const bal = await provider.getBalance(address);
+      setWalletBalance(ethers.formatUnits(bal, 6));
+    } catch (err) {
+      console.error("[PayPer App] Failed to fetch wallet balance:", err);
+    }
+  };
+
+  const handleDisconnect = () => {
+    setWalletAddress(null);
+    setWalletChainId(null);
+    setWalletBalance('0.00');
+    setIsWalletDropdownOpen(false);
+  };
+
   const connectWallet = async () => {
     if (!window.ethereum) {
       alert("MetaMask or other Web3 wallet not found. Please install a browser wallet extension.");
@@ -248,6 +268,7 @@ export default function App() {
       
       setWalletAddress(address);
       setWalletChainId(Number(network.chainId));
+      await fetchWalletBalance(address);
 
       // If not on Arc Testnet, request network switch
       if (Number(network.chainId) !== 5042002) {
@@ -293,6 +314,7 @@ export default function App() {
             const network = await provider.getNetwork();
             setWalletAddress(address);
             setWalletChainId(Number(network.chainId));
+            await fetchWalletBalance(address);
           }
         })
         .catch(err => console.error("Error checking initial accounts:", err));
@@ -300,8 +322,10 @@ export default function App() {
       const handleAccountsChanged = (accounts) => {
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
+          fetchWalletBalance(accounts[0]);
         } else {
           setWalletAddress(null);
+          setWalletBalance('0.00');
         }
       };
 
@@ -520,9 +544,13 @@ export default function App() {
         {/* Navigation Action Buttons */}
         <div className="nav-actions">
           {currentPage === 'app' && (
-            <>
+            <div style={{ position: 'relative' }}>
               {walletAddress ? (
-                <button className="btn-terminal" style={{ borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)', fontSize: '11px', letterSpacing: '0.05em' }}>
+                <button
+                  className="btn-terminal"
+                  onClick={() => setIsWalletDropdownOpen(!isWalletDropdownOpen)}
+                  style={{ borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)', fontSize: '11px', letterSpacing: '0.05em', cursor: 'pointer' }}
+                >
                   {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)} {walletChainId !== 5042002 ? '(WRONG NETWORK)' : ''}
                 </button>
               ) : (
@@ -530,7 +558,20 @@ export default function App() {
                   CONNECT WALLET
                 </button>
               )}
-            </>
+
+              {walletAddress && isWalletDropdownOpen && (
+                <div className="wallet-dropdown">
+                  <div className="dropdown-item">
+                    <span className="dropdown-lbl">Balance</span>
+                    <span className="dropdown-val">{Number(walletBalance).toFixed(2)} USDC</span>
+                  </div>
+                  <hr className="dropdown-divider" />
+                  <button className="dropdown-btn" onClick={handleDisconnect}>
+                    Disconnect Wallet
+                  </button>
+                </div>
+              )}
+            </div>
           )}
 
           {currentPage === 'app' ? (
