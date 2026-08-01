@@ -325,32 +325,45 @@ export default function App() {
     e.preventDefault();
     if (!sellerForm.name || !sellerForm.endpoint) return;
 
+    if (!window.ethereum) {
+      alert("Web3 Wallet Not Found: Please install MetaMask or another browser wallet extension to publish services to the Arc Testnet smart contract.");
+      return;
+    }
+
     try {
       const priceInUnits = Math.round(parseFloat(sellerForm.pricePerCall) * 1e6);
       
-      const newListing = {
-        id: listings.length + 1,
-        seller: '0x926b00bcAB0D17f059B884B14554efec4573F97c',
-        name: sellerForm.name,
-        endpoint: sellerForm.endpoint,
-        pricePerCall: priceInUnits,
-        category: sellerForm.category.toLowerCase(),
-        description: sellerForm.description || 'Newly registered capability service on Arc Testnet.',
-        active: true,
-        totalCalls: 0,
-        successRatio: 100.0,
-        avgResponseMs: 150,
-        ratingScore: 98
-      };
+      // Initialize browser Web3 provider and request account access
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const signer = await provider.getSigner();
+      
+      const registryContract = new ethers.Contract(
+        ARC_TESTNET_CONFIG.contracts.payPerRegistry,
+        REGISTRY_ABI,
+        signer
+      );
 
-      setListings(prev => [...prev, newListing]);
-      alert(`Service "${sellerForm.name}" registered on PayPerRegistry (${ARC_TESTNET_CONFIG.contracts.payPerRegistry})!`);
+      // Submit on-chain registration transaction
+      const tx = await registryContract.registerService(
+        sellerForm.name,
+        sellerForm.endpoint,
+        priceInUnits,
+        sellerForm.category.toLowerCase(),
+        sellerForm.description || 'Newly registered capability service on Arc Testnet.'
+      );
+
+      // Show transaction submitted status
+      alert(`Transaction submitted! Hash: ${tx.hash}\nWaiting for Arc Testnet confirmation...`);
+      await tx.wait();
+
+      alert(`Service "${sellerForm.name}" registered successfully on the blockchain!`);
       setSellerForm({ name: '', endpoint: '', pricePerCall: '0.01', category: 'scraping', description: '' });
       setViewMode('buyer');
       fetchOnChainRegistryData();
     } catch (err) {
-      console.error("[PayPer App] Registration error:", err);
-      alert(`Failed to register service: ${err.message}`);
+      console.error("[PayPer App] On-chain registration error:", err);
+      alert(`Failed to publish service to smart contract: ${err.message}`);
     }
   };
 
