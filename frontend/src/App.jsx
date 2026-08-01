@@ -113,9 +113,17 @@ const SLIDES = [
 
 export default function App() {
   // Navigation Page State: 'landing' | 'app' | 'deck'
-  const [currentPage, setCurrentPage] = useState('landing');
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('payper_current_page') || 'landing';
+    }
+    return 'landing';
+  });
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('payper_current_page', currentPage);
+    }
     if (currentPage === 'app') {
       document.body.classList.add('memoriada-app-body');
     } else {
