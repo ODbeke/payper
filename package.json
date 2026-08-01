@@ -19,7 +19,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
     "@nomicfoundation/hardhat-toolbox": "^6.1.2",
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
