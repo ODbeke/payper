@@ -172,23 +172,8 @@ export default function App() {
       setIsLoadingOnChain(true);
       setFetchError(null);
       
-      let provider;
-      // Validate if window.ethereum is available and connected to the Arc Testnet chain
-      if (window.ethereum) {
-        try {
-          const tempProvider = new ethers.BrowserProvider(window.ethereum);
-          const network = await tempProvider.getNetwork();
-          if (Number(network.chainId) === 5042002) {
-            provider = tempProvider;
-          }
-        } catch (e) {
-          console.warn("[PayPer App] Browser provider query failed, using public RPC fallback:", e);
-        }
-      }
-
-      if (!provider) {
-        provider = new ethers.JsonRpcProvider(ARC_TESTNET_CONFIG.rpcUrl);
-      }
+      // Always use the public RPC provider for reads to guarantee reliability and bypass MetaMask configuration errors
+      const provider = new ethers.JsonRpcProvider(ARC_TESTNET_CONFIG.rpcUrl);
 
       const registryContract = new ethers.Contract(
         ARC_TESTNET_CONFIG.contracts.payPerRegistry,
@@ -241,7 +226,7 @@ export default function App() {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const bal = await provider.getBalance(address);
-      setWalletBalance(ethers.formatUnits(bal, 6));
+      setWalletBalance(ethers.formatEther(bal));
     } catch (err) {
       console.error("[PayPer App] Failed to fetch wallet balance:", err);
     }
