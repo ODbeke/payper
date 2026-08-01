@@ -3,8 +3,9 @@ import { CircleAgentStack } from './circleAgentStack.js';
 import { ARC_TESTNET_CONFIG } from '../config/arcConfig.js';
 
 const getPrivateKey = () => {
-  if (typeof process !== 'undefined' && process.env && process.env.BUYER_PRIVATE_KEY) {
-    return process.env.BUYER_PRIVATE_KEY;
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.BUYER_PRIVATE_KEY) return process.env.BUYER_PRIVATE_KEY;
+    if (process.env.PRIVATE_KEY) return process.env.PRIVATE_KEY;
   }
   return '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 };
@@ -129,15 +130,24 @@ export class AutonomousBuyerAgent {
     };
   }
 
-  async executePaidCall(serviceKey, payload = {}, category = 'scraping') {
-    const endpoint = `${this.sellerServerUrl}/api/service/${serviceKey}`;
-    this.log('CALL_INITIATED', `Sending request to ${endpoint}`);
+  async executePaidCall(selectedSeller, payload = {}) {
+    const startTime = Date.now();
+    const endpoint = selectedSeller.endpoint;
+    this.log('CALL_INITIATED', `Sending request to listed capability "${selectedSeller.name}" at: ${endpoint}`);
 
-    let response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    let response;
+    try {
+      response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      this.log('CALL_FAILED', `Network error contacting endpoint: ${err.message}`);
+      // Record call failure metrics on-chain
+      await this.recordOnChainMetrics(selectedSeller.id, false, 0);
+      throw err;
+    }
 
     if (response.status === 402) {
       const challengeData = await response.json();
@@ -151,26 +161,34 @@ export class AutonomousBuyerAgent {
         nonce: paymentAuth.nonce
       });
 
-      response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-PAYMENT-AUTH': JSON.stringify(paymentAuth)
-        },
-        body: JSON.stringify(payload)
-      });
+      try {
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-PAYMENT-AUTH': JSON.stringify(paymentAuth)
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        this.log('CALL_FAILED', `Network error submitting payment auth: ${err.message}`);
+        await this.recordOnChainMetrics(selectedSeller.id, false, 0);
+        throw err;
+      }
     }
 
     const result = await response.json();
     if (!response.ok || !result.success) {
-      this.log('CALL_FAILED', `Call to ${serviceKey} failed: ${result.error || 'Unknown error'}`);
+      this.log('CALL_FAILED', `Call to "${selectedSeller.name}" failed: ${result.error || 'Unknown error'}`);
+      await this.recordOnChainMetrics(selectedSeller.id, false, 0);
       throw new Error(result.error || 'Call failed');
     }
 
+    const executionDuration = Date.now() - startTime;
     const priceUSDC = result.paymentReceipt.amountUSDC;
     this.circleAgentStack.recordApprovedSpending(priceUSDC);
 
-    this.log('CALL_SUCCESS', `Successfully executed ${serviceKey} call & settled payment on Arc Testnet`, {
+    this.log('CALL_SUCCESS', `Successfully executed "${selectedSeller.name}" call & settled payment on Arc Testnet`, {
       ...result.paymentReceipt,
       arcExplorerLink: `${ARC_TESTNET_CONFIG.blockExplorerUrl}/tx/${result.paymentReceipt.txHash}`
     });
@@ -180,7 +198,34 @@ export class AutonomousBuyerAgent {
       explorerUrl: `${ARC_TESTNET_CONFIG.blockExplorerUrl}/tx/${result.paymentReceipt.txHash}`
     });
 
+    // Record Call Metrics On-Chain directly from the Buyer Client!
+    await this.recordOnChainMetrics(selectedSeller.id, true, executionDuration);
+
     return result.data;
+  }
+
+  async recordOnChainMetrics(serviceId, success, responseTimeMs) {
+    try {
+      const provider = new ethers.JsonRpcProvider(ARC_TESTNET_CONFIG.rpcUrl);
+      const signer = new ethers.Wallet(BUYER_PRIVATE_KEY, provider);
+      
+      const REGISTRY_ABI = [
+        "function recordCallMetrics(uint256 id, bool success, uint256 responseTimeMs) external"
+      ];
+      const registryContract = new ethers.Contract(
+        ARC_TESTNET_CONFIG.contracts.payPerRegistry,
+        REGISTRY_ABI,
+        signer
+      );
+
+      // Submit metrics record transaction to smart contract on Arc L1
+      const tx = await registryContract.recordCallMetrics(serviceId, success, responseTimeMs);
+      this.log('METRICS_SUBMITTED', `Submitting execution metrics on-chain... Tx: ${tx.hash}`);
+      await tx.wait();
+      this.log('METRICS_RECORDED', `On-chain metrics finalized. Rating and speed updated for Service ID ${serviceId}.`);
+    } catch (err) {
+      this.log('METRICS_ERROR', `Failed to log metrics on-chain: ${err.message}`);
+    }
   }
 
   async runPipeline(goalDescription, sellerCatalog) {
@@ -205,7 +250,7 @@ export class AutonomousBuyerAgent {
         payload.prompt = `Visual artwork illustrating key summary: ${intermediateContext.summary}`;
       }
 
-      const taskOutput = await this.executePaidCall(subtask.type, payload, subtask.category);
+      const taskOutput = await this.executePaidCall(selectedSeller, payload);
 
       if (subtask.type === 'web-scraper') {
         intermediateContext.scrapedText = taskOutput.content;
