@@ -511,14 +511,18 @@ export default function App() {
 
         {/* Navigation Action Buttons */}
         <div className="nav-actions">
-          {walletAddress ? (
-            <button className="btn-terminal" style={{ borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)', fontSize: '11px', letterSpacing: '0.05em' }}>
-              ● {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)} {walletChainId !== 5042002 ? '(WRONG NETWORK)' : ''}
-            </button>
-          ) : (
-            <button className="btn-terminal" onClick={connectWallet} style={{ fontSize: '11px', letterSpacing: '0.05em' }}>
-              🔌 CONNECT WALLET
-            </button>
+          {currentPage === 'app' && (
+            <>
+              {walletAddress ? (
+                <button className="btn-terminal" style={{ borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)', fontSize: '11px', letterSpacing: '0.05em' }}>
+                  {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)} {walletChainId !== 5042002 ? '(WRONG NETWORK)' : ''}
+                </button>
+              ) : (
+                <button className="btn-terminal" onClick={connectWallet} style={{ fontSize: '11px', letterSpacing: '0.05em' }}>
+                  CONNECT WALLET
+                </button>
+              )}
+            </>
           )}
 
           {currentPage === 'app' ? (
