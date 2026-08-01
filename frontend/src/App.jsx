@@ -610,8 +610,9 @@ export default function App() {
                         <div>
                           <div className="card-head">
                             <span className="badge-category">{listing.category}</span>
-                            <div className="status-online">
-                              <span className="pulse-dot"></span> ONLINE
+                            <div className={`status-online ${listing.id <= 3 ? 'simulated' : ''}`}>
+                              <span className={`pulse-dot ${listing.id <= 3 ? 'simulated-dot' : ''}`}></span>
+                              {listing.id <= 3 ? 'SIMULATED' : 'ONLINE'}
                             </div>
                           </div>
 

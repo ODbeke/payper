@@ -1425,6 +1425,20 @@ body.memoriada-app-body .terminal-cursor-line {
   box-shadow: 0 0 8px var(--accent-emerald) !important;
 }
 
+/* Simulated status badge indicators for demo capabilities */
+body.memoriada-app-body .status-online.simulated {
+  color: var(--ink-tertiary) !important;
+  background: var(--void-03) !important;
+  border: 1px solid var(--void-05) !important;
+}
+
+body.memoriada-app-body .pulse-dot.simulated-dot {
+  background-color: var(--ink-dim) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+
 
 
 
