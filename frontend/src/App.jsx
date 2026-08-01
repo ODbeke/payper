@@ -535,16 +535,8 @@ export default function App() {
                     <span className="wallet-card-net">ARC_TESTNET</span>
                   </div>
                   <div className="wallet-card-body">
-                    <div className="wallet-balance-row" style={{ marginBottom: '20px' }}>
-                      <div>
-                        <div className="wallet-balance-lbl">AVAILABLE BALANCE</div>
-                        <div className="wallet-balance-val">10.00 <span className="usdc-unit">USDC</span></div>
-                      </div>
-                      <div className="wallet-badge-funded">VERIFIED</div>
-                    </div>
-
                     {/* Integrated compact Spend limits */}
-                    <div className="compact-policy-section" style={{ borderTop: '1px solid var(--void-05)', paddingTop: '16px' }}>
+                    <div className="compact-policy-section">
                       <div style={{ fontFamily: 'var(--font-accent)', fontSize: '10px', color: 'var(--ink-secondary)', letterSpacing: '0.05em', marginBottom: '12px', fontWeight: 'bold' }}>
                         SPEND LIMIT GUARDRAILS
                       </div>
