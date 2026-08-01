@@ -146,6 +146,7 @@ export default function App() {
   const [walletChainId, setWalletChainId] = useState(null);
   const [walletBalance, setWalletBalance] = useState('0.00');
   const [isWalletDropdownOpen, setIsWalletDropdownOpen] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(null);
 
   // Circle Agent Stack Guardrail Settings
   const [maxCallBudget, setMaxCallBudget] = useState('0.05');
@@ -783,7 +784,7 @@ export default function App() {
                 ) : (
                   <div className="service-grid">
                     {filteredListings.map((listing) => (
-                      <div key={listing.id} className="card-service">
+                      <div key={listing.id} className="card-service" onClick={() => setSelectedListing(listing)} style={{ cursor: 'pointer' }}>
                         <div>
                           <div className="card-head">
                             <span className="badge-category">{listing.category}</span>
@@ -823,6 +824,57 @@ export default function App() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {/* Capability Service Integration Detail Modal */}
+                {selectedListing && (
+                  <div className="modal-overlay" onClick={() => setSelectedListing(null)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                      <div className="modal-header">
+                        <span className="badge-category">{selectedListing.category}</span>
+                        <button className="modal-close-btn" onClick={() => setSelectedListing(null)}>×</button>
+                      </div>
+                      
+                      <h2 className="modal-title">{selectedListing.name}</h2>
+                      <p className="modal-desc">{selectedListing.description}</p>
+                      
+                      <div className="modal-info-grid">
+                        <div className="info-item">
+                          <span className="info-lbl">Price Per Call</span>
+                          <span className="info-val">{(selectedListing.pricePerCall / 1e6).toFixed(3)} USDC</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="info-lbl">Seller Wallet Address</span>
+                          <span className="info-val copyable" onClick={() => { navigator.clipboard.writeText(selectedListing.seller); alert("Copied wallet address!"); }}>
+                            {selectedListing.seller.slice(0, 10)}...{selectedListing.seller.slice(-8)} 📋
+                          </span>
+                        </div>
+                        <div className="info-item">
+                          <span className="info-lbl">API Public Endpoint</span>
+                          <span className="info-val copyable" onClick={() => { navigator.clipboard.writeText(selectedListing.endpoint); alert("Copied endpoint URL!"); }}>
+                            {selectedListing.endpoint.length > 35 ? selectedListing.endpoint.slice(0, 32) + '...' : selectedListing.endpoint} 📋
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="integration-instructions">
+                        <div className="instruction-header">HOW TO QUERY THIS CAPABILITY</div>
+                        <p className="instruction-p">This endpoint is protected by EIP-3009 USDC payment verification. To call it, your autonomous agent must submit an HTTP POST request containing a signed USDC transfer authorization signature in the <code>x-payment-auth</code> header.</p>
+                        
+                        <div className="step-title">1. Run Local Buyer Agent Pipeline CLI</div>
+                        <p className="step-desc">Run the autonomous agent engine on your local machine to discover, negotiate payment authorizations, and call the smart contract listed capabilities.</p>
+                        <pre className="code-box">npm run agent</pre>
+                        
+                        <div className="step-title">2. Example cURL Challenge Trigger</div>
+                        <p className="step-desc">Submit an unauthenticated request to trigger the HTTP 402 Challenge and inspect the USDC payment request payload details.</p>
+                        <pre className="code-box">
+{`curl -X POST "${selectedListing.endpoint}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"prompt": "Summarize this hacker news page..."}'`}
+                        </pre>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

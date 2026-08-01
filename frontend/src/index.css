@@ -1527,3 +1527,160 @@ body.memoriada-app-body .dropdown-btn:hover {
   background: #fff5f5 !important;
   box-shadow: 0 4px 12px rgba(255, 74, 74, 0.1) !important;
 }
+
+/* Modal Overlay Background */
+body.memoriada-app-body .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(16, 17, 18, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000 !important;
+}
+
+/* Modal Content Card */
+body.memoriada-app-body .modal-content {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid #e2dbf3 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 48px rgba(124, 58, 237, 0.15) !important;
+  padding: 32px !important;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.memoriada-app-body .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.memoriada-app-body .modal-close-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--ink-tertiary) !important;
+  font-size: 28px !important;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+body.memoriada-app-body .modal-close-btn:hover {
+  color: #ff4a4a !important;
+}
+
+body.memoriada-app-body .modal-title {
+  font-family: var(--font-display) !important;
+  font-size: 24px !important;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #000000 !important;
+  margin: 0 !important;
+}
+
+body.memoriada-app-body .modal-desc {
+  font-size: 13px !important;
+  line-height: 1.5;
+  color: var(--ink-secondary) !important;
+  margin: 0 !important;
+}
+
+body.memoriada-app-body .modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  background: #f7f5fc !important;
+  border: 1px solid #e2dbf3 !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+}
+
+body.memoriada-app-body .info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-family: var(--font-accent);
+}
+
+body.memoriada-app-body .info-lbl {
+  color: #7c3aed !important;
+  font-weight: 500;
+}
+
+body.memoriada-app-body .info-val {
+  color: #000000 !important;
+  font-weight: 700;
+}
+
+body.memoriada-app-body .info-val.copyable {
+  cursor: pointer;
+  text-decoration: underline dotted #7c3aed;
+  transition: color 0.2s;
+}
+
+body.memoriada-app-body .info-val.copyable:hover {
+  color: #7c3aed !important;
+}
+
+/* Integration Instructions */
+body.memoriada-app-body .integration-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #e2dbf3 !important;
+  padding-top: 16px !important;
+}
+
+body.memoriada-app-body .instruction-header {
+  font-family: var(--font-accent) !important;
+  font-size: 10px !important;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #7c3aed !important;
+}
+
+body.memoriada-app-body .instruction-p {
+  font-size: 12px !important;
+  line-height: 1.5;
+  color: var(--ink-secondary) !important;
+  margin: 0 !important;
+}
+
+body.memoriada-app-body .step-title {
+  font-size: 12px !important;
+  font-weight: 700;
+  color: #000000 !important;
+  margin-top: 8px !important;
+}
+
+body.memoriada-app-body .step-desc {
+  font-size: 11px !important;
+  color: var(--ink-tertiary) !important;
+  margin: 0 !important;
+}
+
+body.memoriada-app-body .code-box {
+  background: #1e1e24 !important;
+  color: #a78bfa !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid #2e2e38 !important;
+  overflow-x: auto;
+  margin: 4px 0 0 0 !important;
+}
