@@ -157,7 +157,14 @@ export default function App() {
   const fetchOnChainRegistryData = async () => {
     try {
       setIsLoadingOnChain(true);
-      const provider = new ethers.JsonRpcProvider(ARC_TESTNET_CONFIG.rpcUrl);
+      // Use MetaMask provider to bypass public RPC caching/CORS latency if wallet is connected
+      let provider;
+      if (window.ethereum) {
+        provider = new ethers.BrowserProvider(window.ethereum);
+      } else {
+        provider = new ethers.JsonRpcProvider(ARC_TESTNET_CONFIG.rpcUrl);
+      }
+
       const registryContract = new ethers.Contract(
         ARC_TESTNET_CONFIG.contracts.payPerRegistry,
         REGISTRY_ABI,
