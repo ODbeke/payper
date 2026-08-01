@@ -181,11 +181,16 @@ export default function App() {
         provider
       );
 
-      const [rawServices, onChainTxCount, onChainVolume] = await Promise.all([
-        registryContract.getServices(),
-        registryContract.totalNetworkTransactions(),
-        registryContract.totalUSDCVolumeMoved()
-      ]);
+      let rawServices = [];
+      try {
+        rawServices = await registryContract.getServices();
+      } catch (err) {
+        console.error("getServices failed:", err);
+        throw new Error("Could not sync with the Arc Testnet contract registry. Please ensure your network connection is active.");
+      }
+
+      const onChainTxCount = await registryContract.totalNetworkTransactions().catch(() => 0n);
+      const onChainVolume = await registryContract.totalUSDCVolumeMoved().catch(() => 0n);
 
       const parsedListings = rawServices.map((item) => {
         const totalCalls = Number(item.totalCalls);
@@ -753,9 +758,16 @@ export default function App() {
 
                 {/* Diagnostics Fetch Error Alert */}
                 {fetchError && (
-                  <div style={{ margin: '0 0 20px 0', padding: '14px 20px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '10px', color: '#ef4444', fontSize: '13px', fontFamily: 'var(--font-accent)', lineHeight: '1.5' }}>
-                    ⚠️ <strong>Blockchain Connection Error:</strong> {fetchError}<br />
-                    <span style={{ fontSize: '11px', color: 'var(--ink-tertiary)' }}>Verify that your wallet is set to Arc Testnet or check browser console for CORS/RPC restrictions.</span>
+                  <div style={{ margin: '0 0 20px 0', padding: '12px 18px', background: 'rgba(239, 68, 68, 0.04)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: '10px', color: '#ff4a4a', fontSize: '12px', fontFamily: 'var(--font-accent)', lineHeight: '1.5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <strong>Connection Warning:</strong> Could not retrieve some live registry metrics from Arc Testnet (the RPC node may be lagging). The app will automatically fall back to cached data.
+                    </div>
+                    <button 
+                      onClick={() => setFetchError(null)} 
+                      style={{ background: 'none', border: 'none', color: '#ff4a4a', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold', marginLeft: '12px' }}
+                    >
+                      ×
+                    </button>
                   </div>
                 )}
 
