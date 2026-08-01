@@ -133,6 +133,9 @@ export default function App() {
   const [totalTxCount, setTotalTxCount] = useState(0);
   const [totalUsdcVolume, setTotalUsdcVolume] = useState(0);
   const [isLoadingOnChain, setIsLoadingOnChain] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [walletChainId, setWalletChainId] = useState(null);
 
   // Circle Agent Stack Guardrail Settings
   const [maxCallBudget, setMaxCallBudget] = useState('0.05');
@@ -157,6 +160,7 @@ export default function App() {
   const fetchOnChainRegistryData = async () => {
     try {
       setIsLoadingOnChain(true);
+      setFetchError(null);
       
       let provider;
       // Validate if window.ethereum is available and connected to the Arc Testnet chain
@@ -183,9 +187,9 @@ export default function App() {
       );
 
       const [rawServices, onChainTxCount, onChainVolume] = await Promise.all([
-        registryContract.getServices().catch(() => []),
-        registryContract.totalNetworkTransactions().catch(() => 0n),
-        registryContract.totalUSDCVolumeMoved().catch(() => 0n)
+        registryContract.getServices(),
+        registryContract.totalNetworkTransactions(),
+        registryContract.totalUSDCVolumeMoved()
       ]);
 
       const parsedListings = rawServices.map((item) => {
@@ -216,13 +220,98 @@ export default function App() {
       setTotalUsdcVolume(Number(onChainVolume) / 1e6);
     } catch (err) {
       console.error("[PayPer App] On-chain registry fetch error:", err);
+      setFetchError(err.message || String(err));
     } finally {
       setIsLoadingOnChain(false);
     }
   };
 
+  const connectWallet = async () => {
+    if (!window.ethereum) {
+      alert("MetaMask or other Web3 wallet not found. Please install a browser wallet extension.");
+      return;
+    }
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const signer = await provider.getSigner();
+      const address = await signer.getAddress();
+      const network = await provider.getNetwork();
+      
+      setWalletAddress(address);
+      setWalletChainId(Number(network.chainId));
+
+      // If not on Arc Testnet, request network switch
+      if (Number(network.chainId) !== 5042002) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x4ce946' }]
+          });
+        } catch (switchError) {
+          if (switchError.code === 4902) {
+            try {
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: '0x4ce946',
+                  chainName: 'Arc Testnet',
+                  nativeCurrency: { name: 'USD Coin', symbol: 'USDC', decimals: 6 },
+                  rpcUrls: ['https://rpc.testnet.arc.network'],
+                  blockExplorerUrls: ['https://testnet.arcscan.app']
+                }]
+              });
+            } catch (addError) {
+              console.error("Failed to add Arc Testnet:", addError);
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Failed to connect wallet:", err);
+    }
+  };
+
   useEffect(() => {
     fetchOnChainRegistryData();
+
+    if (window.ethereum) {
+      window.ethereum.request({ method: 'eth_accounts' })
+        .then(async (accounts) => {
+          if (accounts.length > 0) {
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const address = await signer.getAddress();
+            const network = await provider.getNetwork();
+            setWalletAddress(address);
+            setWalletChainId(Number(network.chainId));
+          }
+        })
+        .catch(err => console.error("Error checking initial accounts:", err));
+
+      const handleAccountsChanged = (accounts) => {
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+        } else {
+          setWalletAddress(null);
+        }
+      };
+
+      const handleChainChanged = (chainId) => {
+        setWalletChainId(Number(chainId));
+        window.location.reload();
+      };
+
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
+
+      return () => {
+        if (window.ethereum.removeListener) {
+          window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+          window.ethereum.removeListener('chainChanged', handleChainChanged);
+        }
+      };
+    }
   }, []);
 
   // Keyboard Navigation for Presentation Slide Deck
@@ -422,6 +511,16 @@ export default function App() {
 
         {/* Navigation Action Buttons */}
         <div className="nav-actions">
+          {walletAddress ? (
+            <button className="btn-terminal" style={{ borderColor: 'var(--accent-emerald)', color: 'var(--accent-emerald)', fontSize: '11px', letterSpacing: '0.05em' }}>
+              ● {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)} {walletChainId !== 5042002 ? '(WRONG NETWORK)' : ''}
+            </button>
+          ) : (
+            <button className="btn-terminal" onClick={connectWallet} style={{ fontSize: '11px', letterSpacing: '0.05em' }}>
+              🔌 CONNECT WALLET
+            </button>
+          )}
+
           {currentPage === 'app' ? (
             <>
               <button
@@ -613,6 +712,14 @@ export default function App() {
                   <h2 className="section-h2">On-Chain Registered Capabilities ({filteredListings.length})</h2>
                   <p className="section-p">Autonomous endpoints queryable via HTTP 402 challenges</p>
                 </div>
+
+                {/* Diagnostics Fetch Error Alert */}
+                {fetchError && (
+                  <div style={{ margin: '0 0 20px 0', padding: '14px 20px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '10px', color: '#ef4444', fontSize: '13px', fontFamily: 'var(--font-accent)', lineHeight: '1.5' }}>
+                    ⚠️ <strong>Blockchain Connection Error:</strong> {fetchError}<br />
+                    <span style={{ fontSize: '11px', color: 'var(--ink-tertiary)' }}>Verify that your wallet is set to Arc Testnet or check browser console for CORS/RPC restrictions.</span>
+                  </div>
+                )}
 
                 {/* Service Cards Grid */}
                 {isLoadingOnChain ? (
