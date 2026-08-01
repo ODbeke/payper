@@ -191,7 +191,9 @@ export default function App() {
         };
       });
 
-      setListings(parsedListings);
+      // Filter out the pre-seeded demo services (IDs 1, 2, 3) to show only live user listings
+      const liveListings = parsedListings.filter(listing => listing.id > 3);
+      setListings(liveListings);
       setTotalTxCount(Number(onChainTxCount));
       setTotalUsdcVolume(Number(onChainVolume) / 1e6);
     } catch (err) {
