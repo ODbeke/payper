@@ -135,8 +135,8 @@ export default function App() {
   const [isLoadingOnChain, setIsLoadingOnChain] = useState(true);
 
   // Circle Agent Stack Guardrail Settings
-  const [maxCallBudget, setMaxCallBudget] = useState('0.10');
-  const [maxSessionBudget, setMaxSessionBudget] = useState('1.00');
+  const [maxCallBudget, setMaxCallBudget] = useState('0.05');
+  const [maxSessionBudget, setMaxSessionBudget] = useState('0.15');
 
   // Agent Workbench State
   const [userPrompt, setUserPrompt] = useState('Extract tech news from HackerNews, summarize key takeaways, and generate a visual banner image.');

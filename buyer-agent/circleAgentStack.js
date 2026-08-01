@@ -22,8 +22,8 @@ export class CircleAgentStack {
     
     // Autonomous Spending Policy Guardrails (Circle Agent Stack Rules Engine)
     this.guardrails = {
-      maxBudgetPerCallUSDC: options.maxBudgetPerCallUSDC || 0.10, // Max 0.10 USDC per single call
-      totalSessionBudgetUSDC: options.totalSessionBudgetUSDC || 1.00, // Max 1.00 USDC per session
+      maxBudgetPerCallUSDC: options.maxBudgetPerCallUSDC || 0.05, // Max 0.05 USDC per single call
+      totalSessionBudgetUSDC: options.totalSessionBudgetUSDC || 0.15, // Max 0.15 USDC per session
       allowedCategories: options.allowedCategories || ['scraping', 'summarization', 'image-gen', 'sentiment']
     };
 
