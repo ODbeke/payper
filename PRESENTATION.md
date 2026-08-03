@@ -5,7 +5,7 @@
 
 ## 📌 Slide 1: Title & Tagline
 **Headline**: PayPer
-**Subtitle**: Autonomous Agent-to-Agent Nanopayment Marketplace on Arc
+**Subtitle**: Autonomous Agent-to-Agent Nanopayment Marketplace on Arc L1
 **Tagline**: Frictionless micro-transactions between AI agents in native USDC. Zero subscriptions, zero API keys. Payment IS the credential.
 **Key Info**:
 - Track: Agentic Economy Track
@@ -17,8 +17,8 @@
 
 ## ❓ Slide 2: The Problem
 **Headline**: The Payment Bottleneck in the Agent Economy
-- **Subscriptions Don't Scale for Machines**: Autonomous AI agents cannot sign up for monthly SaaS subscriptions or manage credit card billing cycles.
-- **API Keys are Broken Auth Mechanisms**: Hardcoding provider API keys into autonomous agents creates severe security leaks, rate-limit collisions, and manual key management overhead.
+- **Subscriptions Don't Scale for Machines**: Autonomous AI agents cannot sign up for monthly SaaS subscriptions, verify emails, or manage credit card billing cycles.
+- **API Keys are Broken Auth Mechanisms**: Hardcoding provider API keys into autonomous agent code creates severe security leaks, rate-limit collisions, and manual key management overhead.
 - **Micro-transaction Friction**: Existing L1/L2 networks charge volatile third-party gas fees, making 0.01 USDC API calls cost more in gas than the service itself.
 
 ---
@@ -41,15 +41,18 @@
 
 ---
 
-## 🎯 Slide 5: On-Chain Registry & Decision Signals
+## 🎯 Slide 5: On-Chain Registry & Discovery Signals
 **Headline**: Signal-Based Autonomous Agent Discovery
 - **`PayPerRegistry` Smart Contract**: Live on Arc Testnet at `0xdAea9d883f8d7F87F0D62378555e6660EC51AB77`.
-- **Autonomous Selection Logic**: Buyer agents rank candidate sellers using weighted on-chain market signals:
+- **Decentralized Buyer-Driven Metrics Logging**: 
+  - The buyer agent measures response speed and success.
+  - Buyer signs and logs the metrics to the contract (`recordCallMetrics`) directly, keeping metrics honest and preventing seller spoofing.
+  - Sellers onboard with **zero configuration**—no private keys or database IDs needed on the API wrapper!
+- **Autonomous Selection Signals**: Buyer agents rank candidate sellers using weighted on-chain market signals:
   - **Rating Score** (e.g. 99/100)
   - **Success Ratio** (e.g. 99.3%)
   - **Response Speed** (e.g. 120ms)
-  - **USDC Pricing** (e.g. 0.01 USDC)
-- **Zero Hallucination**: Selection logic is strictly mathematical and transparent, avoiding random seller choices.
+  - **USDC Pricing (e.g. 0.01 USDC)**
 
 ---
 
@@ -57,18 +60,20 @@
 **Headline**: Enterprise Spending Guardrails & Developer Wallets
 - **Circle Web3 Services (W3S)**: Integrated with Circle Agent Stack (`circlefin/agent-stack-starter-kits`).
 - **Autonomous Spending Guardrails**: Policy engine enforces:
-  - Single-call budget caps (e.g. Max 0.10 USDC / call)
-  - Cumulative session budget caps (e.g. Max 1.00 USDC / session)
-  - Allowed category whitelists (`scraping`, `summarization`, `image-gen`, `sentiment`)
+  - Single-call budget caps (e.g. Max 0.05 USDC / call)
+  - Cumulative session budget caps (e.g. Max 0.15 USDC / session)
+  - Allowed category whitelists (`scraping`, `summarization`, `image-gen`)
 - **Arc App Kit**: Integrated chain parameters, Explorer links (`testnet.arcscan.app`), and Web3 provider wrappers.
 
 ---
 
-## 💻 Slide 7: Live Product & Architecture
+## 💻 Slide 7: Live Product & UI/UX Optimizations
 **Headline**: Production-Grade Full-Stack Marketplace
-- **Landing Page**: Sleek single-scroll hero, persistent live transaction & USDC volume ticker, single prominent CTA (`LAUNCH MARKETPLACE APP →`).
-- **Buyer View**: Interactive capability game-card grid, category filtering, Circle Wallet guardrails controls, and **Live Autonomous Execution Workbench** with step-by-step terminal logs & Arc Explorer receipts.
-- **Seller View**: On-chain capability registration form to publish wrapped HTTP API endpoints to `PayPerRegistry`.
+- **Aesthetic Landing Page**: Sleek single-scroll hero, persistent live transaction ticker, single prominent CTA (`LAUNCH APP`).
+- **State Persistence**: Current page state is backed by LocalStorage, allowing seamless page reloading without resetting dashboard sessions.
+- **Header Navbar Dropdown**: Clean balance checks (scaled using 18 decimals native to Arc L1 USDC) and disconnect controls.
+- **Interactive Capability Modals**: Cards open detailed overlay panels containing copyable endpoint fields and terminal instruction guides (cURL & local agent execution).
+- **Public RPC Isolation & Defensively Caught Reads**: Read states decouple from MetaMask flaws and fetch metrics concurrently, recovering from individual contract errors gracefully.
 
 ---
 
@@ -78,6 +83,7 @@
 - **USDC System Contract**: `0x3600000000000000000000000000000000000000`
 - **Registry Address**: `0xdAea9d883f8d7F87F0D62378555e6660EC51AB77`
 - **GitHub Repository**: [github.com/ODbeke/payper](https://github.com/ODbeke/payper)
-- **Live Demo App**: [http://localhost:3001](http://localhost:3001)
+- **Hosted Gemini API Repository**: [github.com/ODbeke/payper-gemini-service](https://github.com/ODbeke/payper-gemini-service)
+- **Hosted Web Application**: [payper-three.vercel.app](https://payper-three.vercel.app/)
 
 *PayPer: Enabling true financial autonomy for the AI Agentic Economy.*
