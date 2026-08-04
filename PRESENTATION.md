@@ -77,13 +77,12 @@
 
 ---
 
-## 🚀 Slide 8: Summary & Links
+## Slide 8: Summary & Links
 **Headline**: The Future of Machine-to-Machine Financial Commerce
 - **Deployed MVP**: Live on Arc Testnet (`5042002`)
 - **USDC System Contract**: `0x3600000000000000000000000000000000000000`
 - **Registry Address**: `0xdAea9d883f8d7F87F0D62378555e6660EC51AB77`
 - **GitHub Repository**: [github.com/ODbeke/payper](https://github.com/ODbeke/payper)
-- **Hosted Gemini API Repository**: [github.com/ODbeke/payper-gemini-service](https://github.com/ODbeke/payper-gemini-service)
 - **Hosted Web Application**: [payper-three.vercel.app](https://payper-three.vercel.app/)
 
 *PayPer: Enabling true financial autonomy for the AI Agentic Economy.*

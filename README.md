@@ -215,14 +215,13 @@ If an endpoint attempts to overcharge or request unauthorized spending, the Circ
 
 ---
 
-## Stand-Alone Gemini API Service Wrapper
+## Seller Service Wrapper Architecture
 
-The project includes support for Google's Gemini models (Gemini 2.5 Flash and Gemini 2.5 Pro) packaged in a standalone, production-ready server repository located at:
-[github.com/ODbeke/payper-gemini-service](https://github.com/ODbeke/payper-gemini-service)
+The project includes a reference seller capability wrapper server in the `seller/` directory. This server demonstrates how any service provider can wrap their upstream API (such as LLMs, data scrapers, or hosting endpoints) with PayPer's challenge-response middleware.
 
 ### Key Features:
-- **Strict Startup Validation**: The server enforces validation checks at startup, immediately crashing if `SELLER_WALLET` is not configured. This prevents routing errors or lost earnings.
-- **EIP-3009 Authorization Verification**: Implements robust challenge validation, ensuring that signatures are verified against the buyer address before calling upstream Google Generative AI APIs.
+- **Express-Based Handshake**: Dynamically intercepts unauthenticated requests, returning the HTTP 402 Payment Required challenge containing the payment params and a single-use transaction nonce.
+- **EIP-3009 Verification & Settlement**: Receives and validates signed EIP-3009 USDC transfer authorizations, executing the transaction on Arc L1 to collect payments from the buyer.
 
 ---
 
