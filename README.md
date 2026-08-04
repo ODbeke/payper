@@ -2,7 +2,7 @@
   <img src="logo.png" alt="PayPer Marketplace Logo" width="280" />
 </p>
 
-# PayPer ⚡
+# PayPer
 ### Autonomous Agent-to-Agent Nanopayment Marketplace on Arc L1
 
 [![Network](https://img.shields.io/badge/Network-Arc_Testnet_(5042002)-0284c7?style=for-the-badge&logo=ethereum)](https://testnet.arcscan.app)
@@ -11,11 +11,11 @@
 [![Security](https://img.shields.io/badge/Auth-EIP--3009_transferWithAuthorization-38bdf8?style=for-the-badge)](https://github.com/ODbeke/payper)
 [![Track](https://img.shields.io/badge/Hackathon-Encode_Club_Agentic_Economy-f59e0b?style=for-the-badge)](https://github.com/ODbeke/payper)
 
-> **PayPer** is an autonomous, machine-to-machine financial infrastructure built natively on **Arc L1**. It enables AI agents to discover, evaluate, and pay specialized service provider agents per API call in **USDC** using **x402 HTTP Payment Required** headers and **EIP-3009 gasless authorizations**. Zero subscriptions, zero hardcoded API keys — **Payment IS the Credential**.
+PayPer is an autonomous, machine-to-machine financial infrastructure built natively on Arc L1. It enables AI agents to discover, evaluate, and pay specialized service provider agents per API call in USDC using x402 HTTP Payment Required headers and EIP-3009 gasless authorizations. Zero subscriptions, zero hardcoded API keys — Payment IS the Credential.
 
 ---
 
-## 📌 Executive Summary & Live Contract Directory
+## Executive Summary & Live Contract Directory
 
 | Deployment Parameter | Live Contract Specification |
 |---|---|
@@ -27,10 +27,11 @@
 | **PayPerRegistry Smart Contract** | [`0xdAea9d883f8d7F87F0D62378555e6660EC51AB77`](https://testnet.arcscan.app/address/0xdAea9d883f8d7F87F0D62378555e6660EC51AB77) |
 | **Deployer & Authority Wallet** | [`0x926b00bcAB0D17f059B884B14554efec4573F97c`](https://testnet.arcscan.app/address/0x926b00bcAB0D17f059B884B14554efec4573F97c) |
 | **Pitch Deck Document** | [PRESENTATION.md](PRESENTATION.md) |
+| **Live Hosted Web Application** | [payper-three.vercel.app](https://payper-three.vercel.app/) |
 
 ---
 
-## 🐉 Architecture & Core Sequence Flow Charts
+## Architecture & Core Sequence Flow Charts
 
 ### System Topology Architecture
 ```mermaid
@@ -42,7 +43,7 @@ graph TD
     end
 
     subgraph On-Chain Signal Layer
-        R[(PayPerRegistry Contract<br/>0xdAea...AB77)] -->|Rating ★ / Speed ms / USDC Price| C
+        R[(PayPerRegistry Contract<br/>0xdAea...AB77)] -->|Rating / Speed ms / USDC Price| C
     end
 
     subgraph Seller x402 Execution Layer
@@ -63,10 +64,10 @@ graph TD
 ```mermaid
 sequenceDiagram
     autonumber
-    actor BuyerAgent as 🤖 Autonomous Buyer Agent (Circle W3S)
-    participant SellerServer as 🌐 Seller Server (x402 Express)
-    participant UpstreamAPI as ⚡ Upstream API Capability
-    participant ArcL1 as ⛓️ Arc L1 Blockchain (PayPerRegistry & USDC)
+    actor BuyerAgent as Autonomous Buyer Agent (Circle W3S)
+    participant SellerServer as Seller Server (x402 Express)
+    participant UpstreamAPI as Upstream API Capability
+    participant ArcL1 as Arc L1 Blockchain (PayPerRegistry & USDC)
 
     BuyerAgent->>SellerServer: 1. HTTP Request (No Credentials / API Key)
     SellerServer-->>BuyerAgent: 2. HTTP 402 Payment Required (Price, Nonce, ServiceID)
@@ -87,36 +88,36 @@ sequenceDiagram
 
 ---
 
-## 💡 The Paradigm Shift: Why Traditional Billing Fails Machine Economy
+## The Paradigm Shift: Why Traditional Billing Fails the Machine Economy
 
-As AI agents transition from conversational interfaces to autonomous execution engines, existing Web2 financial rails and traditional Web3 patterns create critical adoption bottlenecks:
+As AI agents transition from conversational chatbots to autonomous execution systems, existing Web2 financial rails and traditional Web3 patterns create critical bottlenecks:
 
 ```
-❌ Traditional Web2 API Models               ❌ Standard Web3 On-Chain Payments
---------------------------------            ---------------------------------
-• Monthly SaaS Subscriptions                • Volatile 3rd-party gas tokens (ETH/MATIC)
-• Manual Credit Card Checkout               • Complex 2-step Token Approve() txs
-• Hardcoded Provider API Keys               • Manual MetaMask popup approvals
-• Vulnerable to Key Theft & Collisions      • High latency (12s - 15m finality)
+Traditional Web2 API Models                  Standard Web3 On-Chain Payments
+--------------------------------             ---------------------------------
+- Monthly SaaS Subscriptions                 - Volatile third-party gas tokens (ETH/MATIC)
+- Manual Credit Card Checkout                - Complex two-step Token Approve transactions
+- Hardcoded Provider API Keys                - Manual MetaMask popup approvals
+- Vulnerable to Key Theft & Collisions       - High latency (12s to 15m finality)
 ```
 
 ### The PayPer Architecture Solution
 
 ```
-⚡ PayPer Machine-Native Financial Commerce
+PayPer Machine-Native Financial Commerce
 -------------------------------------------
 1. Zero Subscriptions: Agents pay per execution (e.g. 0.01 USDC).
 2. Zero API Keys: HTTP 402 Payment Required status acts as dynamic authorization.
 3. Native USDC Gas on Arc: Sub-second finality with zero third-party gas volatility.
-4. EIP-3009 Gasless Off-Chain Signing: 1-step signature without prior approval transactions.
+4. EIP-3009 Gasless Off-Chain Signing: One-step signature without prior approval transactions.
 5. Task-Success Settlement Guarantee: Funds move ONLY when upstream execution succeeds.
 ```
 
 ---
 
-## ⚙️ Core Architectural Innovations
+## Core Architectural Innovations
 
-### 1. The `x402` HTTP Payment Protocol Handshake
+### 1. The x402 HTTP Payment Protocol Handshake
 When an autonomous buyer agent invokes a seller endpoint without credentials, the server responds with a standard `HTTP 402 Payment Required` header payload containing the precise payment challenge:
 
 ```json
@@ -136,26 +137,26 @@ When an autonomous buyer agent invokes a seller endpoint without credentials, th
 }
 ```
 
-### 2. Gasless Settlement via `EIP-3009 transferWithAuthorization`
+### 2. Gasless Settlement via EIP-3009 transferWithAuthorization
 The buyer agent signs an EIP-3009 typed data payload off-chain:
 $$\text{EIP-3009 Payload} = \{\text{from}, \text{to}, \text{value}, \text{validAfter}, \text{validBefore}, \text{nonce}\}$$
 
-This eliminates the need for separate `ERC20.approve()` transactions, allowing instant, 1-step sub-second settlement on Arc L1.
+This eliminates the need for separate `ERC20.approve()` transactions, allowing instant, one-step sub-second settlement on Arc L1.
 
 ### 3. The Golden Safety Rule: Task-Success Before Settlement
-PayPer enforces a strict ordering rule in the seller payment middleware ([seller/x402Server.js](file:///Users/okoyes/PAYPER/seller/x402Server.js)):
+PayPer enforces a strict ordering rule in the seller payment middleware:
 
 $$\text{Upstream API Execution} \xrightarrow{\text{SUCCESS (HTTP 200)}} \text{Submit EIP-3009 Authorization to Arc} \rightarrow \text{Settle USDC}$$
 
 $$\text{Upstream API Execution} \xrightarrow{\text{FAILURE (HTTP 500)}} \text{Discard Authorization} \rightarrow \text{Deduct 0 USDC}$$
 
-> **Key Takeaway**: If a seller service throws an error or returns corrupted data, the signature is safely discarded. The buyer agent is **NEVER** charged for broken API calls.
+If a seller service throws an error or returns corrupted data, the signature is safely discarded. The buyer agent is NEVER charged for broken API calls.
 
 ---
 
-## 🎯 Signal-Based Discovery Logic in `PayPerRegistry.sol`
+## Signal-Based Discovery Logic in PayPerRegistry.sol
 
-Autonomous agents cannot rely on subjective marketing copy. The [`PayPerRegistry.sol`](file:///Users/okoyes/PAYPER/contracts/PayPerRegistry.sol) smart contract acts as an immutable on-chain registry that tracks verifiable seller execution signals:
+Autonomous agents cannot rely on subjective marketing copy. The `PayPerRegistry.sol` smart contract acts as an immutable on-chain registry that tracks verifiable seller execution signals:
 
 ```solidity
 struct Listing {
@@ -175,7 +176,7 @@ struct Listing {
 ```
 
 ### Autonomous Seller Ranking Algorithm
-The buyer agent ([buyer-agent/agentEngine.js](file:///Users/okoyes/PAYPER/buyer-agent/agentEngine.js)) calculates a deterministic composite score $S$ for candidate sellers:
+The buyer agent calculates a deterministic composite score $S$ for candidate sellers:
 
 $$S = \left( W_{\text{rating}} \cdot \text{RatingScore} \right) + \left( W_{\text{speed}} \cdot \frac{1000}{\text{AvgResponseMs}} \right) - \left( W_{\text{price}} \cdot \text{PriceUSDC} \right)$$
 
@@ -183,16 +184,30 @@ This mathematical selection process eliminates hallucinated choices and guarante
 
 ---
 
-## 🛡️ Circle Agent Stack & Spending Policy Engine
+## Decentralized Buyer-Driven Metrics Logging
 
-Integrated with the official **Circle Developer Stack** (`circlefin/agent-stack-starter-kits`), the buyer agent includes strict policy guardrails ([buyer-agent/circleAgentStack.js](file:///Users/okoyes/PAYPER/buyer-agent/circleAgentStack.js)):
+To guarantee the integrity of the reputation marketplace, PayPer shifts the responsibility of recording execution metrics from the seller to the buyer agent client.
+
+### Traditional Seller-Self-Reporting vs. Buyer-Driven Architecture
+- **Traditional (Seller Logs Metrics)**: Sellers have a conflict of interest. They are incentivized to report artificially high success ratios and 1ms execution speeds to rank higher in the registry search algorithm. Additionally, sellers must configure and manage private keys and local databases to perform transactions on-chain.
+- **Buyer-Driven (Buyer Logs Metrics)**: The buyer agent client measures network latency and execution success. Since the buyer has no incentive to lie, they write authentic metrics to `recordCallMetrics()` on the smart contract directly. 
+
+### Benefits:
+- **Zero-Setup Seller Onboarding**: Developers can publish wrapped API endpoints to the PayPer Registry with absolute ease. Their hosted endpoints do not require gas tokens, private keys, database setups, or manual environment variables mapping.
+- **Sybil Resistance**: The smart contract filters metrics updates, validating that only callers interacting with the services can write updates.
+
+---
+
+## Circle Agent Stack & Spending Policy Engine
+
+Integrated with the official Circle Developer Stack, the buyer agent includes strict policy guardrails:
 
 ```javascript
 // Circle Agent Guardrail Policy Engine
 const policy = {
-  maxSingleCallBudgetUSDC: 0.10,    // Reject any call costing > 0.10 USDC
-  maxSessionBudgetUSDC: 1.00,       // Hard spending cap per execution session
-  permittedCategories: ['scraping', 'summarization', 'image-gen', 'sentiment']
+  maxSingleCallBudgetUSDC: 0.05,    // Reject any call costing > 0.05 USDC
+  maxSessionBudgetUSDC: 0.15,       // Hard spending cap per execution session
+  permittedCategories: ['scraping', 'summarization', 'image-gen']
 };
 ```
 
@@ -200,22 +215,30 @@ If an endpoint attempts to overcharge or request unauthorized spending, the Circ
 
 ---
 
-## 🎨 Cyber-Financial Design System (`admon.peerfix.dev` Style)
+## Stand-Alone Gemini API Service Wrapper
 
-The frontend application ([frontend/src/App.jsx](file:///Users/okoyes/PAYPER/frontend/src/App.jsx)) is crafted with custom typography and visual aesthetics inspired by high-end web3 build registries:
+The project includes support for Google's Gemini models (Gemini 2.5 Flash and Gemini 2.5 Pro) packaged in a standalone, production-ready server repository located at:
+[github.com/ODbeke/payper-gemini-service](https://github.com/ODbeke/payper-gemini-service)
 
-- **Display Typography**: **`Bricolage Grotesque`** (tight geometric display headlines, `-0.045em` tracking).
-- **Technical & Metric Typography**: **`IBM Plex Mono`** (monospaced terminal paths, transaction hashes, gas metrics, and badges).
-- **Body Copy**: **`Manrope`** (clean geometric sans-serif for descriptions and UI components).
-- **Interactive Views**:
-  - **Single-Scroll Landing Page**: High-impact hero title, live persistent transaction ticker, and a single prominent CTA (`LAUNCH MARKETPLACE APP →`).
-  - **Buyer Marketplace View**: Capability game-card grid, category filters, wallet guardrails, and **Live Execution Console Workbench**.
-  - **Seller Registration View**: Direct on-chain publishing interface to register capabilities on `PayPerRegistry`.
-  - **Interactive Pitch Deck**: Integrated 8-slide presentation deck accessible directly in navigation (`📊 PITCH DECK`).
+### Key Features:
+- **Strict Startup Validation**: The server enforces validation checks at startup, immediately crashing if `SELLER_WALLET` is not configured. This prevents routing errors or lost earnings.
+- **EIP-3009 Authorization Verification**: Implements robust challenge validation, ensuring that signatures are verified against the buyer address before calling upstream Google Generative AI APIs.
 
 ---
 
-## 📂 Codebase Directory Architecture
+## Web App UI/UX Optimizations
+
+The frontend application features several Web3 optimizations to provide an excellent user experience:
+
+- **Typography**: Uses Bricolage Grotesque for bold display headlines, IBM Plex Mono for technical and blockchain parameters, and Manrope for body text.
+- **State Persistence**: The current view state (landing page vs. main app dashboard) is cached in LocalStorage, preventing frustrating page resets back to the cover page on browser refreshes.
+- **Navbar Wallet Dropdown**: Connected MetaMask sessions show the native USDC balance (properly scaled using the 18-decimal gas token format) and a clean button to disconnect the session.
+- **Integration Detail Modals**: Service cards are clickable, opening a panel that offers copyable endpoint paths, seller addresses, cURL test commands, and agent startup CLI commands.
+- **Public RPC Isolation**: Reads decouple from MetaMask provider instances and route directly to the public Arc Testnet RPC node. Metrics fetch queries are caught individually, protecting the UI from freezing when specific contract parameters return call exceptions.
+
+---
+
+## Codebase Directory Architecture
 
 ```
 PAYPER/
@@ -250,7 +273,7 @@ PAYPER/
 
 ---
 
-## 🧪 Verification & Testing
+## Verification & Testing
 
 PayPer includes a complete unit testing suite for smart contracts and spending policy engines:
 
@@ -278,7 +301,7 @@ npm run test
 
 ---
 
-## ⚡ Quickstart Setup Guide
+## Quickstart Setup Guide
 
 ### 1. Clone & Install Dependencies
 ```bash
@@ -298,13 +321,13 @@ cp .env.example .env
 ```bash
 npm run dev
 ```
-Open **`http://localhost:3001`** in your browser to view the live marketplace, landing page, and slide deck.
+Open `http://localhost:3001` in your browser to view the live marketplace, landing page, and slide deck.
 
 ### 4. Start Seller x402 Middleware Server
 ```bash
 npm run seller
 ```
-Starts the seller backend server on **`http://localhost:4020`**.
+Starts the seller backend server on `http://localhost:4020`.
 
 ### 5. Run Autonomous Buyer Agent Pipeline CLI
 ```bash
@@ -313,7 +336,7 @@ npm run agent
 
 ---
 
-## 📄 License & Attribution
+## License & Attribution
 
-Built for the **Encode Club Programmable Money Hackathon (Arc Track)**.  
+Built for the Encode Club Programmable Money Hackathon (Arc Track).  
 Repository: [github.com/ODbeke/payper](https://github.com/ODbeke/payper)
