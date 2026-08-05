@@ -36,32 +36,58 @@ export class AutonomousBuyerAgent {
   planGoal(userGoal) {
     this.log('PLANNING', `Decomposing user goal: "${userGoal}"`);
 
-    const subtasks = [
-      {
+    const lowerGoal = userGoal.toLowerCase();
+    const subtasks = [];
+
+    // Simple keyword-based goal planner to dynamically minimize cost
+    const needsScraper = lowerGoal.includes('scrape') || lowerGoal.includes('extract') || lowerGoal.includes('hackernews') || lowerGoal.includes('url');
+    const needsImage = lowerGoal.includes('image') || lowerGoal.includes('generate a visual') || lowerGoal.includes('banner') || lowerGoal.includes('art');
+    const needsSummarizer = lowerGoal.includes('summarize') || lowerGoal.includes('summary') || lowerGoal.includes('key takeaways') || (!needsScraper && !needsImage);
+
+    if (needsScraper) {
+      subtasks.push({
         id: 'subtask-1',
         type: 'web-scraper',
         category: 'scraping',
         name: 'Web Scraping',
         description: 'Extract raw text & headlines from target URL',
         input: { url: 'https://news.ycombinator.com' }
-      },
-      {
+      });
+    }
+
+    if (needsSummarizer) {
+      subtasks.push({
         id: 'subtask-2',
         type: 'summarizer',
         category: 'summarization',
         name: 'AI Summarization',
         description: 'Process scraped text into structured key insights',
         input: {}
-      },
-      {
+      });
+    }
+
+    if (needsImage) {
+      subtasks.push({
         id: 'subtask-3',
         type: 'image-gen',
         category: 'image-gen',
         name: 'Visual Banner Generation',
         description: 'Generate promotional artwork based on summary',
         input: {}
-      }
-    ];
+      });
+    }
+
+    // Default fallback if no keywords matched
+    if (subtasks.length === 0) {
+      subtasks.push({
+        id: 'subtask-2',
+        type: 'summarizer',
+        category: 'summarization',
+        name: 'AI Summarization',
+        description: 'Process raw input text',
+        input: {}
+      });
+    }
 
     this.log('PLANNING_SUCCESS', `Created execution plan with ${subtasks.length} paid subtasks`, subtasks);
     return subtasks;
@@ -245,10 +271,10 @@ export class AutonomousBuyerAgent {
       const selectedSeller = this.evaluateListings(subtask.category, candidates);
 
       let payload = { ...subtask.input };
-      if (subtask.type === 'summarizer' && intermediateContext.scrapedText) {
-        payload.text = intermediateContext.scrapedText;
-      } else if (subtask.type === 'image-gen' && intermediateContext.summary) {
-        payload.prompt = `Visual artwork illustrating key summary: ${intermediateContext.summary}`;
+      if (subtask.type === 'summarizer') {
+        payload.text = intermediateContext.scrapedText || goalDescription;
+      } else if (subtask.type === 'image-gen') {
+        payload.prompt = intermediateContext.summary ? `Visual artwork illustrating key summary: ${intermediateContext.summary}` : goalDescription;
       }
 
       const taskOutput = await this.executePaidCall(selectedSeller, payload);
