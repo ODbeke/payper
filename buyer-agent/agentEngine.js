@@ -16,7 +16,7 @@ export class AutonomousBuyerAgent {
   constructor(options = {}) {
     this.sellerServerUrl = options.sellerServerUrl || 'http://localhost:4020';
     this.wallet = new ethers.Wallet(BUYER_PRIVATE_KEY);
-    this.circleAgentStack = new CircleAgentStack(options);
+    this.circleAgentStack = new CircleAgentStack({ ...options, agentWalletAddress: this.wallet.address });
     this.logs = [];
     this.transactions = [];
   }
