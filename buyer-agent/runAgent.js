@@ -51,7 +51,7 @@ async function main() {
   
   const catalog = await fetchOnChainCatalog();
   const agent = new AutonomousBuyerAgent();
-  const goal = process.argv[2] || 'Extract tech news from HackerNews, summarize key takeaways, and generate a visual banner image';
+  const goal = process.argv[2] || 'Summarize: Arc L1 native gas tokens enable machine-to-machine nanopayments';
 
   const result = await agent.runPipeline(goal, catalog);
   console.log('\n=== Execution Completed Successfully! ===');
