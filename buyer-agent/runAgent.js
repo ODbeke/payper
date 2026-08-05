@@ -14,6 +14,7 @@ async function fetchOnChainCatalog() {
 
     const catalog = {};
     for (const item of rawServices) {
+      if (Number(item.id) <= 3) continue; // Filter out pre-seeded mock listings
       const category = item.category.toLowerCase();
       if (!catalog[category]) catalog[category] = [];
 
