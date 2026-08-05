@@ -814,7 +814,7 @@ export default function App() {
                           <div className="metrics-row">
                             <div>
                               <div className="metric-lbl">RATING</div>
-                              <div className="metric-val" style={{ color: 'var(--accent-amber)' }}>★ {listing.ratingScore}/100</div>
+                              <div className="metric-val" style={{ color: 'var(--accent-amber)' }}>{listing.ratingScore}/100</div>
                             </div>
                             <div>
                               <div className="metric-lbl">SUCCESS</div>
