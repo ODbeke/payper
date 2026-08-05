@@ -194,23 +194,35 @@ export default function App() {
       const onChainVolume = await registryContract.totalUSDCVolumeMoved().catch(() => 0n);
 
       const parsedListings = rawServices.map((item) => {
-        const totalCalls = Number(item.totalCalls);
-        const successCount = Number(item.successCount);
+        const id = item.id !== undefined ? Number(item.id) : Number(item[0]);
+        const seller = item.seller || item[1];
+        const name = item.name || item[2];
+        const endpoint = item.endpoint || item[3];
+        const pricePerCall = item.pricePerCall !== undefined ? Number(item.pricePerCall) : Number(item[4]);
+        const category = (item.category || item[5] || '').toLowerCase();
+        const description = item.description || item[6] || '';
+        const active = item.active !== undefined ? item.active : item[7];
+        
+        const totalCalls = item.totalCalls !== undefined ? Number(item.totalCalls) : Number(item[8]);
+        const successCount = item.successCount !== undefined ? Number(item.successCount) : Number(item[9]);
+        const avgResponseMs = item.avgResponseMs !== undefined ? Number(item.avgResponseMs) : Number(item[10]);
+        const ratingScore = item.ratingScore !== undefined ? Number(item.ratingScore) : Number(item[11]);
+        
         const successRatio = totalCalls > 0 ? Number(((successCount * 100) / totalCalls).toFixed(1)) : 100.0;
 
         return {
-          id: Number(item.id),
-          seller: item.seller,
-          name: item.name,
-          endpoint: item.endpoint,
-          pricePerCall: Number(item.pricePerCall),
-          category: item.category.toLowerCase(),
-          description: item.description,
-          active: item.active,
-          totalCalls: totalCalls,
-          successRatio: successRatio,
-          avgResponseMs: Number(item.avgResponseMs),
-          ratingScore: Number(item.ratingScore)
+          id,
+          seller,
+          name,
+          endpoint,
+          pricePerCall,
+          category,
+          description,
+          active,
+          totalCalls,
+          successRatio,
+          avgResponseMs,
+          ratingScore
         };
       });
 
