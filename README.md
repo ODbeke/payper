@@ -310,6 +310,113 @@ async function queryPayPerService(endpointUrl, privateKey, payload = {}) {
 
 ---
 
+## Seller Integration Guide: How to Host a Capability
+
+Service providers can monetize any API endpoint (such as AI models, databases, or computing resources) by wrapping it with PayPer's HTTP 402 middleware.
+
+### Express Middleware Setup
+
+Sellers run an Express server that intercepts unauthenticated requests, returns the EIP-3009 payment challenge parameters, and settles the signed transfer payload on the Arc L1 blockchain.
+
+Here is the complete template of a seller server middleware:
+
+```javascript
+import express from 'express';
+import { ethers } from 'ethers';
+
+const app = express();
+app.use(express.json());
+
+const SELLER_WALLET = process.env.SELLER_WALLET; // Seller receiver address
+const SELLER_PRIVATE_KEY = process.env.SELLER_PRIVATE_KEY; // Used to settle txs on-chain
+const PRICE_PER_CALL = 10000; // 0.01 USDC (6 decimals)
+const SERVICE_ID = 4; // Your registered service ID in registry contract
+
+app.post('/api/service/gemini-flash', async (req, res) => {
+  const paymentHeader = req.headers['x-payment-auth'];
+
+  // STEP 1: If no payment is attached, return HTTP 402 Challenge
+  if (!paymentHeader) {
+    const nonce = ethers.hexlify(ethers.randomBytes(32));
+    const validBefore = Math.floor(Date.now() / 1000) + 120; // 2 minutes validity
+
+    return res.status(402).json({
+      error: 'Payment Required',
+      code: 402,
+      x402: {
+        payTo: SELLER_WALLET,
+        amount: PRICE_PER_CALL,
+        currency: 'USDC',
+        decimals: 6,
+        validBefore: validBefore,
+        nonce: nonce,
+        chainId: 5042002, // Arc Testnet
+        serviceId: SERVICE_ID
+      }
+    });
+  }
+
+  // STEP 2: Verify and Settle Payment On-Chain
+  try {
+    const paymentAuth = JSON.parse(paymentHeader);
+    const provider = new ethers.JsonRpcProvider('https://rpc.testnet.arc.network');
+    const signer = new ethers.Wallet(SELLER_PRIVATE_KEY, provider);
+
+    // Initialize USDC Native token contract
+    const USDC_CONTRACT = '0x3600000000000000000000000000000000000000';
+    const USDC_ABI = [
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s) external"
+    ];
+    const usdcContract = new ethers.Contract(USDC_CONTRACT, USDC_ABI, signer);
+
+    // Split the buyer's signature into v, r, s parameters
+    const sig = ethers.Signature.from(paymentAuth.signature);
+
+    // Submit EIP-3009 transfer signature on-chain to move USDC
+    const transferTx = await usdcContract.transferWithAuthorization(
+      paymentAuth.from,
+      paymentAuth.to,
+      paymentAuth.amount,
+      0, // validAfter
+      paymentAuth.validBefore,
+      paymentAuth.nonce,
+      sig.v,
+      sig.r,
+      sig.s
+    );
+    await transferTx.wait();
+
+    // STEP 3: Execute Upstream API (e.g. Gemini, Scraper)
+    const resultText = "Your API execution output based on req.body";
+
+    // STEP 4: Submit metrics to the PayPerRegistry contract
+    const REGISTRY_CONTRACT = '0xdAea9d883f8d7F87F0D62378555e6660EC51AB77';
+    const REGISTRY_ABI = [
+      "function recordCallMetrics(uint256 id, bool success, uint256 responseTimeMs) external"
+    ];
+    const registryContract = new ethers.Contract(REGISTRY_CONTRACT, REGISTRY_ABI, signer);
+    await registryContract.recordCallMetrics(SERVICE_ID, true, 150).catch(console.error);
+
+    // Return the response to the buyer with transaction receipt details
+    return res.status(200).json({
+      success: true,
+      data: { text: resultText },
+      paymentReceipt: {
+        settled: true,
+        amountUSDC: PRICE_PER_CALL / 1e6,
+        txHash: transferTx.hash,
+        settledAt: new Date().toISOString()
+      }
+    });
+
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+```
+
+---
+
 ## Web App UI/UX Optimizations
 
 The frontend application features several Web3 optimizations to provide an excellent user experience:
