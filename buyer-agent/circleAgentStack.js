@@ -78,7 +78,7 @@ export class CircleAgentStack {
     const amountInUnits = Math.round(amountUSDC * 1e6); // 6 decimal USDC
     return {
       domain: {
-        name: 'USD Coin',
+        name: 'USDC',
         version: '2',
         chainId: ARC_TESTNET_CONFIG.chainId,
         verifyingContract: ARC_TESTNET_CONFIG.contracts.officialCircleUsdc
