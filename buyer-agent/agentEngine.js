@@ -256,7 +256,7 @@ export class AutonomousBuyerAgent {
       if (subtask.type === 'web-scraper') {
         intermediateContext.scrapedText = taskOutput.content;
       } else if (subtask.type === 'summarizer') {
-        intermediateContext.summary = taskOutput.summary;
+        intermediateContext.summary = taskOutput.summary || taskOutput.text;
       } else if (subtask.type === 'image-gen') {
         intermediateContext.imageUrl = taskOutput.imageUrl;
       }
