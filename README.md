@@ -225,6 +225,91 @@ The project includes a reference seller capability wrapper server in the `seller
 
 ---
 
+## Developer Integration Guide: How to Query Endpoints
+
+Developers and autonomous agentic systems can query any PayPer capability listed on-chain without static API credentials by implementing the x402 HTTP challenge-response handshake in their clients.
+
+### Javascript Client Implementation
+
+Here is the complete implementation of a buyer client that automatically handles EIP-3009 signature verification and settlement:
+
+```javascript
+import { ethers } from 'ethers';
+
+async function queryPayPerService(endpointUrl, privateKey, payload = {}) {
+  const wallet = new ethers.Wallet(privateKey);
+
+  // 1. Initial Request (Triggers HTTP 402 challenge)
+  let response = await fetch(endpointUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  // 2. Challenge Handshake
+  if (response.status === 402) {
+    const { x402 } = await response.json();
+
+    const domain = {
+      name: 'USD Coin',
+      version: '2',
+      chainId: x402.chainId,
+      verifyingContract: '0x3600000000000000000000000000000000000000'
+    };
+
+    const types = {
+      TransferWithAuthorization: [
+        { name: 'from', type: 'address' },
+        { name: 'to', type: 'address' },
+        { name: 'value', type: 'uint256' },
+        { name: 'validAfter', type: 'uint256' },
+        { name: 'validBefore', type: 'uint256' },
+        { name: 'nonce', type: 'bytes32' }
+      ]
+    };
+
+    const message = {
+      from: wallet.address,
+      to: x402.payTo,
+      value: x402.amount,
+      validAfter: 0,
+      validBefore: x402.validBefore,
+      nonce: x402.nonce
+    };
+
+    const signature = await wallet.signTypedData(domain, types, message);
+
+    const paymentAuth = {
+      from: wallet.address,
+      to: x402.payTo,
+      amount: x402.amount,
+      validBefore: x402.validBefore,
+      nonce: x402.nonce,
+      signature
+    };
+
+    // 3. Resubmit with signed payment authorization
+    response = await fetch(endpointUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-PAYMENT-AUTH': JSON.stringify(paymentAuth)
+      },
+      body: JSON.stringify(payload)
+    });
+  }
+
+  const result = await response.json();
+  if (!response.ok || !result.success) {
+    throw new Error(result.error || 'Execution failed');
+  }
+
+  return result;
+}
+```
+
+---
+
 ## Web App UI/UX Optimizations
 
 The frontend application features several Web3 optimizations to provide an excellent user experience:
