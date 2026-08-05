@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { ethers } from 'ethers';
 import { CircleAgentStack } from './circleAgentStack.js';
 import { ARC_TESTNET_CONFIG } from '../config/arcConfig.js';
