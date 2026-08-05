@@ -14,7 +14,7 @@ async function fetchOnChainCatalog() {
 
     const catalog = {};
     for (const item of rawServices) {
-      if (Number(item.id) <= 3) continue; // Filter out pre-seeded mock listings
+      if (Number(item.id) === 2) continue; // Filter out only the simulated summarizer to force Gemini Flash usage
       const category = item.category.toLowerCase();
       if (!catalog[category]) catalog[category] = [];
 
