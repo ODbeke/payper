@@ -54,19 +54,20 @@ async function main() {
   const goal = process.argv[2] || 'Summarize: Arc L1 native gas tokens enable machine-to-machine nanopayments';
 
   const result = await agent.runPipeline(goal, catalog);
+  const summary = result.summary;
   console.log('\n=== Execution Completed Successfully! ===');
   console.log('\n--- Final Pipeline Output ---');
-  if (result.finalOutput.scrapedText) {
-    console.log(`[Scraped Text]: ${result.finalOutput.scrapedText}`);
+  if (summary.finalOutput.scrapedText) {
+    console.log(`[Scraped Text]: ${summary.finalOutput.scrapedText}`);
   }
-  if (result.finalOutput.summary) {
-    console.log(`[AI Summary]: ${result.finalOutput.summary}`);
+  if (summary.finalOutput.summary) {
+    console.log(`[AI Summary]: ${summary.finalOutput.summary}`);
   }
-  if (result.finalOutput.imageUrl) {
-    console.log(`[Generated Image URL]: ${result.finalOutput.imageUrl}`);
+  if (summary.finalOutput.imageUrl) {
+    console.log(`[Generated Image URL]: ${summary.finalOutput.imageUrl}`);
   }
   console.log('-----------------------------\n');
-  console.dir(result, { depth: null });
+  console.dir(summary, { depth: null });
 }
 
 main().catch(console.error);
